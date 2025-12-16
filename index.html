@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" id="top" data-page="index.html">
 <head>
@@ -11,26 +10,59 @@
   <meta name="robots" content="index,follow"/>
   <meta name="theme-color" content="#f7f8fb"/>
   <meta name="referrer" content="strict-origin-when-cross-origin"/>
-  <link rel="canonical" href="https://ackzero.io/"/>
+  <link rel="canonical" href="/"/>
 
+  <link rel="alternate" hreflang="en" href="/"/>
+  <link rel="alternate" hreflang="x-default" href="/"/>
+
+  <!-- Icons / Manifest (add files later; safe to keep even if missing) -->
+  <link rel="icon" href="/favicon.ico" sizes="any"/>
+  <link rel="icon" href="/logo.svg" type="image/svg+xml"/>
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+  <link rel="manifest" href="/site.webmanifest"/>
+
+  <!-- Social -->
   <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="ACKZERO"/>
   <meta property="og:title" content="ACKZERO — Prove you sent it. Independently."/>
   <meta property="og:description" content="Neutral, verifiable receipt that a specific message was issued and made available at a precise time — without storing the message and without requiring the recipient to sign up."/>
-  <meta property="og:url" content="https://ackzero.io/"/>
-  <meta property="og:image" content="https://ackzero.io/og.png"/>
-  <meta name="twitter:card" content="summary_large_image"/>
+  <meta property="og:url" content="/"/>
+  <meta property="og:image" content="/og.png"/>
+  <meta property="og:image:alt" content="ACKZERO — Neutral proof of message issuance"/>
+  <meta property="og:locale" content="en_GB"/>
+  <meta property="og:locale:alternate" content="fr_FR"/>
 
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="ACKZERO — Prove you sent it. Independently."/>
+  <meta name="twitter:description" content="Neutral, verifiable receipt for message issuance — no recipient signup, no message storage."/>
+  <meta name="twitter:image" content="/og.png"/>
+
+  <!-- Security meta -->
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()"/>
+
+  <!-- JSON-LD -->
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "ACKZERO",
-    "applicationCategory": "BusinessApplication",
-    "operatingSystem": "Web",
-    "description": "ACKZERO is a simple, independent digital acknowledgement service that creates a verifiable proof that a specific message was issued and made available at a precise time, without requiring the recipient to sign up.",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
-    "areaServed": ["Europe", "United Kingdom"],
-    "url": "https://ackzero.io/"
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"ACKZERO",
+    "url":"/",
+    "logo":"/og.png",
+    "areaServed":["Europe","United Kingdom"],
+    "contactPoint":[{
+      "@type":"ContactPoint",
+      "email":"contact@ackzero.io",
+      "contactType":"support",
+      "availableLanguage":["en","fr"]
+    }]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"ACKZERO",
+    "url":"/"
   }
   </script>
 
@@ -38,714 +70,662 @@
     :root{
       --bg:#f7f8fb;
       --panel:#ffffff;
-      --text:#0b1220;
-      --muted:#4b5565;
       --line:#e6e9f0;
-      --accent:#1f6feb;
+      --text:#0b1320;
+      --muted:#4b5563;
+      --accent:#1d4ed8;
       --accent2:#0ea5e9;
       --ok:#16a34a;
-      --warn:#b45309;
-      --bad:#b91c1c;
-      --shadow: 0 14px 40px rgba(10,20,40,.10);
-      --shadow2: 0 7px 18px rgba(10,20,40,.08);
-      --radius:18px;
-      --radius2:24px;
-      --max:1120px;
+      --warn:#f59e0b;
+      --err:#dc2626;
+      --shadow: 0 10px 30px rgba(11,19,32,.08);
+      --shadow2: 0 1px 0 rgba(11,19,32,.06);
+      --r:16px;
+      --e:cubic-bezier(.22,.61,.36,1);
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
+    *{ box-sizing:border-box }
+    html{ background:var(--bg); scroll-behavior:smooth; scroll-padding-top:90px }
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font:16px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
       color:var(--text);
       background:
-        radial-gradient(900px 520px at 12% 8%, rgba(31,111,235,.16), transparent 60%),
-        radial-gradient(900px 520px at 85% 10%, rgba(14,165,233,.14), transparent 60%),
-        radial-gradient(900px 520px at 50% 94%, rgba(31,111,235,.10), transparent 65%),
+        radial-gradient(1100px 500px at 85% -10%, rgba(29,78,216,.10), transparent 55%),
+        radial-gradient(900px 420px at 10% 0%, rgba(14,165,233,.10), transparent 55%),
         var(--bg);
-      line-height:1.55;
     }
-    a{color:inherit}
-    .container{max-width:var(--max); margin:0 auto; padding:0 18px}
+    a{ color:var(--accent); text-decoration:none }
+    a:hover{ text-decoration:underline }
+    code, pre{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace }
+    pre{ white-space:pre-wrap; word-break:break-word; overflow-wrap:anywhere }
 
-    /* Top bar */
-    .topbar{
-      position:sticky; top:0; z-index:30;
-      backdrop-filter:saturate(1.2) blur(10px);
-      background: rgba(247,248,251,.72);
-      border-bottom:1px solid rgba(230,233,240,.85);
+    .skip{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden }
+    .skip:focus{
+      position:fixed; left:12px; top:12px; width:auto; height:auto;
+      padding:10px 12px; border-radius:12px; background:#fff; border:1px solid var(--line);
+      box-shadow:var(--shadow); z-index:9999;
     }
-    .topbar__inner{
-      display:flex; align-items:center; justify-content:space-between;
-      height:64px;
-      gap:14px;
+
+    .wrap{ max-width:1120px; margin:0 auto; padding:0 18px }
+    header{
+      position:sticky; top:0; z-index:1000;
+      background:rgba(247,248,251,.85);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+    .hdr{
+      height:64px; display:flex; align-items:center; gap:14px;
     }
     .brand{
-      display:flex; align-items:center; gap:10px; text-decoration:none;
-      letter-spacing:-.02em;
-      min-width: 190px;
-    }
-    .brand__mark{
-      width:34px; height:34px; border-radius:12px;
-      background: linear-gradient(135deg, rgba(31,111,235,1), rgba(14,165,233,1));
-      box-shadow: 0 10px 25px rgba(31,111,235,.20);
-      position:relative;
-      flex:0 0 auto;
-    }
-    .brand__mark:after{
-      content:"";
-      position:absolute; inset:9px;
-      border-radius:9px;
-      background: rgba(255,255,255,.92);
-      transform: rotate(8deg);
-    }
-    .brand__name{font-weight:900; font-size:15px; line-height:1}
-    .brand__sub{color:var(--muted); font-size:12px; margin-top:3px}
-
-    .nav{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
-    .nav a{
-      text-decoration:none;
-      color:var(--muted);
-      font-weight:700;
-      font-size:13px;
-      padding:8px 10px;
-      border-radius:999px;
-    }
-    .nav a:hover{background: rgba(230,233,240,.75); color:var(--text)}
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      gap:10px;
-      padding:11px 14px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:var(--panel);
+      display:flex; align-items:center; gap:10px;
+      font-weight:900; letter-spacing:.2px;
       color:var(--text);
-      text-decoration:none;
-      font-weight:800;
-      box-shadow: var(--shadow2);
-      transition: transform .15s ease, box-shadow .15s ease;
-      white-space:nowrap;
+      margin-right:auto;
     }
-    .btn:hover{transform:translateY(-1px)}
-    .btn--primary{
-      border-color: transparent;
-      background: linear-gradient(135deg, rgba(31,111,235,1), rgba(14,165,233,1));
-      color:#fff;
-      box-shadow: 0 18px 45px rgba(31,111,235,.22);
-    }
-
-    .menuBtn{
-      display:none;
-      border:1px solid rgba(230,233,240,.95);
-      background: rgba(255,255,255,.70);
-      border-radius: 999px;
-      padding:10px 12px;
-      box-shadow: var(--shadow2);
-      font-weight:850;
-      color: rgba(7,19,40,.86);
-    }
-    .menuBtn:active{transform:translateY(1px)}
-    @media (max-width: 920px){
-      .nav{display:none}
-      .menuBtn{display:inline-flex}
-    }
-
-    /* Mobile drawer */
-    .drawerOverlay{
-      position:fixed; inset:0;
-      background: rgba(10,20,40,.45);
-      display:none;
-      z-index:50;
-    }
-    .drawer{
-      position:fixed; top:10px; right:10px; left:10px;
-      max-width: 640px;
-      margin: 0 auto;
-      background: rgba(255,255,255,.92);
-      border:1px solid rgba(230,233,240,.95);
-      border-radius: 22px;
-      box-shadow: var(--shadow);
-      padding: 14px;
-      display:none;
-      z-index:60;
-    }
-    .drawer .row{display:flex; align-items:center; justify-content:space-between; gap:10px}
-    .drawer a{
-      display:flex;
-      text-decoration:none;
-      padding:12px 12px;
-      border-radius: 14px;
-      border:1px solid rgba(230,233,240,.0);
-      font-weight:800;
-      color: rgba(7,19,40,.86);
-      margin-top:10px;
-      background: rgba(247,248,251,.55);
-    }
-    .drawer a:hover{border-color: rgba(230,233,240,.95); background: rgba(247,248,251,.9)}
-    .drawer .close{
-      border:1px solid rgba(230,233,240,.95);
-      background: rgba(247,248,251,.9);
-      border-radius: 999px;
-      padding:10px 12px;
+    .logo{
+      width:38px; height:38px; border-radius:12px;
+      background:linear-gradient(135deg, rgba(29,78,216,.20), rgba(14,165,233,.22));
+      border:1px solid rgba(29,78,216,.18);
+      display:inline-flex; align-items:center; justify-content:center;
+      box-shadow:var(--shadow2);
       font-weight:900;
     }
+    nav{ display:flex; align-items:center; gap:14px }
+    nav a{ color:var(--muted); font-weight:700 }
+    nav a:hover{ color:var(--text); text-decoration:none }
+    .cta{
+      display:inline-flex; align-items:center; justify-content:center;
+      height:40px; padding:0 14px; border-radius:12px;
+      background:linear-gradient(135deg, var(--accent), var(--accent2));
+      color:#fff; font-weight:900;
+      box-shadow:0 10px 24px rgba(29,78,216,.18);
+      border:1px solid rgba(29,78,216,.12);
+    }
+    .cta:hover{ text-decoration:none; filter:brightness(1.02) }
 
-    /* Hero */
-    .hero{padding:46px 0 26px}
-    .hero__grid{
-      display:grid;
-      grid-template-columns: 1.18fr .82fr;
-      gap:22px;
+    main{ padding:34px 0 18px }
+    .hero{
+      display:grid; gap:18px;
+      grid-template-columns: 1.05fr .95fr;
       align-items:start;
+      margin-top:18px;
     }
-    @media (max-width: 920px){
-      .hero{padding:32px 0 18px}
-      .hero__grid{grid-template-columns:1fr; gap:16px}
+    @media (max-width: 980px){
+      .hero{ grid-template-columns:1fr; }
     }
-    .kickers{display:flex; flex-wrap:wrap; gap:10px; margin:4px 0 16px}
+    .kicker{
+      display:inline-flex; gap:10px; flex-wrap:wrap; align-items:center;
+      color:var(--muted); font-weight:700;
+    }
     .pill{
       display:inline-flex; align-items:center; gap:8px;
-      padding:9px 12px;
-      border-radius:999px;
-      border:1px solid rgba(230,233,240,.92);
-      background: rgba(255,255,255,.65);
-      color: var(--muted);
-      font-weight:700;
-      font-size:13px;
-    }
-    .pill b{color:var(--text)}
-    .dot{
-      width:8px; height:8px; border-radius:99px;
-      background: linear-gradient(135deg, rgba(31,111,235,1), rgba(14,165,233,1));
-      box-shadow: 0 0 0 6px rgba(31,111,235,.10);
+      padding:6px 10px; border-radius:999px;
+      background:#fff; border:1px solid var(--line);
+      box-shadow:var(--shadow2);
+      font-size:.88rem;
     }
     h1{
-      margin:0 0 12px;
-      letter-spacing:-.04em;
-      font-size: clamp(34px, 5.4vw, 64px);
-      line-height:1.02;
+      margin:8px 0 0;
+      font-size: clamp(2.1rem, 4.5vw, 3.2rem);
+      line-height:1.06;
+      letter-spacing:-.02em;
     }
     .lead{
-      margin:0 0 18px;
-      color: var(--muted);
-      font-size: clamp(15px, 2.2vw, 18px);
-      max-width: 65ch;
-    }
-    .hero__cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:6px}
-    .mini{
-      margin-top:14px;
-      display:flex; flex-wrap:wrap; gap:10px;
-      color: var(--muted);
-      font-size: 12.5px;
-    }
-    .mini .chip{
-      padding:7px 10px;
-      border-radius:999px;
-      border:1px solid rgba(230,233,240,.92);
-      background: rgba(255,255,255,.55);
-    }
-
-    /* Right panel */
-    .card{
-      background: rgba(255,255,255,.84);
-      border: 1px solid rgba(230,233,240,.95);
-      border-radius: var(--radius2);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .card__hd{
-      padding:16px 18px;
-      border-bottom:1px solid rgba(230,233,240,.9);
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px;
-      background: linear-gradient(180deg, rgba(255,255,255,.97), rgba(255,255,255,.84));
-    }
-    .badge{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:7px 10px;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:850;
-      color: rgba(7,19,40,.82);
-      border:1px solid rgba(230,233,240,.95);
-      background: rgba(247,248,251,.9);
-      white-space:nowrap;
-    }
-    .badge .ok{width:8px;height:8px;border-radius:99px;background:var(--ok)}
-    .card__bd{padding:14px 18px 18px}
-    .steps{display:grid; gap:10px; margin-top:6px}
-    .step{
-      display:flex; gap:10px;
-      padding:12px;
-      border:1px solid rgba(230,233,240,.95);
-      background: rgba(255,255,255,.75);
-      border-radius: 14px;
-    }
-    .step__n{
-      width:28px; height:28px; border-radius:10px;
-      display:flex; align-items:center; justify-content:center;
-      font-weight:950;
-      color:#fff;
-      background: linear-gradient(135deg, rgba(31,111,235,1), rgba(14,165,233,1));
-      flex:0 0 auto;
-    }
-    .step__t{font-weight:900; font-size:13px; margin:0}
-    .step__d{margin:2px 0 0; color:var(--muted); font-size:13px}
-
-    /* Sections */
-    section{padding:26px 0}
-    .section__title{
-      margin:0 0 10px;
-      letter-spacing:-.02em;
-      font-size: 22px;
-    }
-    .section__desc{margin:0 0 16px; color:var(--muted); max-width:78ch}
-
-    .grid3{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:14px;
-    }
-    @media (max-width: 920px){ .grid3{grid-template-columns:1fr} }
-
-    .feature{
-      background: rgba(255,255,255,.82);
-      border:1px solid rgba(230,233,240,.95);
-      border-radius: var(--radius);
-      padding:16px;
-      box-shadow: var(--shadow2);
-    }
-    .feature__k{
-      display:flex; align-items:center; gap:10px;
-      font-weight:950;
-      margin:0 0 6px;
-      letter-spacing:-.01em;
-    }
-    .ico{
-      width:34px;height:34px;border-radius:14px;
-      background: rgba(31,111,235,.10);
-      border:1px solid rgba(31,111,235,.18);
-      display:flex; align-items:center; justify-content:center;
-      color: rgba(31,111,235,1);
-      font-weight:950;
-      flex:0 0 auto;
-    }
-    .feature p{margin:0; color:var(--muted)}
-
-    /* Comparison */
-    .table{
-      overflow:auto;
-      border-radius: var(--radius);
-      border:1px solid rgba(230,233,240,.95);
-      background: rgba(255,255,255,.86);
-      box-shadow: var(--shadow2);
-    }
-    table{width:100%; border-collapse:collapse; min-width:820px}
-    th,td{padding:14px 14px; text-align:left; border-bottom:1px solid rgba(230,233,240,.9); vertical-align:top}
-    th{font-size:12px; color:var(--muted); letter-spacing:.08em; text-transform:uppercase}
-    td{font-size:14px}
-    .yes{color:var(--ok); font-weight:950}
-    .no{color:var(--bad); font-weight:950}
-    .maybe{color:var(--warn); font-weight:950}
-
-    /* Code blocks */
-    .codeCard{
-      border:1px solid rgba(230,233,240,.95);
-      background: rgba(255,255,255,.86);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow2);
-      overflow:hidden;
-    }
-    .codeCard__hd{
-      display:flex; justify-content:space-between; align-items:center; gap:12px;
-      padding:12px 14px;
-      border-bottom:1px solid rgba(230,233,240,.92);
-      background: rgba(247,248,251,.78);
-    }
-    .codeTitle{font-weight:950; letter-spacing:-.01em}
-    .codeMeta{color:var(--muted); font-size:12.5px; font-weight:750}
-    pre{
-      margin:0;
-      padding:14px;
-      overflow:auto;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size:12.5px;
-      line-height:1.55;
-      color: rgba(7,19,40,.90);
-      background: rgba(255,255,255,.75);
-    }
-
-    /* Footer */
-    footer{padding:34px 0 46px; color:var(--muted)}
-    .foot{
-      display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap;
-      border-top:1px solid rgba(230,233,240,.9);
-      padding-top:18px;
-    }
-    .links{display:flex; gap:12px; flex-wrap:wrap}
-    .links a{
+      margin:10px 0 0;
       color:var(--muted);
-      text-decoration:none;
-      font-weight:750;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid rgba(230,233,240,.0);
+      font-size:1.05rem;
+      max-width:62ch;
     }
-    .links a:hover{border-color:rgba(230,233,240,.95); background:rgba(255,255,255,.6); color:var(--text)}
-    .fine{font-size:12.5px; max-width:86ch}
-    .tiny{font-size:12px; color:var(--muted)}
+
+    .panel{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:var(--r);
+      box-shadow:var(--shadow);
+    }
+    .panel-hd{
+      padding:16px 16px 10px;
+      border-bottom:1px solid var(--line);
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .panel-hd strong{ font-size:1rem }
+    .panel-bd{ padding:16px }
+
+    .grid{
+      display:grid; gap:12px;
+      grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 640px){ .grid{ grid-template-columns:1fr } }
+
+    label{ font-weight:800; font-size:.92rem; color:#111827 }
+    .hint{ font-size:.88rem; color:var(--muted); margin-top:4px }
+    input, textarea{
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px 12px;
+      font:inherit;
+      background:#fbfcff;
+      box-shadow: inset 0 1px 0 rgba(11,19,32,.03);
+    }
+    textarea{ min-height:120px; resize:vertical }
+    .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      height:44px; padding:0 14px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:#fff;
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:var(--shadow2);
+      transition: transform .12s var(--e);
+    }
+    .btn:hover{ transform: translateY(-1px) }
+    .btn.primary{
+      background:linear-gradient(135deg, var(--accent), var(--accent2));
+      color:#fff;
+      border-color: rgba(29,78,216,.16);
+      box-shadow:0 12px 26px rgba(29,78,216,.16);
+    }
+    .btn.ghost{ background:transparent }
+    .btn:disabled{ opacity:.55; cursor:not-allowed; transform:none }
+
+    .out{
+      margin-top:12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:#fbfcff;
+      padding:12px;
+      color:#111827;
+    }
+    .kv{
+      display:grid; gap:6px;
+      font-size:.92rem;
+    }
+    .kv div{
+      display:flex; gap:10px; align-items:flex-start; justify-content:space-between;
+      border-bottom:1px dashed rgba(230,233,240,.9);
+      padding-bottom:6px;
+    }
+    .kv div:last-child{ border-bottom:none; padding-bottom:0 }
+    .k{ color:var(--muted); font-weight:800; min-width:130px }
+    .v{ text-align:right; word-break:break-word; overflow-wrap:anywhere; max-width: calc(100% - 140px) }
+
+    .status{
+      margin-top:10px;
+      font-weight:900;
+      font-size:.95rem;
+    }
+    .status.ok{ color:var(--ok) }
+    .status.err{ color:var(--err) }
+    .status.warn{ color:var(--warn) }
+
+    section{ padding:22px 0 }
+    .cards{
+      display:grid; gap:14px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 980px){ .cards{ grid-template-columns:1fr } }
+    .card{ padding:16px; }
+    .card h3{ margin:0 0 6px; font-size:1.05rem }
+    .card p{ margin:0; color:var(--muted) }
+
+    .pricing{
+      display:grid; gap:14px;
+      grid-template-columns: repeat(3, 1fr);
+      align-items:stretch;
+    }
+    @media (max-width: 980px){ .pricing{ grid-template-columns:1fr } }
+    .price{
+      padding:16px;
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .tag{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px; border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      width:fit-content;
+      font-weight:900;
+      color:#111827;
+      font-size:.88rem;
+    }
+    .amount{
+      font-size:2rem; font-weight:1000; letter-spacing:-.02em;
+    }
+    .ul{ margin:0; padding-left:18px; color:var(--muted) }
+    .ul li{ margin:6px 0 }
+
+    details{
+      border-top:1px solid var(--line);
+      padding:12px 0;
+    }
+    summary{ cursor:pointer; font-weight:900 }
+    details p{ margin:10px 0 0; color:var(--muted) }
+
+    footer{
+      border-top:1px solid var(--line);
+      padding:18px 0 28px;
+      color:var(--muted);
+    }
+    .foot{
+      display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:space-between;
+    }
+    .foot a{ color:var(--muted); font-weight:800 }
+    .foot a:hover{ color:var(--text); text-decoration:none }
+
+    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+      outline:3px solid rgba(29,78,216,.25);
+      outline-offset:2px;
+      border-radius:12px;
+    }
   </style>
 </head>
 
 <body>
-  <header class="topbar">
-    <div class="container">
-      <div class="topbar__inner">
-        <a class="brand" href="#top" aria-label="ACKZERO Home">
-          <span class="brand__mark" aria-hidden="true"></span>
-          <span>
-            <div class="brand__name">ACKZERO</div>
-            <div class="brand__sub">Independent digital acknowledgement</div>
-          </span>
-        </a>
+  <a class="skip" href="#main">Skip to main content</a>
 
-        <nav class="nav" aria-label="Primary">
-          <a href="#how">How it works</a>
-          <a href="#use">Use cases</a>
-          <a href="#compare">Comparison</a>
-          <a href="#api">API</a>
-        </nav>
+  <header role="banner">
+    <div class="wrap hdr">
+      <a class="brand" href="/" aria-label="ACKZERO Home">
+        <span class="logo" aria-hidden="true">A</span>
+        <span>ACKZERO</span>
+      </a>
 
-        <div style="display:flex; align-items:center; gap:10px">
-          <button class="menuBtn" id="menuBtn" type="button" aria-haspopup="dialog" aria-controls="drawer" aria-expanded="false">Menu</button>
-          <a class="btn btn--primary" href="#api">Create a proof</a>
-        </div>
-      </div>
+      <nav aria-label="Primary">
+        <a href="#how">How it works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a class="cta" href="#create">Create a receipt</a>
+      </nav>
     </div>
   </header>
 
-  <div class="drawerOverlay" id="overlay" hidden></div>
-  <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Menu" hidden>
-    <div class="row">
-      <div style="font-weight:950">ACKZERO</div>
-      <button class="close" id="closeBtn" type="button" aria-label="Close menu">Close</button>
-    </div>
-    <a href="#how">How it works</a>
-    <a href="#use">Use cases</a>
-    <a href="#compare">Comparison</a>
-    <a href="#api">API</a>
-    <a class="btn btn--primary" href="#api" style="margin-top:12px; justify-content:center">Create a proof</a>
-  </div>
+  <main id="main" class="wrap" role="main">
+    <section class="hero" aria-labelledby="title">
+      <div>
+        <div class="kicker">
+          <span class="pill">Europe + UK</span>
+          <span class="pill">No recipient signup</span>
+          <span class="pill">No message storage</span>
+        </div>
+        <h1 id="title">Prove you sent it. Independently.</h1>
+        <p class="lead">
+          Generate a neutral receipt that a specific message was issued and made available at a precise time.
+          Only hashes and timestamps are stored.
+        </p>
 
-  <main>
-    <section class="hero">
-      <div class="container">
-        <div class="hero__grid">
-          <div>
-            <div class="kickers">
-              <span class="pill"><span class="dot" aria-hidden="true"></span><b>No accounts</b> · Hash-only · Public verification</span>
-              <span class="pill"><b>Europe + United Kingdom</b></span>
-            </div>
+        <div class="row" style="margin-top:14px">
+          <a class="btn primary" href="#create">Create a receipt</a>
+          <a class="btn" href="#how">Understand the proof</a>
+          <a class="btn ghost" href="https://ackzero.jeason-bacoul.workers.dev/health" target="_blank" rel="noopener">API health</a>
+        </div>
 
-            <h1>Prove you sent it.<br/>Independently.</h1>
-            <p class="lead">
-              ACKZERO creates a neutral, verifiable receipt that a specific message was issued and made available at a precise time —
-              without storing the message and without requiring the recipient to sign up.
-            </p>
-
-            <div class="hero__cta">
-              <a class="btn btn--primary" href="#api">Create a proof</a>
-              <a class="btn" href="#compare">See the comparison</a>
-            </div>
-
-            <div class="mini" aria-label="Key assurances">
-              <span class="chip">Privacy-first (hashes only)</span>
-              <span class="chip">No SMTP in v0.1</span>
-              <span class="chip">Recipient never needs an account</span>
-              <span class="chip">Shareable public receipt</span>
-            </div>
-          </div>
-
-          <aside class="card" aria-label="Quick flow">
-            <div class="card__hd">
-              <div style="font-weight:950; letter-spacing:-.01em">In 30 seconds</div>
-              <div class="badge"><span class="ok" aria-hidden="true"></span> v0.1 live</div>
-            </div>
-            <div class="card__bd">
-              <div class="steps">
-                <div class="step">
-                  <div class="step__n">1</div>
-                  <div>
-                    <p class="step__t">Hash your message</p>
-                    <p class="step__d">Subject + body + recipient identifier (locally or via your app).</p>
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step__n">2</div>
-                  <div>
-                    <p class="step__t">Create a proof</p>
-                    <p class="step__d">ACKZERO returns a claim link + signed JSON receipt.</p>
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step__n">3</div>
-                  <div>
-                    <p class="step__t">Send normally</p>
-                    <p class="step__d">Paste the claim link into your email/letter. No signup required.</p>
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step__n">4</div>
-                  <div>
-                    <p class="step__t">Verify anytime</p>
-                    <p class="step__d">Anyone can verify the receipt independently (public endpoint).</p>
-                  </div>
-                </div>
+        <div class="panel" style="margin-top:16px">
+          <div class="panel-bd">
+            <div class="row" style="justify-content:space-between">
+              <div>
+                <div style="font-weight:1000">What ACKZERO guarantees</div>
+                <div class="hint">A technical proof of issuance + availability, not a regulated e-delivery certification.</div>
               </div>
-
-              <div style="height:10px"></div>
-              <div class="tiny">
-                ACKZERO proves issuance and availability of proof (not legal delivery certification).
+              <span class="pill">Neutral receipt</span>
+            </div>
+            <div class="cards" style="margin-top:12px">
+              <div class="panel card">
+                <h3>Timestamp</h3>
+                <p>When the proof was created (UTC).</p>
+              </div>
+              <div class="panel card">
+                <h3>Integrity</h3>
+                <p>Hashes of recipient/subject/body — no content stored.</p>
+              </div>
+              <div class="panel card">
+                <h3>Public verification</h3>
+                <p>Anyone can verify later via the receipt link.</p>
               </div>
             </div>
-          </aside>
+          </div>
+        </div>
+      </div>
 
+      <!-- Create -->
+      <div class="panel" id="create" aria-labelledby="create-title">
+        <div class="panel-hd">
+          <strong id="create-title">Create a receipt</strong>
+          <span class="pill">v0.1</span>
+        </div>
+        <div class="panel-bd">
+          <div class="grid">
+            <div>
+              <label for="to">Recipient (email)</label>
+              <input id="to" type="email" inputmode="email" autocomplete="email" placeholder="recipient@example.com"/>
+              <div class="hint">Hashed locally. The raw email is not stored by ACKZERO.</div>
+            </div>
+            <div>
+              <label for="subject">Subject (optional)</label>
+              <input id="subject" type="text" autocomplete="off" placeholder="Cancellation notice"/>
+              <div class="hint">Hashed locally. Recommended for formal notices.</div>
+            </div>
+          </div>
+
+          <div style="margin-top:12px">
+            <label for="body">Message body</label>
+            <textarea id="body" placeholder="Write the message you will send (email, notice, etc.)."></textarea>
+            <div class="hint">
+              Hashed locally (UTF-8). ACKZERO stores hashes + timestamps only.
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:12px">
+            <button class="btn primary" id="btnCreate" type="button">Generate receipt</button>
+            <button class="btn" id="btnExample" type="button">Fill example</button>
+            <button class="btn ghost" id="btnClear" type="button">Clear</button>
+          </div>
+
+          <div id="status" class="status" role="status" aria-live="polite" style="display:none"></div>
+
+          <div id="result" class="out" style="display:none" aria-label="Result">
+            <div class="kv" id="kv"></div>
+            <div class="row" style="margin-top:12px">
+              <button class="btn" id="copyAll" type="button">Copy links</button>
+              <a class="btn" id="openClaim" href="#" target="_blank" rel="noopener">Open claim</a>
+              <a class="btn" id="openReceipt" href="#" target="_blank" rel="noopener">Open receipt</a>
+            </div>
+            <details style="margin-top:12px">
+              <summary>Show raw JSON</summary>
+              <pre id="raw" style="margin:10px 0 0"></pre>
+            </details>
+          </div>
+
+          <div class="hint" style="margin-top:12px">
+            Next step: include the <strong>claim link</strong> in your message, then send it with your usual email client.
+            Opening the claim link records a “made available” event.
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="how">
-      <div class="container">
-        <h2 class="section__title">Why ACKZERO exists</h2>
-        <p class="section__desc">
-          “I never received it.” Screenshots, email headers, and local timestamps are easy to dispute and hard to verify independently.
-          ACKZERO exists for the moment where proof matters: a neutral, checkable record of issuance.
-        </p>
-
-        <div class="grid3">
-          <div class="feature">
-            <div class="feature__k"><span class="ico">⏱</span> Timestamped issuance</div>
-            <p>Anchors when the proof was created, with an auditable timeline of events.</p>
-          </div>
-          <div class="feature">
-            <div class="feature__k"><span class="ico">#</span> Cryptographic integrity</div>
-            <p>Hashes lock the exact message and recipient reference without storing the message itself.</p>
-          </div>
-          <div class="feature">
-            <div class="feature__k"><span class="ico">🔎</span> Public verification</div>
-            <p>A public receipt endpoint lets anyone check existence and signature later.</p>
+    <section id="how" aria-labelledby="how-title">
+      <div class="panel">
+        <div class="panel-hd">
+          <strong id="how-title">How it works</strong>
+          <span class="pill">Simple model</span>
+        </div>
+        <div class="panel-bd">
+          <ol class="ul" style="margin:0">
+            <li><strong>You write your message</strong> (email/notice) normally.</li>
+            <li><strong>This page hashes</strong> recipient + subject + body locally (SHA-256).</li>
+            <li><strong>ACKZERO returns</strong> a Proof ID + claim link + receipt link.</li>
+            <li><strong>You include the claim link</strong> inside your message and send it.</li>
+            <li><strong>Anyone can verify</strong> later via the receipt JSON (signed).</li>
+          </ol>
+          <div class="hint" style="margin-top:10px">
+            Important: ACKZERO proves issuance and availability of a verifiable receipt. It does not prove legal identity or guaranteed delivery.
           </div>
         </div>
       </div>
     </section>
 
-    <section id="use">
-      <div class="container">
-        <h2 class="section__title">Typical use cases</h2>
-        <p class="section__desc">
-          Built for individuals, freelancers, and small organizations across Europe + the UK: cancellations, disputes, HR notices, and B2B communications.
-        </p>
+    <section id="pricing" aria-labelledby="pricing-title">
+      <div class="panel">
+        <div class="panel-hd">
+          <strong id="pricing-title">Pricing</strong>
+          <span class="pill">EUR · Europe/UK</span>
+        </div>
+        <div class="panel-bd">
+          <div class="pricing">
+            <div class="panel price">
+              <span class="tag">Free</span>
+              <div class="amount">€0</div>
+              <div class="hint">For individuals testing the workflow.</div>
+              <ul class="ul">
+                <li>Generate receipts</li>
+                <li>Public receipt links</li>
+                <li>Basic proof fields</li>
+              </ul>
+            </div>
 
-        <div class="grid3">
-          <div class="feature">
-            <div class="feature__k"><span class="ico">🧾</span> Cancellations</div>
-            <p>Prove you issued a cancellation notice at a specific time, without relying on screenshots.</p>
+            <div class="panel price" style="border:1px solid rgba(29,78,216,.25)">
+              <span class="tag">Pro</span>
+              <div class="amount">€9</div>
+              <div class="hint">Per month (early pricing).</div>
+              <ul class="ul">
+                <li>Higher limits</li>
+                <li>Export / audit-friendly receipts</li>
+                <li>Priority reliability</li>
+              </ul>
+              <div class="hint"><strong>Activation:</strong> manual for now (no accounts yet).</div>
+            </div>
+
+            <div class="panel price">
+              <span class="tag">Business</span>
+              <div class="amount">€49</div>
+              <div class="hint">Per month (small teams).</div>
+              <ul class="ul">
+                <li>Team usage</li>
+                <li>Higher limits</li>
+                <li>Support</li>
+              </ul>
+              <div class="hint"><strong>Activation:</strong> manual for now.</div>
+            </div>
           </div>
-          <div class="feature">
-            <div class="feature__k"><span class="ico">⚖️</span> Disputes</div>
-            <p>Provide an independent receipt that the exact message existed and was made available.</p>
-          </div>
-          <div class="feature">
-            <div class="feature__k"><span class="ico">👔</span> HR notices</div>
-            <p>Keep a tamper-evident proof trail for procedural communications (not legal delivery certification).</p>
+
+          <div class="hint" style="margin-top:12px">
+            This is an operational v0.1 pricing page. Billing/accounts can be added later without breaking existing receipts.
           </div>
         </div>
       </div>
     </section>
 
-    <section id="compare">
-      <div class="container">
-        <h2 class="section__title">Comparison</h2>
-        <p class="section__desc">
-          ACKZERO is simpler than registered e-delivery, and stronger than “I sent an email”.
-          It proves issuance and availability of proof — not guaranteed legal delivery.
-        </p>
-
-        <div class="table" role="region" aria-label="Comparison table">
-          <table>
-            <thead>
-              <tr>
-                <th>Method</th>
-                <th>Independent verification</th>
-                <th>Proves exact content integrity</th>
-                <th>Recipient needs account</th>
-                <th>Legal delivery certification</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><b>ACKZERO</b></td>
-                <td class="yes">Yes</td>
-                <td class="yes">Yes (hash)</td>
-                <td class="yes">No</td>
-                <td class="maybe">No (varies)</td>
-              </tr>
-              <tr>
-                <td>Email screenshots</td>
-                <td class="no">No</td>
-                <td class="no">No</td>
-                <td class="yes">No</td>
-                <td class="no">No</td>
-              </tr>
-              <tr>
-                <td>Registered e-delivery</td>
-                <td class="maybe">Sometimes</td>
-                <td class="maybe">Depends</td>
-                <td class="maybe">Often</td>
-                <td class="yes">Yes</td>
-              </tr>
-            </tbody>
-          </table>
+    <section id="faq" aria-labelledby="faq-title">
+      <div class="panel">
+        <div class="panel-hd">
+          <strong id="faq-title">FAQ</strong>
+          <span class="pill">Clear limits</span>
+        </div>
+        <div class="panel-bd">
+          <details open>
+            <summary>Does ACKZERO store my message?</summary>
+            <p>No. This page hashes locally. ACKZERO stores hashes and timestamps only.</p>
+          </details>
+          <details>
+            <summary>Does this prove the recipient read the message?</summary>
+            <p>No. It proves a receipt was created and can record that the claim link was opened (availability). Reading is not guaranteed.</p>
+          </details>
+          <details>
+            <summary>Is this equivalent to registered electronic delivery?</summary>
+            <p>No. ACKZERO is a technical receipt. Legal equivalence depends on jurisdiction and regulated providers.</p>
+          </details>
+          <details>
+            <summary>What should I include in my email?</summary>
+            <p>Include the claim link. Optionally include the receipt link for transparency.</p>
+          </details>
         </div>
       </div>
     </section>
 
-    <section id="api">
-      <div class="container">
-        <h2 class="section__title">API (v0.1)</h2>
-        <p class="section__desc">
-          v0.1 is “link + tracking” (no SMTP). You create a proof, embed the claim link in your message, and verify publicly later.
-          The service stores hashes and timestamps only.
-        </p>
-
-        <div class="grid3">
-          <div class="feature">
-            <div class="feature__k"><span class="ico">POST</span> /v1/proofs</div>
-            <p>Creates a proof in KV and returns <b>claim</b>, <b>receipt</b>, and optional <b>pixel</b> URLs.</p>
-          </div>
-          <div class="feature">
-            <div class="feature__k"><span class="ico">GET</span> /p/:token</div>
-            <p>Public claim page. Logs an access event (availability proof).</p>
-          </div>
-          <div class="feature">
-            <div class="feature__k"><span class="ico">GET</span> /v/:id</div>
-            <p>Public JSON receipt signed with <b>HMAC</b> over a canonical string.</p>
-          </div>
+    <section aria-label="Legal notice">
+      <div class="panel">
+        <div class="panel-hd">
+          <strong>Legal positioning (v0.1)</strong>
+          <span class="pill">Europe/UK</span>
         </div>
-
-        <div style="height:14px"></div>
-
-        <div class="codeCard" aria-label="API example">
-          <div class="codeCard__hd">
-            <div class="codeTitle">Example request</div>
-            <div class="codeMeta">Content-Type: application/json</div>
-          </div>
-          <pre>POST https://ackzero.example.workers.dev/v1/proofs
-{
-  "to": "recipient@example.com",
-  "subject": "Cancellation notice",
-  "body": "Hello, I hereby cancel...",
-  "meta": { "channel": "email" }
-}</pre>
-        </div>
-
-        <div style="height:14px"></div>
-
-        <div class="codeCard" aria-label="Curl example">
-          <div class="codeCard__hd">
-            <div class="codeTitle">cURL</div>
-            <div class="codeMeta">Create a proof</div>
-          </div>
-          <pre>curl -sS -X POST "https://ackzero.example.workers.dev/v1/proofs" \
-  -H "content-type: application/json" \
-  -d '{"to":"recipient@example.com","subject":"Cancellation notice","body":"Hello, I hereby cancel...","meta":{"channel":"email"}}'</pre>
-        </div>
-
-        <div style="height:12px"></div>
-        <div class="tiny">
-          Tip: for maximum privacy, your client can send <code>hashes.to</code>, <code>hashes.subject</code>, <code>hashes.body</code> instead of raw values.
+        <div class="panel-bd">
+          <p style="margin:0; color:var(--muted)">
+            ACKZERO provides a <strong>technical proof of issuance</strong> and a <strong>verifiable receipt</strong>.
+            It is designed to strengthen disputes and document good-faith communication.
+            It does not certify legal identity or guarantee delivery, and it is not a regulated e-delivery service.
+          </p>
         </div>
       </div>
     </section>
   </main>
 
-  <footer>
-    <div class="container">
-      <div class="foot">
-        <div class="fine">
-          <b>ACKZERO</b> — Independent digital acknowledgement.<br/>
-          Proof of issuance + availability of proof (not certified legal delivery). Target: Europe + United Kingdom.
-        </div>
-        <div class="links" aria-label="Footer links">
-          <a href="#top">Top</a>
-          <a href="#how">How it works</a>
-          <a href="#use">Use cases</a>
-          <a href="#compare">Comparison</a>
-          <a href="#api">API</a>
-        </div>
-      </div>
-      <div class="tiny" style="margin-top:12px">
-        © <span id="y"></span> ACKZERO. Privacy-first: hashes and timestamps only.
+  <footer role="contentinfo">
+    <div class="wrap foot">
+      <div>© <span id="y"></span> ACKZERO — Independent receipts for message issuance.</div>
+      <div class="row">
+        <a href="#create">Create</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://ackzero.jeason-bacoul.workers.dev/health" target="_blank" rel="noopener">API</a>
       </div>
     </div>
   </footer>
 
   <script>
-    (function(){
-      const y = document.getElementById("y");
-      if (y) y.textContent = String(new Date().getFullYear());
+  (function(){
+    const WORKER_BASE = "https://ackzero.jeason-bacoul.workers.dev"; // change later to api.ackzero.io
+    const $ = (id) => document.getElementById(id);
 
-      const btn = document.getElementById("menuBtn");
-      const drawer = document.getElementById("drawer");
-      const overlay = document.getElementById("overlay");
-      const closeBtn = document.getElementById("closeBtn");
+    $("y").textContent = String(new Date().getFullYear());
 
-      const open = () => {
-        if (!drawer || !overlay || !btn) return;
-        drawer.hidden = false;
-        overlay.hidden = false;
-        drawer.style.display = "block";
-        overlay.style.display = "block";
-        btn.setAttribute("aria-expanded", "true");
-        closeBtn && closeBtn.focus();
-      };
+    function showStatus(kind, msg){
+      const el = $("status");
+      el.style.display = "block";
+      el.className = "status " + (kind || "");
+      el.textContent = msg;
+    }
 
-      const close = () => {
-        if (!drawer || !overlay || !btn) return;
-        drawer.hidden = true;
-        overlay.hidden = true;
-        drawer.style.display = "none";
-        overlay.style.display = "none";
-        btn.setAttribute("aria-expanded", "false");
-        btn.focus();
-      };
+    function hideStatus(){
+      const el = $("status");
+      el.style.display = "none";
+      el.textContent = "";
+    }
 
-      if (btn) btn.addEventListener("click", open);
-      if (closeBtn) closeBtn.addEventListener("click", close);
-      if (overlay) overlay.addEventListener("click", close);
+    function normalizeText(s){
+      return String(s || "")
+        .replace(/\r\n/g, "\n")
+        .replace(/\r/g, "\n")
+        .trim();
+    }
 
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") close();
+    async function sha256Hex(str){
+      const enc = new TextEncoder().encode(str);
+      const dig = await crypto.subtle.digest("SHA-256", enc);
+      return Array.from(new Uint8Array(dig)).map(b => b.toString(16).padStart(2,"0")).join("");
+    }
+
+    async function computeHashes(to, subject, body){
+      const hTo = await sha256Hex(normalizeText(to).toLowerCase());
+      const hSubject = subject ? await sha256Hex(normalizeText(subject)) : "";
+      const hBody = await sha256Hex(normalizeText(body));
+      return { to: hTo, subject: hSubject, body: hBody, meta: "" };
+    }
+
+    async function createProof(payload){
+      const r = await fetch(WORKER_BASE + "/v1/proofs", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload),
+        mode: "cors",
+        credentials: "omit",
+        cache: "no-store",
+        referrerPolicy: "no-referrer",
       });
+      const j = await r.json().catch(()=>null);
+      if(!r.ok){
+        const msg = j?.error?.message || ("Request failed (" + r.status + ")");
+        throw new Error(msg);
+      }
+      return j;
+    }
 
-      // Close drawer when clicking a link
-      if (drawer) {
-        drawer.addEventListener("click", (e) => {
-          const a = e.target && e.target.closest ? e.target.closest("a") : null;
-          if (a) close();
-        });
+    function setResult(j){
+      $("result").style.display = "block";
+
+      const kv = $("kv");
+      kv.innerHTML = "";
+
+      const add = (k,v) => {
+        const row = document.createElement("div");
+        row.innerHTML = '<span class="k"></span><span class="v"></span>';
+        row.querySelector(".k").textContent = k;
+        row.querySelector(".v").textContent = v;
+        kv.appendChild(row);
+      };
+
+      add("Proof ID", j.id || "—");
+      add("Created", j.createdAt || "—");
+      add("Claim link", j?.urls?.claim || "—");
+      add("Receipt link", j?.urls?.receipt || "—");
+      add("Pixel", j?.urls?.pixel || "—");
+
+      $("openClaim").href = j?.urls?.claim || "#";
+      $("openReceipt").href = j?.urls?.receipt || "#";
+
+      $("raw").textContent = JSON.stringify(j, null, 2);
+
+      $("copyAll").onclick = async () => {
+        const txt = [
+          "ACKZERO receipt",
+          "Proof ID: " + (j.id || ""),
+          "Claim: " + (j?.urls?.claim || ""),
+          "Receipt: " + (j?.urls?.receipt || ""),
+          "Pixel: " + (j?.urls?.pixel || "")
+        ].join("\n");
+        try{
+          await navigator.clipboard.writeText(txt);
+          showStatus("ok", "Copied.");
+          setTimeout(hideStatus, 1100);
+        }catch{
+          showStatus("warn", "Copy failed. Select and copy manually from the links above.");
+        }
+      };
+    }
+
+    $("btnExample").addEventListener("click", () => {
+      $("to").value = "recipient@example.com";
+      $("subject").value = "Cancellation notice";
+      $("body").value =
+        "Hello,\n\nI hereby cancel my subscription effective immediately.\nPlease confirm in writing.\n\nRegards,";
+      $("to").focus();
+    });
+
+    $("btnClear").addEventListener("click", () => {
+      $("to").value = "";
+      $("subject").value = "";
+      $("body").value = "";
+      $("result").style.display = "none";
+      hideStatus();
+      $("to").focus();
+    });
+
+    $("btnCreate").addEventListener("click", async () => {
+      hideStatus();
+      $("result").style.display = "none";
+
+      const to = $("to").value.trim();
+      const subject = $("subject").value;
+      const body = $("body").value;
+
+      if(!to){
+        showStatus("err", "Recipient email is required.");
+        return;
+      }
+      if(!body.trim()){
+        showStatus("err", "Message body is required.");
+        return;
       }
 
-      // Safety: if resized to desktop, ensure drawer is closed
-      window.addEventListener("resize", () => {
-        if (window.innerWidth > 920) {
-          if (!drawer || !overlay || !btn) return;
-          drawer.hidden = true; overlay.hidden = true;
-          drawer.style.display = "none"; overlay.style.display = "none";
-          btn.setAttribute("aria-expanded", "false");
-        }
-      });
-    })();
+      const btn = $("btnCreate");
+      btn.disabled = true;
+      btn.textContent = "Generating…";
+
+      try{
+        const hashes = await computeHashes(to, subject, body);
+        const j = await createProof({ hashes });
+        showStatus("ok", "Receipt generated.");
+        setResult(j);
+      }catch(e){
+        showStatus("err", String(e?.message || e));
+      }finally{
+        btn.disabled = false;
+        btn.textContent = "Generate receipt";
+      }
+    });
+  })();
   </script>
 </body>
-</html>
+    </html>
