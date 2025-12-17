@@ -5,47 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
   <meta name="color-scheme" content="light"/>
   <title>ACKZERO — Prove you sent it. Independently.</title>
+
   <meta name="application-name" content="ACKZERO"/>
-  <meta name="description" content="ACKZERO creates a neutral, verifiable receipt that a specific message was issued and made available at a precise time — without storing the message and without requiring the recipient to sign up."/>
+  <meta name="description" content="Create a neutral, verifiable receipt that a specific message was issued and made available at a precise time — without storing the message and without requiring the recipient to sign up."/>
   <meta name="robots" content="index,follow"/>
   <meta name="theme-color" content="#f7f8fb"/>
   <meta name="referrer" content="strict-origin-when-cross-origin"/>
-  <link rel="canonical" href="/"/>
-  <link rel="alternate" hreflang="en" href="/"/>
-  <link rel="alternate" hreflang="x-default" href="/"/>
 
-  <!-- Icons / Manifest (add files later; safe to keep even if missing) -->
+  <!-- Canonical (ABSOLUTE) -->
+  <link rel="canonical" href="https://ackzero.io/"/>
+  <link rel="alternate" hreflang="en" href="https://ackzero.io/"/>
+  <link rel="alternate" hreflang="x-default" href="https://ackzero.io/"/>
+
+  <!-- Icons / Manifest -->
   <link rel="icon" href="/favicon.ico" sizes="any"/>
   <link rel="icon" href="/logo.svg" type="image/svg+xml"/>
   <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
   <link rel="manifest" href="/site.webmanifest"/>
 
-  <!-- Social -->
+  <!-- Social (ABSOLUTE) -->
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="ACKZERO"/>
   <meta property="og:title" content="ACKZERO — Prove you sent it. Independently."/>
-  <meta property="og:description" content="Neutral, verifiable receipt that a specific message was issued and made available at a precise time — without storing the message and without requiring the recipient to sign up."/>
-  <meta property="og:url" content="/"/>
-  <meta property="og:image" content="/og.png"/>
+  <meta property="og:description" content="Neutral, verifiable receipt for message issuance — no recipient signup, no message storage."/>
+  <meta property="og:url" content="https://ackzero.io/"/>
+  <meta property="og:image" content="https://ackzero.io/og.png"/>
   <meta property="og:image:alt" content="ACKZERO — Neutral proof of message issuance"/>
   <meta property="og:locale" content="en_GB"/>
   <meta property="og:locale:alternate" content="fr_FR"/>
+
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="ACKZERO — Prove you sent it. Independently."/>
   <meta name="twitter:description" content="Neutral, verifiable receipt for message issuance — no recipient signup, no message storage."/>
-  <meta name="twitter:image" content="/og.png"/>
+  <meta name="twitter:image" content="https://ackzero.io/og.png"/>
 
-  <!-- Security meta -->
+  <!-- Privacy/Security -->
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()"/>
 
-  <!-- JSON-LD -->
+  <!-- JSON-LD (ABSOLUTE URLs + offers) -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
     "@type":"Organization",
     "name":"ACKZERO",
-    "url":"/",
-    "logo":"/og.png",
+    "url":"https://ackzero.io/",
+    "logo":"https://ackzero.io/og.png",
     "areaServed":["Europe","United Kingdom"],
     "contactPoint":[{
       "@type":"ContactPoint",
@@ -56,7 +60,28 @@
   }
   </script>
   <script type="application/ld+json">
-  { "@context":"https://schema.org", "@type":"WebSite", "name":"ACKZERO", "url":"/" }
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"ACKZERO",
+    "url":"https://ackzero.io/"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"SoftwareApplication",
+    "name":"ACKZERO",
+    "applicationCategory":"BusinessApplication",
+    "operatingSystem":"Web",
+    "url":"https://ackzero.io/",
+    "description":"ACKZERO creates a neutral, verifiable receipt that a specific message was issued and made available at a precise time — without storing the message and without requiring the recipient to sign up.",
+    "offers":[
+      { "@type":"Offer", "name":"Free", "price":"0", "priceCurrency":"EUR" },
+      { "@type":"Offer", "name":"Pro", "price":"9", "priceCurrency":"EUR", "priceSpecification": { "@type":"UnitPriceSpecification", "price":"9", "priceCurrency":"EUR", "unitText":"MONTH" } },
+      { "@type":"Offer", "name":"Business", "price":"49", "priceCurrency":"EUR", "priceSpecification": { "@type":"UnitPriceSpecification", "price":"49", "priceCurrency":"EUR", "unitText":"MONTH" } }
+    ]
+  }
   </script>
 
   <style>
@@ -110,7 +135,6 @@
     .wrap{ max-width:var(--max); margin:0 auto; padding:0 18px }
     .hairline{ height:1px; background:linear-gradient(90deg, transparent, rgba(11,19,32,.10), transparent) }
 
-    /* Header */
     header{
       position:sticky; top:0; z-index:1000;
       background:rgba(247,248,251,.86);
@@ -181,8 +205,8 @@
     .drawer a{ font-weight:900; color:var(--text) }
     .drawer .sub{ color:var(--muted); font-weight:800; margin-top:-6px }
 
-    /* Main */
     main{ padding:34px 0 18px }
+
     .hero{
       display:grid; gap:18px;
       grid-template-columns: 1.05fr .95fr;
@@ -247,7 +271,6 @@
     .btn.ghost{ background:transparent }
     .btn:disabled{ opacity:.55; cursor:not-allowed; transform:none }
 
-    /* Panels */
     .panel{
       background:var(--panel);
       border:1px solid var(--line);
@@ -262,7 +285,6 @@
     .panel-hd strong{ font-size:1rem }
     .panel-bd{ padding:16px }
 
-    /* Trust bar (Element 1) */
     .trustbar{
       display:grid; gap:12px;
       grid-template-columns: repeat(3, 1fr);
@@ -287,7 +309,6 @@
     .trust strong{ display:block; margin:0 0 4px; font-weight:1000 }
     .trust span{ color:var(--muted); font-weight:700; font-size:.95rem }
 
-    /* Create form */
     .grid{ display:grid; gap:12px; grid-template-columns: 1fr 1fr; }
     @media (max-width: 640px){ .grid{ grid-template-columns:1fr } }
 
@@ -331,12 +352,8 @@
     .status.err{ color:var(--err) }
     .status.warn{ color:var(--warn) }
 
-    /* Sections */
     section{ padding:26px 0 }
-    .section{
-      padding:34px 0;
-      position:relative;
-    }
+    .section{ padding:34px 0; position:relative; }
     .section.alt{
       background:linear-gradient(180deg, var(--bg), var(--bg2));
       border-top:1px solid rgba(230,233,240,.7);
@@ -354,7 +371,6 @@
       max-width:75ch;
     }
 
-    /* Element 2: “How it looks in practice” */
     .example{
       display:grid; gap:14px;
       grid-template-columns: 1.1fr .9fr;
@@ -397,7 +413,6 @@
       box-shadow:var(--shadow2);
     }
 
-    /* Element 3: Proves vs Doesn’t */
     .compare{
       display:grid; gap:14px;
       grid-template-columns: 1fr 1fr;
@@ -415,7 +430,6 @@
     .cmp ul{ margin:0; padding-left:18px; color:var(--muted); font-weight:700 }
     .cmp li{ margin:7px 0 }
 
-    /* Element 4: Steps component */
     .steps{
       display:grid; gap:12px;
       grid-template-columns: repeat(5, 1fr);
@@ -440,7 +454,6 @@
     .step strong{ display:block; font-weight:1000; margin-bottom:4px }
     .step span{ color:var(--muted); font-weight:700; font-size:.95rem }
 
-    /* Element 5: Feature cards with icons */
     .cards{
       display:grid; gap:14px;
       grid-template-columns: repeat(3, 1fr);
@@ -466,7 +479,6 @@
     }
     .ico svg{ width:20px; height:20px; color:#0b1320 }
 
-    /* Pricing */
     .pricing{
       display:grid; gap:14px;
       grid-template-columns: repeat(3, 1fr);
@@ -513,12 +525,10 @@
     .ul{ margin:0; padding-left:18px; color:var(--muted); font-weight:700 }
     .ul li{ margin:6px 0 }
 
-    /* FAQ */
     details{ border-top:1px solid var(--line); padding:12px 0; }
     summary{ cursor:pointer; font-weight:1000 }
     details p{ margin:10px 0 0; color:var(--muted); font-weight:700 }
 
-    /* Element 6: Legal / Trust disclaimer block */
     .legalbox{
       padding:16px;
       border-radius:16px;
@@ -531,7 +541,17 @@
     .legalbox strong{ font-weight:1100 }
     .legalbox p{ margin:8px 0 0; color:var(--muted); font-weight:700 }
 
-    /* Footer */
+    .callout{
+      padding:16px;
+      border-radius:16px;
+      border:1px solid rgba(29,78,216,.18);
+      background:linear-gradient(180deg, rgba(29,78,216,.06), rgba(255,255,255,0));
+      box-shadow:var(--shadow2);
+      margin-top:14px;
+    }
+    .callout strong{ font-weight:1100 }
+    .callout p{ margin:8px 0 0; color:var(--muted); font-weight:700 }
+
     footer{
       border-top:1px solid var(--line);
       padding:18px 0 28px;
@@ -552,14 +572,12 @@
       max-width:80ch;
     }
 
-    /* Focus */
     a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
       outline:3px solid rgba(29,78,216,.25);
       outline-offset:2px;
       border-radius:12px;
     }
 
-    /* Motion */
     @media (prefers-reduced-motion: reduce){
       *{ scroll-behavior:auto !important }
       .btn, .price.featured{ transform:none !important }
@@ -580,9 +598,10 @@
       <nav aria-label="Primary">
         <a href="#how">How it works</a>
         <a href="#example">Example</a>
+        <a href="#verify">Verify</a>
         <a href="#pricing">Pricing</a>
         <a href="#faq">FAQ</a>
-        <a class="cta" href="#create">Create a receipt</a>
+        <a href="#legal" class="cta">Create a receipt</a>
       </nav>
 
       <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
@@ -595,7 +614,9 @@
         <a href="#how">How it works</a>
         <span class="sub">Understand what the proof does (and doesn’t) guarantee.</span>
         <a href="#example">Example</a>
-        <span class="sub">See how to include the claim link in a message.</span>
+        <span class="sub">How to include the claim link in a message.</span>
+        <a href="#verify">Verify</a>
+        <span class="sub">Verify a receipt JSON and optionally match your hashes locally.</span>
         <a href="#pricing">Pricing</a>
         <span class="sub">Operational v0.1 pricing (manual activation).</span>
         <a href="#faq">FAQ</a>
@@ -627,11 +648,10 @@
 
         <div class="row" style="margin-top:14px">
           <a class="btn primary" href="#create">Create a receipt</a>
-          <a class="btn" href="#how">Understand the proof</a>
+          <a class="btn" href="#verify">Verify a receipt</a>
           <a class="btn ghost" href="https://ackzero.jeason-bacoul.workers.dev/health" target="_blank" rel="noopener">API health</a>
         </div>
 
-        <!-- Element 1: Trust bar -->
         <div class="trustbar" aria-label="Trust highlights">
           <div class="trust">
             <div class="ic" aria-hidden="true">
@@ -661,9 +681,13 @@
             </div>
           </div>
         </div>
+
+        <div class="callout" style="margin-top:14px">
+          <strong>For public disputes: keep it simple</strong>
+          <p>Generate a receipt, paste the claim link into your message, send with your usual email client, and keep the signed receipt JSON for your file.</p>
+        </div>
       </div>
 
-      <!-- Create tool -->
       <div class="panel" id="create" aria-labelledby="create-title">
         <div class="panel-hd">
           <strong id="create-title">Create a receipt</strong>
@@ -718,7 +742,6 @@
       </div>
     </section>
 
-    <!-- Element 4: Steps -->
     <section class="section" id="how" aria-labelledby="how-title">
       <h2 class="h2" id="how-title">How it works</h2>
       <p class="p">A simple workflow: hash locally → generate a receipt → include the claim link → verify later.</p>
@@ -728,10 +751,9 @@
         <div class="step"><div class="n">2</div><strong>Hash locally</strong><span>This page hashes recipient/subject/body on your device.</span></div>
         <div class="step"><div class="n">3</div><strong>Generate</strong><span>ACKZERO returns Proof ID + claim link + receipt link.</span></div>
         <div class="step"><div class="n">4</div><strong>Send</strong><span>Paste the claim link into your message and send it.</span></div>
-        <div class="step"><div class="n">5</div><strong>Verify</strong><span>Anyone can later check the signed receipt JSON.</span></div>
+        <div class="step"><div class="n">5</div><strong>Verify</strong><span>Anyone can later check the receipt JSON (signed).</span></div>
       </div>
 
-      <!-- Element 3: Proves vs Doesn’t -->
       <div class="compare" aria-label="What it proves and what it does not">
         <div class="cmp">
           <h3>ACKZERO proves</h3>
@@ -739,7 +761,7 @@
             <li><strong>When</strong> the receipt was created (UTC timestamp).</li>
             <li><strong>Which exact message</strong> (hash of body + optional subject).</li>
             <li><strong>Which recipient reference</strong> (hashed identifier).</li>
-            <li><strong>Independent verification</strong> via signed receipt JSON.</li>
+            <li><strong>Independent inspection</strong> via receipt JSON.</li>
           </ul>
         </div>
         <div class="cmp">
@@ -753,7 +775,6 @@
         </div>
       </div>
 
-      <!-- Element 6: Legal disclaimer -->
       <div class="legalbox" role="note" aria-label="Legal positioning disclaimer">
         <strong>Legal positioning (v0.1)</strong>
         <p>
@@ -764,7 +785,6 @@
       </div>
     </section>
 
-    <!-- Element 2: Example -->
     <section class="section alt" id="example" aria-labelledby="example-title">
       <div class="wrap" style="padding:0">
         <h2 class="h2" id="example-title">How it looks in practice</h2>
@@ -805,7 +825,72 @@ Regards,</code></pre>
       </div>
     </section>
 
-    <!-- Element 5: Feature cards -->
+    <section class="section" id="verify" aria-labelledby="verify-title">
+      <h2 class="h2" id="verify-title">Verify a receipt (public)</h2>
+      <p class="p">Paste a Proof ID or a receipt URL. Optionally re-hash your message locally to match the receipt hashes.</p>
+
+      <div class="panel" style="margin-top:14px">
+        <div class="panel-bd">
+          <div class="grid">
+            <div>
+              <label for="verifyInput">Proof ID or receipt URL</label>
+              <input id="verifyInput" type="text" autocomplete="off" placeholder="e.g. 01J... or https://.../v/01J..."/>
+              <div class="hint">We fetch the public receipt JSON. No private content is sent.</div>
+            </div>
+            <div>
+              <label>&nbsp;</label>
+              <div class="row" style="gap:10px">
+                <button class="btn primary" id="btnVerify" type="button">Fetch receipt</button>
+                <button class="btn" id="btnVerifyClear" type="button">Clear</button>
+              </div>
+              <div id="verifyStatus" class="status" role="status" aria-live="polite" style="display:none"></div>
+            </div>
+          </div>
+
+          <details style="margin-top:12px">
+            <summary>Optional: match my message locally (hash check)</summary>
+            <div class="grid" style="margin-top:12px">
+              <div>
+                <label for="vTo">Recipient (email)</label>
+                <input id="vTo" type="email" inputmode="email" autocomplete="email" placeholder="recipient@example.com"/>
+                <div class="hint">Hashed locally (lowercased, trimmed).</div>
+              </div>
+              <div>
+                <label for="vSubject">Subject (optional)</label>
+                <input id="vSubject" type="text" autocomplete="off" placeholder="Cancellation notice"/>
+                <div class="hint">Hashed locally if provided.</div>
+              </div>
+            </div>
+            <div style="margin-top:12px">
+              <label for="vBody">Message body</label>
+              <textarea id="vBody" placeholder="Paste the message body exactly as sent."></textarea>
+              <div class="hint">Hashed locally (UTF-8, normalized line breaks). Nothing uploads.</div>
+            </div>
+            <div class="row" style="margin-top:12px">
+              <button class="btn" id="btnMatch" type="button">Compute hashes & compare</button>
+              <span class="hint" id="matchHint" style="margin:0"></span>
+            </div>
+          </details>
+
+          <div id="verifyOut" class="out" style="display:none; margin-top:12px">
+            <div class="kv" id="verifyKv"></div>
+            <details style="margin-top:12px">
+              <summary>Show raw receipt JSON</summary>
+              <pre id="verifyRaw" style="margin:10px 0 0"></pre>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>About “verification”</strong>
+        <p>
+          Anyone can fetch the receipt JSON and inspect its fields and timestamps. Cryptographic validation depends on the receipt’s signature scheme and canonicalization rules.
+          In v0.1, this page focuses on: (1) fetching the public receipt, and (2) letting you locally match your own message hashes against it.
+        </p>
+      </div>
+    </section>
+
     <section class="section" aria-labelledby="features-title">
       <h2 class="h2" id="features-title">Built for real disputes</h2>
       <p class="p">Simple for the public, strong enough for professionals: clear guarantees, clear limits, verifiable receipts.</p>
@@ -817,7 +902,7 @@ Regards,</code></pre>
           </div>
           <div>
             <h3>Neutral receipt</h3>
-            <p>Independent proof object and public receipt links anyone can verify.</p>
+            <p>Independent proof object and public receipt links anyone can inspect.</p>
           </div>
         </div>
         <div class="card">
@@ -831,17 +916,16 @@ Regards,</code></pre>
         </div>
         <div class="card">
           <div class="ico" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M7 7h10v10H7V7Zm-2 14h14v2H5v-2Zm2-18h10V1H7v2Z"/></svg>
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M7 2h10v2H7V2Zm-2 6h14v14H5V8Zm2 2v10h10V10H7Z"/></svg>
           </div>
           <div>
             <h3>Audit-friendly</h3>
-            <p>Structured JSON receipt, stable fields, easy to attach to case files.</p>
+            <p>Structured receipt JSON: stable fields to attach to case files.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Pricing -->
     <section class="section alt" id="pricing" aria-labelledby="pricing-title">
       <div class="wrap" style="padding:0">
         <h2 class="h2" id="pricing-title">Pricing</h2>
@@ -869,8 +953,8 @@ Regards,</code></pre>
               <li>Export / audit-friendly receipts</li>
               <li>Priority reliability</li>
             </ul>
-            <div class="hint"><strong>Activation:</strong> manual for now (no accounts yet).</div>
-            <a class="btn primary" href="#create" style="height:44px">Start with Pro</a>
+            <div class="hint"><strong>Activation:</strong> manual for now — email <a href="mailto:contact@ackzero.io">contact@ackzero.io</a>.</div>
+            <a class="btn primary" href="mailto:contact@ackzero.io?subject=ACKZERO%20Pro%20activation" style="height:44px">Activate Pro</a>
           </div>
 
           <div class="price">
@@ -882,21 +966,18 @@ Regards,</code></pre>
               <li>Higher limits</li>
               <li>Support</li>
             </ul>
-            <div class="hint"><strong>Activation:</strong> manual for now.</div>
-            <a class="btn" href="#create" style="height:44px">Start with Business</a>
+            <div class="hint"><strong>Activation:</strong> manual for now — email <a href="mailto:contact@ackzero.io">contact@ackzero.io</a>.</div>
+            <a class="btn" href="mailto:contact@ackzero.io?subject=ACKZERO%20Business%20activation" style="height:44px">Activate Business</a>
           </div>
         </div>
 
-        <div class="legalbox" style="border-color:rgba(29,78,216,.18); background:linear-gradient(180deg, rgba(29,78,216,.06), rgba(255,255,255,0));">
+        <div class="callout">
           <strong>Operational today</strong>
-          <p>
-            You can generate receipts now. If you need Pro/Business activation in v0.1, handle it manually via your support channel.
-          </p>
+          <p>You can generate receipts now. Pro/Business activation is manual in v0.1; this avoids accounts while keeping receipts stable and verifiable.</p>
         </div>
       </div>
     </section>
 
-    <!-- FAQ -->
     <section class="section" id="faq" aria-labelledby="faq-title">
       <h2 class="h2" id="faq-title">FAQ</h2>
       <p class="p">Short answers, no ambiguity.</p>
@@ -909,7 +990,7 @@ Regards,</code></pre>
           </details>
           <details>
             <summary>Does this prove the recipient read the message?</summary>
-            <p>No. It proves a receipt was created and can record that the claim link was opened (availability). Reading is not guaranteed.</p>
+            <p>No. It can record that the claim link was opened (availability). Reading is not guaranteed.</p>
           </details>
           <details>
             <summary>Is this equivalent to registered electronic delivery?</summary>
@@ -920,13 +1001,12 @@ Regards,</code></pre>
             <p>Include the claim link. Optionally include the receipt link for transparency.</p>
           </details>
           <details>
-            <summary>What exactly is signed?</summary>
-            <p>The receipt JSON contains a canonical string that is signed (HMAC). This allows independent integrity checks of the receipt contents.</p>
+            <summary>What should I keep for my case file?</summary>
+            <p>Keep the receipt link and the receipt JSON (download/copy). If relevant, keep your sent email copy too.</p>
           </details>
         </div>
       </div>
 
-      <!-- Element 7: Final CTA section -->
       <div class="panel" style="margin-top:18px">
         <div class="panel-bd" style="display:flex; gap:14px; align-items:center; justify-content:space-between; flex-wrap:wrap">
           <div>
@@ -935,13 +1015,12 @@ Regards,</code></pre>
           </div>
           <div class="row">
             <a class="btn primary" href="#create">Create a receipt</a>
-            <a class="btn" href="#how">Review the guarantees</a>
+            <a class="btn" href="#verify">Verify a receipt</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Element 8: Operational “status + endpoints” transparency -->
     <section class="section alt" aria-labelledby="ops-title">
       <div class="wrap" style="padding:0">
         <h2 class="h2" id="ops-title">Operational transparency</h2>
@@ -963,7 +1042,7 @@ Regards,</code></pre>
             </div>
             <div>
               <h3>Receipt JSON</h3>
-              <p>The receipt endpoint returns signed fields and timestamps (no content).</p>
+              <p>Receipt endpoint returns signed fields and timestamps (no content).</p>
             </div>
           </div>
           <div class="card">
@@ -976,9 +1055,56 @@ Regards,</code></pre>
             </div>
           </div>
         </div>
+
+        <div class="callout" style="margin-top:14px">
+          <strong>Security contact</strong>
+          <p>
+            Vulnerability reports: <a href="mailto:security@ackzero.io">security@ackzero.io</a>.
+            Public disclosure policy and security.txt should be available at <code>/.well-known/security.txt</code>.
+          </p>
+        </div>
       </div>
     </section>
 
+    <section class="section" id="legal" aria-labelledby="legal-title">
+      <h2 class="h2" id="legal-title">Legal & privacy (EU/UK)</h2>
+      <p class="p">Clear, minimal, and explicit: what is stored, what is not stored, and what the service does not claim.</p>
+
+      <div class="panel" style="margin-top:14px">
+        <div class="panel-bd">
+          <details open>
+            <summary>Privacy summary (v0.1)</summary>
+            <p>
+              ACKZERO does not store your message content. This page hashes recipient/subject/body locally.
+              The service stores hashes, timestamps, and proof event metadata (e.g. claim/pixel events) to support the receipt.
+              You can request deletion where applicable by contacting <a href="mailto:contact@ackzero.io">contact@ackzero.io</a>.
+            </p>
+          </details>
+          <details>
+            <summary>Terms summary (v0.1)</summary>
+            <p>
+              ACKZERO provides a technical receipt. It does not guarantee delivery, does not certify legal identity,
+              and is not a regulated registered e-delivery service. You are responsible for lawful use and content.
+            </p>
+          </details>
+          <details>
+            <summary>Imprint (placeholder)</summary>
+            <p>
+              Company and address details should be provided here for commercial operation in Europe/UK (entity name, jurisdiction, contact).
+              Until then, operational contact: <a href="mailto:contact@ackzero.io">contact@ackzero.io</a>.
+            </p>
+          </details>
+        </div>
+      </div>
+
+      <div class="legalbox">
+        <strong>Important</strong>
+        <p>
+          ACKZERO is designed to strengthen disputes and document good-faith communication.
+          It is not a substitute for regulated services where law requires a qualified or registered electronic delivery provider.
+        </p>
+      </div>
+    </section>
   </main>
 
   <footer role="contentinfo">
@@ -986,20 +1112,25 @@ Regards,</code></pre>
       <div>
         <div>© <span id="y"></span> ACKZERO — Independent receipts for message issuance.</div>
         <div class="fine" style="margin-top:8px">
-          ACKZERO provides a technical proof of issuance and availability of a verifiable receipt.
-          It does not certify identity, guarantee delivery, or provide regulated registered e-delivery.
+          Technical proof of issuance/availability of a verifiable receipt. No identity certification. No delivery guarantee. Not regulated registered e-delivery.
+        </div>
+        <div class="fine" style="margin-top:8px">
+          Suggested ops files: <code>/robots.txt</code> · <code>/sitemap.xml</code> · <code>/.well-known/security.txt</code>.
         </div>
       </div>
       <div class="row" style="align-items:flex-start">
         <div style="display:flex; flex-direction:column; gap:8px">
           <a href="#create">Create</a>
+          <a href="#verify">Verify</a>
           <a href="#how">How it works</a>
           <a href="#pricing">Pricing</a>
           <a href="#faq">FAQ</a>
         </div>
         <div style="display:flex; flex-direction:column; gap:8px">
+          <a href="#legal">Legal & privacy</a>
+          <a href="mailto:contact@ackzero.io">Support</a>
+          <a href="mailto:security@ackzero.io">Security</a>
           <a href="https://ackzero.jeason-bacoul.workers.dev/health" target="_blank" rel="noopener">API</a>
-          <a href="#ops-title">Operational</a>
         </div>
       </div>
     </div>
@@ -1007,7 +1138,8 @@ Regards,</code></pre>
 
   <script>
   (function(){
-    const WORKER_BASE = "https://ackzero.jeason-bacoul.workers.dev"; // change later to api.ackzero.io
+    // Config
+    const WORKER_BASE = "https://ackzero.jeason-bacoul.workers.dev"; // later: https://api.ackzero.io
     const $ = (id) => document.getElementById(id);
 
     $("y").textContent = String(new Date().getFullYear());
@@ -1046,6 +1178,17 @@ Regards,</code></pre>
     }
     function hideStatus(){
       const el = $("status");
+      el.style.display = "none";
+      el.textContent = "";
+    }
+    function showVerifyStatus(kind, msg){
+      const el = $("verifyStatus");
+      el.style.display = "block";
+      el.className = "status " + (kind || "");
+      el.textContent = msg;
+    }
+    function hideVerifyStatus(){
+      const el = $("verifyStatus");
       el.style.display = "none";
       el.textContent = "";
     }
@@ -1129,6 +1272,7 @@ Regards,</code></pre>
       };
     }
 
+    // Create handlers
     $("btnExample").addEventListener("click", () => {
       $("to").value = "recipient@example.com";
       $("subject").value = "Cancellation notice";
@@ -1179,7 +1323,156 @@ Regards,</code></pre>
         btn.textContent = "Generate receipt";
       }
     });
+
+    // Verify helpers
+    function extractIdOrUrl(input){
+      const s = String(input || "").trim();
+      if(!s) return { kind:"empty", value:"" };
+
+      // If URL, accept it as-is
+      if(/^https?:\/\//i.test(s)) return { kind:"url", value:s };
+
+      // Otherwise treat as ID (best-effort)
+      return { kind:"id", value:s };
+    }
+
+    async function fetchReceipt(input){
+      const parsed = extractIdOrUrl(input);
+      if(parsed.kind === "empty") throw new Error("Please paste a Proof ID or receipt URL.");
+
+      let url = "";
+      if(parsed.kind === "url"){
+        url = parsed.value;
+      }else{
+        url = WORKER_BASE + "/v/" + encodeURIComponent(parsed.value);
+      }
+
+      const r = await fetch(url, {
+        method:"GET",
+        mode:"cors",
+        credentials:"omit",
+        cache:"no-store",
+        referrerPolicy:"no-referrer",
+      });
+      const j = await r.json().catch(()=>null);
+      if(!r.ok){
+        const msg = j?.error?.message || ("Request failed (" + r.status + ")");
+        throw new Error(msg);
+      }
+      return { url, receipt:j };
+    }
+
+    function setVerifyResult(url, receipt){
+      const out = $("verifyOut");
+      out.style.display = "block";
+
+      const kv = $("verifyKv");
+      kv.innerHTML = "";
+
+      const add = (k,v) => {
+        const row = document.createElement("div");
+        row.innerHTML = '<span class="k"></span><span class="v"></span>';
+        row.querySelector(".k").textContent = k;
+        row.querySelector(".v").textContent = v;
+        kv.appendChild(row);
+      };
+
+      add("Receipt URL", url);
+      add("Proof ID", receipt?.id || receipt?.proofId || "—");
+      add("Created", receipt?.createdAt || receipt?.created || "—");
+      add("Status", receipt?.status || "—");
+      add("Claimed", receipt?.events?.claim?.at || receipt?.claimedAt || "—");
+      add("Opened (pixel)", receipt?.events?.pixel?.at || receipt?.openedAt || "—");
+      add("Hash(to)", receipt?.hashes?.to || "—");
+      add("Hash(subject)", receipt?.hashes?.subject || "—");
+      add("Hash(body)", receipt?.hashes?.body || "—");
+      add("Signature", receipt?.sig || receipt?.signature || "—");
+
+      $("verifyRaw").textContent = JSON.stringify(receipt, null, 2);
+    }
+
+    let lastReceipt = null;
+
+    $("btnVerify").addEventListener("click", async () => {
+      hideVerifyStatus();
+      $("verifyOut").style.display = "none";
+      $("matchHint").textContent = "";
+      lastReceipt = null;
+
+      const btn = $("btnVerify");
+      btn.disabled = true;
+      btn.textContent = "Fetching…";
+
+      try{
+        const { url, receipt } = await fetchReceipt($("verifyInput").value);
+        lastReceipt = receipt;
+        setVerifyResult(url, receipt);
+        showVerifyStatus("ok", "Receipt fetched.");
+      }catch(e){
+        showVerifyStatus("err", String(e?.message || e));
+      }finally{
+        btn.disabled = false;
+        btn.textContent = "Fetch receipt";
+      }
+    });
+
+    $("btnVerifyClear").addEventListener("click", () => {
+      $("verifyInput").value = "";
+      $("verifyOut").style.display = "none";
+      $("verifyRaw").textContent = "";
+      $("verifyKv").innerHTML = "";
+      $("vTo").value = "";
+      $("vSubject").value = "";
+      $("vBody").value = "";
+      $("matchHint").textContent = "";
+      hideVerifyStatus();
+      lastReceipt = null;
+      $("verifyInput").focus();
+    });
+
+    $("btnMatch").addEventListener("click", async () => {
+      $("matchHint").textContent = "";
+      if(!lastReceipt){
+        showVerifyStatus("warn", "Fetch a receipt first.");
+        return;
+      }
+
+      const to = $("vTo").value.trim();
+      const subject = $("vSubject").value;
+      const body = $("vBody").value;
+
+      if(!to || !body.trim()){
+        showVerifyStatus("warn", "Recipient + message body are required to match hashes.");
+        return;
+      }
+
+      try{
+        const hashes = await computeHashes(to, subject, body);
+        const rTo = lastReceipt?.hashes?.to || "";
+        const rSub = lastReceipt?.hashes?.subject || "";
+        const rBody = lastReceipt?.hashes?.body || "";
+
+        const okTo = rTo && (hashes.to === rTo);
+        const okSub = (!rSub && !hashes.subject) || (rSub && hashes.subject === rSub);
+        const okBody = rBody && (hashes.body === rBody);
+
+        if(okTo && okSub && okBody){
+          showVerifyStatus("ok", "Local hashes match the receipt.");
+          $("matchHint").textContent = "Match: recipient + subject + body.";
+        }else{
+          showVerifyStatus("err", "Local hashes do NOT match the receipt.");
+          const parts = [
+            "recipient=" + (okTo ? "match" : "mismatch"),
+            "subject=" + (okSub ? "match" : "mismatch"),
+            "body=" + (okBody ? "match" : "mismatch"),
+          ];
+          $("matchHint").textContent = parts.join(" · ") + ".";
+        }
+      }catch(e){
+        showVerifyStatus("err", String(e?.message || e));
+      }
+    });
   })();
   </script>
 </body>
-</html>
+          </html>
