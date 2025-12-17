@@ -12,6 +12,7 @@
   <meta name="robots" content="index,follow"/>
   <meta name="theme-color" content="#f7f8fb"/>
   <meta name="referrer" content="strict-origin-when-cross-origin"/>
+
   <!-- Canonical: set to your production domain when ready -->
   <link rel="canonical" href="/"/>
   <link rel="alternate" hreflang="en" href="/"/>
@@ -764,16 +765,32 @@
     // Mobile menu
     const burger = $("burger");
     const mobile = $("mobile");
+
     function setMenu(open){
       mobile.setAttribute("data-open", open ? "true" : "false");
       burger.setAttribute("aria-expanded", open ? "true" : "false");
+      burger.setAttribute("aria-label", open ? "Close menu" : "Open menu");
     }
+
     burger.addEventListener("click", () => {
       const open = mobile.getAttribute("data-open") === "true";
       setMenu(!open);
     });
+
     mobile.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setMenu(false)));
+
     document.addEventListener("keydown", (e)=>{ if(e.key==="Escape") setMenu(false); });
+
+    document.addEventListener("click", (e) => {
+      const isOpen = mobile.getAttribute("data-open") === "true";
+      if(!isOpen) return;
+      const inHeader = burger.contains(e.target) || mobile.contains(e.target);
+      if(!inHeader) setMenu(false);
+    });
+
+    window.addEventListener("resize", () => {
+      if(window.innerWidth > 920) setMenu(false);
+    });
 
     function showStatus(kind, msg){
       const el = $("status");
@@ -924,4 +941,4 @@
   })();
   </script>
 </body>
-</html>
+  </html>
