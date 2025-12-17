@@ -1,34 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" id="top" data-page="index.html">
 <head>
-  <!-- Core -->
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
   <meta name="color-scheme" content="light"/>
   <title>ACKZERO — Independent, verifiable message receipts</title>
   <meta name="application-name" content="ACKZERO"/>
-  <meta name="description" content="Create a neutral, verifiable receipt that a specific message was issued and made available at a precise time — without storing the message and without requiring the recipient to sign up."/>
+  <meta name="description" content="Pay once. Generate a neutral, verifiable receipt that a specific message was issued at a precise time — without storing the message and without requiring the recipient to sign up."/>
   <meta name="keywords" content="proof of sending,proof of issuance,message receipt,verifiable receipt,email dispute,evidence,timestamp,hash,SHA-256,Europe,UK"/>
   <meta name="robots" content="index,follow"/>
   <meta name="theme-color" content="#f7f8fb"/>
   <meta name="referrer" content="strict-origin-when-cross-origin"/>
-
-  <!-- Canonical: set to your production domain when ready -->
   <link rel="canonical" href="/"/>
   <link rel="alternate" hreflang="en" href="/"/>
   <link rel="alternate" hreflang="x-default" href="/"/>
 
-  <!-- Icons / Manifest (safe even if missing during dev) -->
   <link rel="icon" href="/favicon.ico" sizes="any"/>
   <link rel="icon" href="/logo.svg" type="image/svg+xml"/>
   <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
   <link rel="manifest" href="/site.webmanifest"/>
 
-  <!-- Social -->
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="ACKZERO"/>
   <meta property="og:title" content="ACKZERO — Independent, verifiable message receipts"/>
-  <meta property="og:description" content="Neutral receipt that a specific message was issued and made available at a precise time — hash-only, no recipient signup, verifiable later."/>
+  <meta property="og:description" content="Pay once. Hash locally. Generate a signed receipt. Share a single link. No message storage. No recipient signup."/>
   <meta property="og:url" content="/"/>
   <meta property="og:image" content="/og.png"/>
   <meta property="og:image:alt" content="ACKZERO — Verifiable message receipt"/>
@@ -37,29 +32,11 @@
 
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="ACKZERO — Independent, verifiable message receipts"/>
-  <meta name="twitter:description" content="Hash locally. Generate a signed receipt. Share claim + receipt links. No message storage. No recipient signup."/>
+  <meta name="twitter:description" content="Pay once. Hash locally. Generate a signed receipt. Share a single link. No message storage. No recipient signup."/>
   <meta name="twitter:image" content="/og.png"/>
 
-  <!-- Security meta -->
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()"/>
 
-  <!-- JSON-LD -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Organization",
-    "name":"ACKZERO",
-    "url":"/",
-    "logo":"/og.png",
-    "areaServed":["Europe","United Kingdom"],
-    "contactPoint":[{
-      "@type":"ContactPoint",
-      "email":"contact@ackzero.io",
-      "contactType":"support",
-      "availableLanguage":["en","fr"]
-    }]
-  }
-  </script>
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -92,7 +69,6 @@
 
       --max:1120px;
     }
-
     *{ box-sizing:border-box }
     html{ background:var(--bg); scroll-behavior:smooth; scroll-padding-top:92px }
     body{
@@ -106,10 +82,8 @@
         var(--bg);
       overflow-x:hidden;
     }
-
     a{ color:var(--accent); text-decoration:none }
     a:hover{ text-decoration:underline }
-
     code, pre{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace }
     pre{ white-space:pre-wrap; word-break:break-word; overflow-wrap:anywhere }
 
@@ -122,7 +96,6 @@
 
     .wrap{ max-width:var(--max); margin:0 auto; padding:0 18px }
 
-    /* Header */
     header{
       position:sticky; top:0; z-index:1000;
       background:rgba(247,248,251,.78);
@@ -149,10 +122,7 @@
       color:#fff; font-weight:1000;
       border:1px solid rgba(29,78,216,.20);
     }
-
-    .nav{
-      display:flex; align-items:center; gap:14px;
-    }
+    .nav{ display:flex; align-items:center; gap:14px; }
     .nav a{
       color:var(--muted);
       font-weight:850;
@@ -185,12 +155,10 @@
       align-items:center; justify-content:center;
       font-size:20px;
     }
-
     @media (max-width: 920px){
       .nav{ display:none }
       .burger{ display:inline-flex }
     }
-
     .mobile{
       display:none;
       padding:10px 0 14px;
@@ -207,7 +175,6 @@
     .mobile a:hover{ background:rgba(11,19,32,.03); color:var(--text); text-decoration:none }
     .mobile .cta{ width:100%; margin-top:10px }
 
-    /* Sections */
     main{ padding:32px 0 18px }
     section{ padding:22px 0 }
 
@@ -225,7 +192,6 @@
     .panel-hd strong{ font-size:1rem }
     .panel-bd{ padding:18px }
 
-    /* Hero */
     .hero{
       display:grid; gap:18px;
       grid-template-columns: 1.06fr .94fr;
@@ -263,7 +229,6 @@
       font-size:1.07rem;
       max-width:64ch;
     }
-
     .hero-actions{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:14px }
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
@@ -286,7 +251,6 @@
       box-shadow:0 18px 36px rgba(29,78,216,.16);
     }
     .btn.ghost{ background:transparent }
-    .btn:disabled{ opacity:.60; cursor:not-allowed; transform:none }
 
     .hero-note{
       margin-top:10px;
@@ -296,14 +260,12 @@
     }
     .hero-note strong{ color:var(--text) }
 
-    /* Trust strip */
     .trust{
       display:grid; gap:12px;
       grid-template-columns: repeat(3, 1fr);
       margin-top:14px;
     }
     @media (max-width: 980px){ .trust{ grid-template-columns:1fr; } }
-
     .card{
       padding:16px;
       border-radius:var(--r);
@@ -316,59 +278,6 @@
     .card h3{ margin:0 0 6px; font-size:1.05rem; letter-spacing:-.01em }
     .card p{ margin:0; color:var(--muted) }
 
-    /* Create form */
-    .grid{
-      display:grid; gap:12px;
-      grid-template-columns: 1fr 1fr;
-    }
-    @media (max-width: 640px){ .grid{ grid-template-columns:1fr } }
-
-    label{ font-weight:950; font-size:.92rem; color:#111827 }
-    .hint{ font-size:.88rem; color:var(--muted); margin-top:5px }
-    input, textarea{
-      width:100%;
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:12px 12px;
-      font:inherit;
-      background:#fbfcff;
-      box-shadow: inset 0 1px 0 rgba(11,19,32,.03);
-    }
-    textarea{ min-height:120px; resize:vertical }
-
-    .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center }
-
-    .out{
-      margin-top:12px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background:#fbfcff;
-      padding:12px;
-      color:#111827;
-    }
-    .kv{
-      display:grid; gap:6px;
-      font-size:.92rem;
-    }
-    .kv div{
-      display:flex; gap:10px; align-items:flex-start; justify-content:space-between;
-      border-bottom:1px dashed rgba(230,233,240,.95);
-      padding-bottom:6px;
-    }
-    .kv div:last-child{ border-bottom:none; padding-bottom:0 }
-    .k{ color:var(--muted); font-weight:950; min-width:128px }
-    .v{ text-align:right; word-break:break-word; overflow-wrap:anywhere; max-width: calc(100% - 140px) }
-
-    .status{
-      margin-top:10px;
-      font-weight:1000;
-      font-size:.95rem;
-    }
-    .status.ok{ color:var(--ok) }
-    .status.err{ color:var(--err) }
-    .status.warn{ color:var(--warn) }
-
-    /* How / Pricing / FAQ */
     .two{
       display:grid; gap:14px;
       grid-template-columns: 1fr 1fr;
@@ -378,22 +287,20 @@
     .ul{ margin:0; padding-left:18px; color:var(--muted) }
     .ul li{ margin:7px 0 }
 
-    .pricing{
+    .priceRow{
       display:grid; gap:14px;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       align-items:stretch;
     }
-    @media (max-width: 980px){ .pricing{ grid-template-columns:1fr } }
+    @media (max-width: 980px){ .priceRow{ grid-template-columns:1fr } }
 
     .price{
       padding:16px;
-      display:flex; flex-direction:column; gap:10px;
       border-radius:var(--r);
       border:1px solid var(--line);
       background:#fff;
       box-shadow:var(--shadow2);
-      position:relative;
-      overflow:hidden;
+      display:flex; flex-direction:column; gap:10px;
     }
     .price.featured{
       border-color: rgba(29,78,216,.25);
@@ -421,7 +328,6 @@
     summary{ cursor:pointer; font-weight:1000 }
     details p{ margin:10px 0 0; color:var(--muted) }
 
-    /* Footer */
     footer{
       border-top:1px solid var(--line);
       padding:18px 0 28px;
@@ -434,14 +340,12 @@
     .foot a{ color:var(--muted); font-weight:950; padding:6px 8px; border-radius:12px }
     .foot a:hover{ color:var(--text); text-decoration:none; background:rgba(11,19,32,.03) }
 
-    /* Focus */
-    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+    a:focus-visible, button:focus-visible{
       outline:3px solid rgba(29,78,216,.22);
       outline-offset:2px;
       border-radius:12px;
     }
 
-    /* Subtle entrance animation (safe) */
     @media (prefers-reduced-motion: no-preference){
       .lift{ opacity:0; transform:translateY(10px); animation:lift .55s var(--e) forwards }
       .lift.d2{ animation-delay:.06s }
@@ -468,24 +372,22 @@
         <a href="#pricing">Pricing</a>
         <a href="#faq">FAQ</a>
         <a href="#legal">Legal</a>
-        <a class="cta" href="#create" aria-label="Create a receipt">Create a receipt</a>
+        <a class="cta" href="#buy" aria-label="Buy and create a receipt">Buy &amp; create</a>
       </nav>
 
       <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile">☰</button>
     </div>
 
     <div class="wrap mobile" id="mobile" data-open="false" aria-label="Mobile menu">
-      <a href="#create">Create</a>
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
       <a href="#legal">Legal</a>
-      <a class="cta" href="#create" aria-label="Create a receipt (mobile)">Create a receipt</a>
+      <a class="cta" href="#buy" aria-label="Buy and create (mobile)">Buy &amp; create</a>
     </div>
   </header>
 
   <main id="main" class="wrap" role="main">
-    <!-- HERO -->
     <section class="hero" aria-labelledby="title">
       <div class="lift">
         <div class="kicker" aria-label="Key claims">
@@ -498,18 +400,18 @@
         <h1 id="title">Prove you sent it. Independently.</h1>
 
         <p class="lead">
-          Generate a neutral receipt that a specific message was <strong>issued</strong> and made available at a precise time.
-          ACKZERO stores <strong>hashes + timestamps + proof events</strong> only — never your message.
+          When the other side stays silent, you need a clean, neutral proof your message existed at a specific time.
+          ACKZERO creates a <strong>signed, hash-only receipt</strong> you can keep and share later.
         </p>
 
         <div class="hero-actions" role="group" aria-label="Primary actions">
-          <a class="btn primary" href="#create">Create a receipt</a>
+          <a class="btn primary" href="#buy">Buy &amp; create</a>
           <a class="btn" href="#how">Understand the proof</a>
           <a class="btn ghost" id="healthLink" href="#" target="_blank" rel="noopener">API health</a>
         </div>
 
         <p class="hero-note">
-          What it proves: <strong>issuance of a verifiable receipt</strong> + optional availability/open events (claim link / pixel).<br/>
+          What it proves: <strong>a receipt was issued at a precise UTC time</strong> for a specific recipient/subject/body (hash-only).<br/>
           What it does not prove: <strong>legal identity</strong>, <strong>guaranteed delivery</strong>, or that the recipient read the full message.
         </p>
 
@@ -520,7 +422,7 @@
           </div>
           <div class="card lift d3">
             <h3>Integrity (hash-only)</h3>
-            <p><code>to</code>, optional <code>subject</code>, <code>body</code> are hashed locally (SHA-256). No raw content stored.</p>
+            <p><code>to</code>, optional <code>subject</code>, <code>body</code> hashed locally (SHA-256). No raw content stored.</p>
           </div>
           <div class="card lift d4">
             <h3>Independent verification</h3>
@@ -529,100 +431,54 @@
         </div>
       </div>
 
-      <!-- Create -->
-      <div class="panel lift d2" id="create" aria-labelledby="create-title">
+      <div class="panel lift d2" id="buy" aria-labelledby="buy-title">
         <div class="panel-hd">
-          <strong id="create-title">Create a receipt</strong>
-          <span class="pill">v0.1</span>
+          <strong id="buy-title">Buy &amp; create (1 receipt)</strong>
+          <span class="pill">Stripe</span>
         </div>
-
         <div class="panel-bd">
-          <div class="grid">
-            <div>
-              <label for="to">Recipient (email)</label>
-              <input id="to" type="email" inputmode="email" autocomplete="email" placeholder="recipient@example.com"/>
-              <div class="hint">Hashed locally. The raw email is not stored by ACKZERO.</div>
-            </div>
-            <div>
-              <label for="subject">Subject (optional)</label>
-              <input id="subject" type="text" autocomplete="off" placeholder="Cancellation notice"/>
-              <div class="hint">Hashed locally. Recommended for formal notices.</div>
-            </div>
+          <p class="muted" style="margin:0">
+            Pay once, then you’ll be redirected to the creation page with a <code>session_id</code>.
+            Without a paid session, creating a receipt is disabled.
+          </p>
+
+          <div class="hero-actions" style="margin-top:12px">
+            <a class="btn primary" id="buyLink" href="#" rel="noopener">Pay €2.90 and create</a>
+            <a class="btn" href="/create.html">I already paid (open create)</a>
           </div>
 
-          <div style="margin-top:12px">
-            <label for="body">Message body</label>
-            <textarea id="body" placeholder="Write the message you will send (email, notice, etc.)."></textarea>
-            <div class="hint">Hashed locally (UTF-8). ACKZERO stores hashes + timestamps only.</div>
-          </div>
-
-          <div class="row" style="margin-top:12px">
-            <button class="btn primary" id="btnCreate" type="button">Generate receipt</button>
-            <button class="btn" id="btnExample" type="button">Fill example</button>
-            <button class="btn ghost" id="btnClear" type="button">Clear</button>
-          </div>
-
-          <div id="status" class="status" role="status" aria-live="polite" style="display:none"></div>
-
-          <div id="result" class="out" style="display:none" aria-label="Result">
-            <div class="kv" id="kv"></div>
-
-            <div class="row" style="margin-top:12px">
-              <button class="btn" id="copyAll" type="button">Copy links</button>
-              <a class="btn" id="openClaim" href="#" target="_blank" rel="noopener">Open claim</a>
-              <a class="btn" id="openReceipt" href="#" target="_blank" rel="noopener">Open receipt</a>
-            </div>
-
-            <details style="margin-top:12px">
-              <summary>Show raw JSON</summary>
-              <pre id="raw" style="margin:10px 0 0"></pre>
-            </details>
-          </div>
-
-          <div class="hint" style="margin-top:12px">
-            Next step: include the <strong>claim link</strong> in your message, then send it with your usual email client.
-            Opening the claim link records a “made available” event.
-          </div>
+          <p class="muted" style="margin:10px 0 0; font-size:.95rem">
+            You can test the UI freely on <code>/create.html</code>, but creation requires <code>?session_id=...</code>.
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- HOW -->
     <section id="how" aria-labelledby="how-title">
       <div class="panel">
         <div class="panel-hd">
           <strong id="how-title">How it works</strong>
-          <span class="pill">One-link model</span>
+          <span class="pill">3 steps</span>
         </div>
         <div class="panel-bd">
           <div class="two">
             <div>
               <ol class="ul" style="margin:0">
-                <li><strong>You write your message</strong> (email / notice) normally.</li>
-                <li><strong>This page hashes</strong> recipient + subject + body locally (SHA-256).</li>
-                <li><strong>ACKZERO returns</strong> a proof id + claim link + receipt JSON link.</li>
-                <li><strong>You include the claim link</strong> in the message and send it.</li>
-                <li><strong>Anyone can verify</strong> later via the signed receipt (and events).</li>
+                <li><strong>Pay once</strong> (Stripe Checkout).</li>
+                <li><strong>Write your message</strong> and generate a receipt (hash-only).</li>
+                <li><strong>Copy a single line</strong> into your email (claim link), send as usual.</li>
               </ol>
-              <div class="hint" style="margin-top:10px">
-                Positioning: ACKZERO is a <strong>technical receipt</strong>. It strengthens evidence but does not replace regulated e-delivery services.
+              <div class="muted" style="margin-top:10px">
+                The recipient can verify using the public receipt link (JSON) at any time.
               </div>
             </div>
             <div class="panel" style="box-shadow:var(--shadow2)">
               <div class="panel-bd">
-                <div style="font-weight:1100; letter-spacing:-.01em">What’s inside the receipt</div>
-                <div class="hint" style="margin-top:6px">
-                  Minimal, hash-only, verification-first fields designed for disputes and audits.
+                <div style="font-weight:1100; letter-spacing:-.01em">What you paste in the email</div>
+                <div class="muted" style="margin-top:6px">
+                  One simple line (claim link). Optional: include receipt link for transparency.
                 </div>
-                <ul class="ul" style="margin-top:10px">
-                  <li><strong>hashes</strong>: SHA-256 of <code>to</code>, optional <code>subject</code>, <code>body</code></li>
-                  <li><strong>timestamps</strong>: createdAt (UTC) + event times (claim/pixel)</li>
-                  <li><strong>urls</strong>: claim / receipt / pixel endpoints</li>
-                  <li><strong>signature</strong>: HMAC-SHA256 (server-side) for integrity</li>
-                </ul>
-                <div class="hint" style="margin-top:10px">
-                  Tip: for high-stakes notices, keep a screenshot/PDF of the sent message and attach the receipt JSON in your evidence folder.
-                </div>
+                <pre class="muted" style="margin:10px 0 0; border:1px solid var(--line); background:#fbfcff; padding:12px; border-radius:14px">ACKZERO proof: https://ackzero.io/p/&lt;token&gt;</pre>
               </div>
             </div>
           </div>
@@ -630,59 +486,43 @@
       </div>
     </section>
 
-    <!-- PRICING -->
     <section id="pricing" aria-labelledby="pricing-title">
       <div class="panel">
         <div class="panel-hd">
           <strong id="pricing-title">Pricing</strong>
-          <span class="pill">EUR · Europe/UK</span>
+          <span class="pill">EUR</span>
         </div>
         <div class="panel-bd">
-          <div class="pricing" aria-label="Pricing plans">
-            <div class="price">
-              <span class="tag">Free</span>
-              <div class="amount">€0</div>
-              <div class="muted">For individuals testing the workflow.</div>
+          <div class="priceRow" aria-label="Pricing options">
+            <div class="price featured">
+              <span class="tag">Per receipt</span>
+              <div class="amount">€2.90</div>
+              <div class="muted">One payment = one receipt creation.</div>
               <ul class="ul">
-                <li>Create receipts</li>
-                <li>Public receipt links</li>
-                <li>Basic proof fields</li>
+                <li>No account</li>
+                <li>No subscription</li>
+                <li>Public verification link</li>
               </ul>
             </div>
-
-            <div class="price featured" aria-label="Pro plan">
-              <span class="tag">Pro</span>
-              <div class="amount">€9<span style="font-size:1rem; font-weight:900">/mo</span></div>
-              <div class="muted">Early pricing for frequent use.</div>
-              <ul class="ul">
-                <li>Higher limits</li>
-                <li>Export / audit-friendly receipts</li>
-                <li>Priority reliability</li>
-              </ul>
-              <div class="hint"><strong>Activation:</strong> manual for now (no accounts yet).</div>
-            </div>
-
             <div class="price">
-              <span class="tag">Business</span>
-              <div class="amount">€49<span style="font-size:1rem; font-weight:900">/mo</span></div>
-              <div class="muted">Small teams handling formal notices.</div>
+              <span class="tag">Later (optional)</span>
+              <div class="amount">€19.90<span style="font-size:1rem; font-weight:900">/mo</span></div>
+              <div class="muted">Not enabled in v0.1. Only if needed later.</div>
               <ul class="ul">
-                <li>Team usage</li>
-                <li>Higher limits</li>
+                <li>Monthly credits</li>
+                <li>Invoice history</li>
                 <li>Support</li>
               </ul>
-              <div class="hint"><strong>Activation:</strong> manual for now.</div>
             </div>
           </div>
 
-          <div class="hint" style="margin-top:12px">
-            v0.1: pricing is operational for launch. Accounts/billing can be added later without breaking existing receipts.
+          <div class="muted" style="margin-top:12px">
+            v0.1 ships with pay-per-proof only. Subscriptions are intentionally postponed to avoid complexity.
           </div>
         </div>
       </div>
     </section>
 
-    <!-- FAQ -->
     <section id="faq" aria-labelledby="faq-title">
       <div class="panel">
         <div class="panel-hd">
@@ -692,43 +532,37 @@
         <div class="panel-bd">
           <details open>
             <summary>Does ACKZERO store my message?</summary>
-            <p>No. This page hashes locally. ACKZERO stores hashes + timestamps + proof events only.</p>
+            <p>No. Your browser hashes locally. ACKZERO stores hashes + timestamps only.</p>
           </details>
           <details>
-            <summary>Does this prove the recipient read the message?</summary>
-            <p>No. It proves a receipt was created and can record that the claim link (or pixel) was opened. Reading the full content is not guaranteed.</p>
+            <summary>Does this prove delivery or that the recipient read it?</summary>
+            <p>No. It proves a receipt was issued at a precise time for a specific message (hash-only). Delivery and reading depend on your email provider and the recipient.</p>
+          </details>
+          <details>
+            <summary>Can the recipient verify the proof?</summary>
+            <p>Yes. The receipt JSON link can be shared and checked by anyone.</p>
           </details>
           <details>
             <summary>Is this equivalent to registered electronic delivery?</summary>
-            <p>No. ACKZERO is a technical receipt. Legal equivalence depends on jurisdiction and regulated providers.</p>
-          </details>
-          <details>
-            <summary>What should I include in my email?</summary>
-            <p>Include the claim link. Optionally include the receipt link for transparency and faster verification.</p>
-          </details>
-          <details>
-            <summary>What if I need stronger evidence?</summary>
-            <p>Use ACKZERO + keep a copy of the sent message (PDF/screenshot) + include the receipt JSON in your evidence file. For regulated equivalence, use a qualified e-delivery provider in your jurisdiction.</p>
+            <p>No. ACKZERO is a technical receipt. For regulated equivalence, use an accredited provider in your jurisdiction.</p>
           </details>
         </div>
       </div>
     </section>
 
-    <!-- LEGAL -->
     <section id="legal" aria-labelledby="legal-title">
       <div class="panel">
         <div class="panel-hd">
           <strong id="legal-title">Legal positioning (v0.1)</strong>
-          <span class="pill">Europe/UK</span>
+          <span class="pill">Important</span>
         </div>
         <div class="panel-bd">
           <p style="margin:0; color:var(--muted)">
             ACKZERO provides a <strong>technical proof of issuance</strong> and a <strong>verifiable receipt</strong>.
-            It is designed to strengthen disputes and document good-faith communication.
-            It does not certify legal identity or guarantee delivery, and it is not a regulated e-delivery service.
+            It does not certify legal identity, does not guarantee delivery, and is not a regulated e-delivery service.
           </p>
           <p style="margin:10px 0 0; color:var(--muted)">
-            Links below are placeholders: add <code>/terms.html</code>, <code>/privacy.html</code>, <code>/legal.html</code> before public launch.
+            Before public paid launch: publish <code>/legal.html</code>, <code>/terms.html</code>, <code>/privacy.html</code>, <code>/refund.html</code>.
           </p>
         </div>
       </div>
@@ -739,13 +573,14 @@
     <div class="wrap foot">
       <div>© <span id="y"></span> ACKZERO — Independent receipts for message issuance.</div>
       <div class="row" aria-label="Footer links">
-        <a href="#create">Create</a>
+        <a href="#how">How</a>
         <a href="#pricing">Pricing</a>
         <a href="#faq">FAQ</a>
         <a href="#legal">Legal</a>
-        <a id="termsLink" href="/terms.html">Terms</a>
-        <a id="privacyLink" href="/privacy.html">Privacy</a>
-        <a id="legalLink" href="/legal.html">Legal</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/legal.html">Legal page</a>
+        <a href="/refund.html">Refund</a>
         <a id="apiLink" href="#" target="_blank" rel="noopener">API</a>
       </div>
     </div>
@@ -753,192 +588,28 @@
 
   <script>
   (function(){
-    // Worker base URL (v0.1). Change later to https://api.ackzero.io
     const WORKER_BASE = "https://ackzero.jeason-bacoul.workers.dev";
+    const STRIPE_PAYMENT_LINK = "REPLACE_WITH_YOUR_STRIPE_LINK";
 
     const $ = (id) => document.getElementById(id);
-
     $("y").textContent = String(new Date().getFullYear());
     $("healthLink").href = WORKER_BASE + "/health";
     $("apiLink").href = WORKER_BASE + "/health";
+    $("buyLink").href = STRIPE_PAYMENT_LINK;
 
-    // Mobile menu
     const burger = $("burger");
     const mobile = $("mobile");
-
     function setMenu(open){
       mobile.setAttribute("data-open", open ? "true" : "false");
       burger.setAttribute("aria-expanded", open ? "true" : "false");
-      burger.setAttribute("aria-label", open ? "Close menu" : "Open menu");
     }
-
     burger.addEventListener("click", () => {
       const open = mobile.getAttribute("data-open") === "true";
       setMenu(!open);
     });
-
     mobile.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setMenu(false)));
-
     document.addEventListener("keydown", (e)=>{ if(e.key==="Escape") setMenu(false); });
-
-    document.addEventListener("click", (e) => {
-      const isOpen = mobile.getAttribute("data-open") === "true";
-      if(!isOpen) return;
-      const inHeader = burger.contains(e.target) || mobile.contains(e.target);
-      if(!inHeader) setMenu(false);
-    });
-
-    window.addEventListener("resize", () => {
-      if(window.innerWidth > 920) setMenu(false);
-    });
-
-    function showStatus(kind, msg){
-      const el = $("status");
-      el.style.display = "block";
-      el.className = "status " + (kind || "");
-      el.textContent = msg;
-    }
-    function hideStatus(){
-      const el = $("status");
-      el.style.display = "none";
-      el.textContent = "";
-    }
-
-    function normalizeText(s){
-      return String(s || "")
-        .replace(/\r\n/g, "\n")
-        .replace(/\r/g, "\n")
-        .trim();
-    }
-
-    async function sha256Hex(str){
-      const enc = new TextEncoder().encode(str);
-      const dig = await crypto.subtle.digest("SHA-256", enc);
-      return Array.from(new Uint8Array(dig)).map(b => b.toString(16).padStart(2,"0")).join("");
-    }
-
-    async function computeHashes(to, subject, body){
-      // Contract (v0.1): hashes: { to, subject?, body, meta? } values are SHA-256 hex (64)
-      const hTo = await sha256Hex(normalizeText(to).toLowerCase());
-      const hSubject = subject ? await sha256Hex(normalizeText(subject)) : "";
-      const hBody = await sha256Hex(normalizeText(body));
-      return { to: hTo, subject: hSubject, body: hBody, meta: "" };
-    }
-
-    async function createProof(payload){
-      const r = await fetch(WORKER_BASE + "/v1/proofs", {
-        method: "POST",
-        headers: { "content-type": "application/json", "accept":"application/json" },
-        body: JSON.stringify(payload),
-        mode: "cors",
-        credentials: "omit",
-        cache: "no-store",
-        referrerPolicy: "no-referrer"
-      });
-
-      const j = await r.json().catch(()=>null);
-      if(!r.ok){
-        const msg = j?.error?.message || ("Request failed (" + r.status + ")");
-        throw new Error(msg);
-      }
-      return j;
-    }
-
-    function setResult(j){
-      $("result").style.display = "block";
-
-      const kv = $("kv");
-      kv.innerHTML = "";
-
-      const add = (k,v) => {
-        const row = document.createElement("div");
-        row.innerHTML = '<span class="k"></span><span class="v"></span>';
-        row.querySelector(".k").textContent = k;
-        row.querySelector(".v").textContent = v;
-        kv.appendChild(row);
-      };
-
-      add("Proof ID", j?.id || "—");
-      add("Token", j?.token || "—");
-      add("Created", j?.createdAt || "—");
-      add("Claim link", j?.urls?.claim || "—");
-      add("Receipt link", j?.urls?.receipt || "—");
-      add("Pixel", j?.urls?.pixel || "—");
-
-      $("openClaim").href = j?.urls?.claim || "#";
-      $("openReceipt").href = j?.urls?.receipt || "#";
-
-      $("raw").textContent = JSON.stringify(j, null, 2);
-
-      $("copyAll").onclick = async () => {
-        const txt = [
-          "ACKZERO receipt",
-          "Proof ID: " + (j?.id || ""),
-          "Claim: " + (j?.urls?.claim || ""),
-          "Receipt: " + (j?.urls?.receipt || ""),
-          "Pixel: " + (j?.urls?.pixel || "")
-        ].join("\n");
-        try{
-          await navigator.clipboard.writeText(txt);
-          showStatus("ok", "Copied.");
-          setTimeout(hideStatus, 1100);
-        }catch{
-          showStatus("warn", "Copy failed. Select and copy manually from the links above.");
-        }
-      };
-    }
-
-    $("btnExample").addEventListener("click", () => {
-      $("to").value = "recipient@example.com";
-      $("subject").value = "Cancellation notice";
-      $("body").value =
-        "Hello,\n\nI hereby cancel my subscription effective immediately.\nPlease confirm in writing.\n\nRegards,";
-      $("to").focus();
-    });
-
-    $("btnClear").addEventListener("click", () => {
-      $("to").value = "";
-      $("subject").value = "";
-      $("body").value = "";
-      $("result").style.display = "none";
-      hideStatus();
-      $("to").focus();
-    });
-
-    $("btnCreate").addEventListener("click", async () => {
-      hideStatus();
-      $("result").style.display = "none";
-
-      const to = $("to").value.trim();
-      const subject = $("subject").value;
-      const body = $("body").value;
-
-      if(!to){
-        showStatus("err", "Recipient email is required.");
-        return;
-      }
-      if(!body.trim()){
-        showStatus("err", "Message body is required.");
-        return;
-      }
-
-      const btn = $("btnCreate");
-      btn.disabled = true;
-      btn.textContent = "Generating…";
-
-      try{
-        const hashes = await computeHashes(to, subject, body);
-        const j = await createProof({ hashes });
-        showStatus("ok", "Receipt generated.");
-        setResult(j);
-      }catch(e){
-        showStatus("err", String(e?.message || e));
-      }finally{
-        btn.disabled = false;
-        btn.textContent = "Generate receipt";
-      }
-    });
   })();
   </script>
 </body>
-  </html>
+</html>
