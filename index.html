@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" id="top" data-page="index.html">
 <head>
+  <!-- Core -->
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
   <meta name="color-scheme" content="light"/>
   <title>ACKZERO — Independent, verifiable message receipts</title>
-
   <meta name="application-name" content="ACKZERO"/>
   <meta name="description" content="Create a neutral, verifiable receipt that a specific message was issued and made available at a precise time — without storing the message and without requiring the recipient to sign up."/>
+  <meta name="keywords" content="proof of sending,proof of issuance,message receipt,verifiable receipt,email dispute,evidence,timestamp,hash,SHA-256,Europe,UK"/>
   <meta name="robots" content="index,follow"/>
-  <meta name="theme-color" content="#fbfcff"/>
+  <meta name="theme-color" content="#f7f8fb"/>
   <meta name="referrer" content="strict-origin-when-cross-origin"/>
+  <!-- Canonical: set to your production domain when ready -->
   <link rel="canonical" href="/"/>
-
   <link rel="alternate" hreflang="en" href="/"/>
   <link rel="alternate" hreflang="x-default" href="/"/>
 
@@ -26,18 +27,19 @@
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="ACKZERO"/>
   <meta property="og:title" content="ACKZERO — Independent, verifiable message receipts"/>
-  <meta property="og:description" content="Proof of issuance + availability without storing message content. Hashes + timestamps only. Europe + UK."/>
+  <meta property="og:description" content="Neutral receipt that a specific message was issued and made available at a precise time — hash-only, no recipient signup, verifiable later."/>
   <meta property="og:url" content="/"/>
   <meta property="og:image" content="/og.png"/>
-  <meta property="og:image:alt" content="ACKZERO — Independent receipts for message issuance"/>
+  <meta property="og:image:alt" content="ACKZERO — Verifiable message receipt"/>
   <meta property="og:locale" content="en_GB"/>
   <meta property="og:locale:alternate" content="fr_FR"/>
 
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="ACKZERO — Independent, verifiable message receipts"/>
-  <meta name="twitter:description" content="Proof of issuance + availability without storing message content. Hashes + timestamps only. No recipient signup."/>
+  <meta name="twitter:description" content="Hash locally. Generate a signed receipt. Share claim + receipt links. No message storage. No recipient signup."/>
   <meta name="twitter:image" content="/og.png"/>
 
+  <!-- Security meta -->
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()"/>
 
   <!-- JSON-LD -->
@@ -68,521 +70,384 @@
 
   <style>
     :root{
-      --paper:#fbfcff;
-      --paper2:#f4f7ff;
+      --bg:#f7f8fb;
       --panel:#ffffff;
-      --line:rgba(15,23,42,.12);
-      --text:#0b1220;
-      --muted:rgba(15,23,42,.68);
-      --muted2:rgba(15,23,42,.52);
+      --line:#e6e9f0;
+      --text:#0b1320;
+      --muted:#4b5563;
 
-      --accent:#4f46e5;   /* indigo */
-      --accent2:#0ea5e9;  /* sky */
+      --accent:#1d4ed8;
+      --accent2:#0ea5e9;
+      --accent3:#7c3aed;
+
       --ok:#16a34a;
       --warn:#f59e0b;
       --err:#dc2626;
 
+      --shadow: 0 14px 40px rgba(11,19,32,.10);
+      --shadow2: 0 1px 0 rgba(11,19,32,.06);
       --r:18px;
-      --r2:14px;
       --e:cubic-bezier(.22,.61,.36,1);
-      --shadow: 0 20px 60px rgba(2,6,23,.10);
-      --shadow2: 0 10px 30px rgba(2,6,23,.08);
-      --shadow3: 0 1px 0 rgba(2,6,23,.06);
 
-      --max: 1120px;
+      --max:1120px;
     }
 
     *{ box-sizing:border-box }
-    html{ background:var(--paper); scroll-behavior:smooth; scroll-padding-top:92px }
+    html{ background:var(--bg); scroll-behavior:smooth; scroll-padding-top:92px }
     body{
       margin:0;
       font:16px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
       color:var(--text);
       background:
-        radial-gradient(1100px 520px at 85% -12%, rgba(79,70,229,.14), transparent 58%),
-        radial-gradient(900px 420px at 12% 0%, rgba(14,165,233,.12), transparent 60%),
-        linear-gradient(180deg, var(--paper), var(--paper2) 60%, var(--paper));
+        radial-gradient(1200px 600px at 85% -10%, rgba(29,78,216,.12), transparent 55%),
+        radial-gradient(900px 420px at 10% 0%, rgba(14,165,233,.10), transparent 55%),
+        radial-gradient(900px 520px at 30% 120%, rgba(124,58,237,.08), transparent 50%),
+        var(--bg);
+      overflow-x:hidden;
     }
 
     a{ color:var(--accent); text-decoration:none }
     a:hover{ text-decoration:underline }
 
     code, pre{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace }
-    pre{ white-space:pre-wrap; word-break:break-word; overflow-wrap:anywhere; margin:0 }
-
-    .wrap{ max-width:var(--max); margin:0 auto; padding:0 18px }
+    pre{ white-space:pre-wrap; word-break:break-word; overflow-wrap:anywhere }
 
     .skip{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden }
     .skip:focus{
-      position:fixed; left:14px; top:14px; width:auto; height:auto;
-      padding:10px 12px; border-radius:12px;
-      background:#fff; border:1px solid var(--line);
-      box-shadow:var(--shadow2);
-      z-index:9999;
+      position:fixed; left:12px; top:12px; width:auto; height:auto;
+      padding:10px 12px; border-radius:12px; background:#fff; border:1px solid var(--line);
+      box-shadow:var(--shadow); z-index:9999;
     }
+
+    .wrap{ max-width:var(--max); margin:0 auto; padding:0 18px }
 
     /* Header */
     header{
       position:sticky; top:0; z-index:1000;
-      background:rgba(251,252,255,.72);
+      background:rgba(247,248,251,.78);
       backdrop-filter: blur(12px);
-      border-bottom:1px solid rgba(15,23,42,.10);
-      transition: box-shadow .2s var(--e), background .2s var(--e);
-    }
-    header.scrolled{
-      background:rgba(251,252,255,.86);
-      box-shadow: 0 12px 30px rgba(2,6,23,.08);
+      border-bottom:1px solid var(--line);
     }
     .hdr{
-      height:64px;
-      display:flex;
-      align-items:center;
-      gap:14px;
+      height:68px;
+      display:flex; align-items:center; gap:14px;
     }
-
     .brand{
       display:flex; align-items:center; gap:10px;
-      font-weight:950;
-      letter-spacing:.2px;
+      font-weight:1000; letter-spacing:.2px;
       color:var(--text);
       margin-right:auto;
     }
-    .mark{
-      width:40px; height:40px; border-radius:14px;
+    .logo{
+      width:42px; height:42px; border-radius:14px;
       background:
-        radial-gradient(12px 12px at 30% 25%, rgba(255,255,255,.85), transparent 55%),
-        linear-gradient(135deg, rgba(79,70,229,.95), rgba(14,165,233,.90));
-      box-shadow: 0 16px 34px rgba(79,70,229,.18), var(--shadow3);
-      display:flex; align-items:center; justify-content:center;
-      border:1px solid rgba(255,255,255,.55);
-    }
-    .mark svg{ width:22px; height:22px; color:#fff; opacity:.95 }
-    .brand small{
-      display:block;
-      font-weight:800;
-      color:var(--muted2);
-      letter-spacing:0;
-      margin-top:-2px;
-      font-size:.82rem;
-    }
-    .brand .t{
-      display:flex; flex-direction:column; line-height:1.05;
+        radial-gradient(12px 12px at 30% 30%, rgba(255,255,255,.8), transparent 55%),
+        linear-gradient(135deg, rgba(29,78,216,.92), rgba(14,165,233,.92));
+      box-shadow:0 18px 40px rgba(29,78,216,.16), var(--shadow2);
+      display:inline-flex; align-items:center; justify-content:center;
+      color:#fff; font-weight:1000;
+      border:1px solid rgba(29,78,216,.20);
     }
 
-    nav{ display:flex; align-items:center; gap:18px }
-    nav a{
-      color:rgba(15,23,42,.72);
-      font-weight:800;
-      text-decoration:none;
+    .nav{
+      display:flex; align-items:center; gap:14px;
     }
-    nav a:hover{ color:rgba(15,23,42,.92) }
+    .nav a{
+      color:var(--muted);
+      font-weight:850;
+      padding:8px 10px;
+      border-radius:12px;
+    }
+    .nav a:hover{ color:var(--text); text-decoration:none; background:rgba(11,19,32,.03) }
 
     .cta{
       display:inline-flex; align-items:center; justify-content:center;
-      height:42px; padding:0 14px;
-      border-radius:14px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color:#fff;
-      font-weight:950;
-      border:1px solid rgba(79,70,229,.18);
-      box-shadow: 0 14px 34px rgba(79,70,229,.18);
-      text-decoration:none;
-      white-space:nowrap;
+      height:42px; padding:0 14px; border-radius:14px;
+      background:linear-gradient(135deg, var(--accent), var(--accent2));
+      color:#fff; font-weight:1000;
+      box-shadow:0 16px 34px rgba(29,78,216,.18);
+      border:1px solid rgba(29,78,216,.14);
+      text-decoration:none !important;
+      transform: translateZ(0);
+      transition: transform .14s var(--e), filter .14s var(--e);
     }
-    .cta:hover{ text-decoration:none; filter:brightness(1.02) }
+    .cta:hover{ filter:brightness(1.03); transform:translateY(-1px) }
 
-    .ghostlink{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:10px 12px;
-      border-radius:14px;
-      border:1px solid rgba(15,23,42,.12);
-      background: rgba(255,255,255,.55);
-      color: rgba(15,23,42,.75);
-      font-weight:900;
-      text-decoration:none;
-      white-space:nowrap;
-    }
-    .ghostlink:hover{ text-decoration:none; background:#fff; color:rgba(15,23,42,.92) }
-
-    /* Burger (mobile) */
     .burger{
       display:none;
       width:46px; height:46px;
       border-radius:14px;
-      border:1px solid rgba(15,23,42,.12);
-      background:rgba(255,255,255,.65);
-      box-shadow: var(--shadow3);
+      border:1px solid var(--line);
+      background:#fff;
+      box-shadow:var(--shadow2);
       cursor:pointer;
+      align-items:center; justify-content:center;
+      font-size:20px;
     }
-    .burger span{ font-size:20px; line-height:1 }
+
     @media (max-width: 920px){
-      nav{ display:none }
-      .burger{ display:inline-flex; align-items:center; justify-content:center }
-      .hdr{ gap:10px }
+      .nav{ display:none }
+      .burger{ display:inline-flex }
     }
-    .mnav{
+
+    .mobile{
       display:none;
-      position:fixed; left:12px; right:12px; top:72px;
-      background:rgba(255,255,255,.92);
-      backdrop-filter: blur(12px);
-      border:1px solid rgba(15,23,42,.12);
-      border-radius:18px;
-      box-shadow: var(--shadow2);
-      padding:12px;
-      z-index:1100;
+      padding:10px 0 14px;
+      border-top:1px solid var(--line);
     }
-    .mnav[data-open="true"]{ display:block }
-    .mnav a{
-      display:flex; justify-content:space-between; align-items:center;
+    .mobile[data-open="true"]{ display:block }
+    .mobile a{
+      display:block;
       padding:12px 12px;
       border-radius:14px;
-      font-weight:950;
-      color:rgba(15,23,42,.82);
-      text-decoration:none;
+      color:var(--muted);
+      font-weight:900;
     }
-    .mnav a:hover{ background:rgba(15,23,42,.04) }
-    .mnav .mcta{ background: linear-gradient(135deg, var(--accent), var(--accent2)); color:#fff; }
-    .mnav .mcta:hover{ background: linear-gradient(135deg, var(--accent), var(--accent2)); filter:brightness(1.02) }
+    .mobile a:hover{ background:rgba(11,19,32,.03); color:var(--text); text-decoration:none }
+    .mobile .cta{ width:100%; margin-top:10px }
 
     /* Sections */
-    main{ padding:34px 0 24px }
-    section{ padding:26px 0 }
-    .sec-title{
-      font-size: clamp(1.35rem, 2.4vw, 1.6rem);
-      letter-spacing:-.01em;
-      margin:0 0 12px;
+    main{ padding:32px 0 18px }
+    section{ padding:22px 0 }
+
+    .panel{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:var(--r);
+      box-shadow:var(--shadow);
     }
-    .sec-lead{
-      margin:0 0 16px;
-      color:var(--muted);
-      max-width:78ch;
+    .panel-hd{
+      padding:16px 18px 10px;
+      border-bottom:1px solid var(--line);
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
     }
+    .panel-hd strong{ font-size:1rem }
+    .panel-bd{ padding:18px }
 
     /* Hero */
     .hero{
-      padding-top:12px;
-      display:grid;
-      gap:16px;
-      grid-template-columns: 1.08fr .92fr;
+      display:grid; gap:18px;
+      grid-template-columns: 1.06fr .94fr;
       align-items:start;
+      margin-top:14px;
     }
-    @media (max-width: 980px){
-      .hero{ grid-template-columns:1fr; }
-    }
+    @media (max-width: 980px){ .hero{ grid-template-columns:1fr; } }
 
     .kicker{
-      display:flex; flex-wrap:wrap; gap:10px;
-      align-items:center;
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
       color:var(--muted);
       font-weight:850;
     }
     .pill{
       display:inline-flex; align-items:center; gap:8px;
-      padding:7px 10px;
+      padding:7px 11px;
       border-radius:999px;
-      border:1px solid rgba(15,23,42,.12);
-      background:rgba(255,255,255,.70);
-      box-shadow: var(--shadow3);
+      background:#fff;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow2);
       font-size:.88rem;
       white-space:nowrap;
     }
-    .pill b{ color:rgba(15,23,42,.86) }
+    .pill b{ color:var(--text) }
+
     h1{
       margin:10px 0 0;
-      font-size: clamp(2.15rem, 4.8vw, 3.3rem);
-      line-height:1.05;
-      letter-spacing:-.035em;
-    }
-    .h1grad{
-      background: linear-gradient(90deg, rgba(15,23,42,1), rgba(79,70,229,.96) 45%, rgba(14,165,233,.92));
-      -webkit-background-clip:text;
-      background-clip:text;
-      color:transparent;
+      font-size: clamp(2.2rem, 4.8vw, 3.35rem);
+      line-height:1.06;
+      letter-spacing:-.03em;
     }
     .lead{
-      margin:12px 0 0;
+      margin:10px 0 0;
       color:var(--muted);
-      font-size:1.06rem;
-      max-width:70ch;
+      font-size:1.07rem;
+      max-width:64ch;
     }
 
-    .actions{
-      display:flex; flex-wrap:wrap; gap:10px;
-      margin-top:16px;
-      align-items:center;
-    }
+    .hero-actions{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:14px }
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
-      height:46px; padding:0 16px;
-      border-radius:16px;
-      border:1px solid rgba(15,23,42,.12);
-      background:rgba(255,255,255,.75);
-      color:rgba(15,23,42,.88);
-      font-weight:950;
+      height:44px; padding:0 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:#fff;
+      font-weight:1000;
       cursor:pointer;
-      box-shadow: var(--shadow3);
-      text-decoration:none;
-      transition: transform .14s var(--e), box-shadow .14s var(--e), background .14s var(--e);
-      white-space:nowrap;
+      box-shadow:var(--shadow2);
+      transition: transform .12s var(--e), filter .12s var(--e);
+      color:var(--text);
+      text-decoration:none !important;
     }
-    .btn:hover{ transform: translateY(-1px); background:#fff; box-shadow: var(--shadow2) }
+    .btn:hover{ transform: translateY(-1px) }
     .btn.primary{
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      background:linear-gradient(135deg, var(--accent), var(--accent2));
       color:#fff;
-      border-color: rgba(79,70,229,.18);
-      box-shadow: 0 18px 42px rgba(79,70,229,.18);
+      border-color: rgba(29,78,216,.16);
+      box-shadow:0 18px 36px rgba(29,78,216,.16);
     }
-    .btn.primary:hover{ filter:brightness(1.02) }
     .btn.ghost{ background:transparent }
-    .btn:disabled{ opacity:.6; cursor:not-allowed; transform:none; box-shadow: var(--shadow3) }
+    .btn:disabled{ opacity:.60; cursor:not-allowed; transform:none }
 
-    /* Panels / cards */
-    .panel{
-      background:rgba(255,255,255,.85);
-      border:1px solid rgba(15,23,42,.12);
-      border-radius: var(--r);
-      box-shadow: var(--shadow2);
-      overflow:hidden;
+    .hero-note{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:.95rem;
+      max-width:70ch;
     }
-    .panel-hd{
-      padding:16px 16px 12px;
-      border-bottom:1px solid rgba(15,23,42,.08);
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-    }
-    .panel-hd strong{ font-size:1rem; font-weight:950; letter-spacing:-.01em }
-    .panel-bd{ padding:16px }
+    .hero-note strong{ color:var(--text) }
 
-    .note{
-      margin-top:12px;
-      padding:12px 14px;
-      border-radius:16px;
-      border:1px solid rgba(15,23,42,.10);
-      background: rgba(15,23,42,.03);
-      color:rgba(15,23,42,.78);
-      font-weight:800;
-    }
-    .note b{ color:rgba(15,23,42,.92) }
-    .note .sub{ display:block; margin-top:4px; font-weight:750; color:rgba(15,23,42,.62) }
-
-    .cards{
+    /* Trust strip */
+    .trust{
       display:grid; gap:12px;
       grid-template-columns: repeat(3, 1fr);
+      margin-top:14px;
     }
-    @media (max-width: 980px){ .cards{ grid-template-columns:1fr } }
+    @media (max-width: 980px){ .trust{ grid-template-columns:1fr; } }
 
     .card{
       padding:16px;
-      border-radius: var(--r);
-      border:1px solid rgba(15,23,42,.10);
-      background: rgba(255,255,255,.85);
-      box-shadow: var(--shadow3);
-      transition: transform .16s var(--e), box-shadow .16s var(--e);
+      border-radius:var(--r);
+      border:1px solid var(--line);
+      background:
+        radial-gradient(900px 260px at 30% -40%, rgba(29,78,216,.10), transparent 55%),
+        #fff;
+      box-shadow:var(--shadow2);
     }
-    .card:hover{ transform: translateY(-2px); box-shadow: var(--shadow2) }
-    .card h3{
-      margin:0 0 6px;
-      font-size:1.04rem;
-      letter-spacing:-.01em;
-    }
+    .card h3{ margin:0 0 6px; font-size:1.05rem; letter-spacing:-.01em }
     .card p{ margin:0; color:var(--muted) }
 
-    .split{
-      display:grid; gap:14px;
-      grid-template-columns: 1fr 1fr;
-      align-items:start;
-    }
-    @media (max-width: 980px){ .split{ grid-template-columns:1fr } }
-
-    /* Form */
-    label{ font-weight:950; font-size:.92rem; color:rgba(15,23,42,.92) }
-    .hint{ font-size:.88rem; color:var(--muted2); margin-top:4px; font-weight:750 }
-
-    input, textarea{
-      width:100%;
-      border:1px solid rgba(15,23,42,.12);
-      border-radius:16px;
-      padding:12px 12px;
-      font:inherit;
-      background: rgba(255,255,255,.92);
-      box-shadow: inset 0 1px 0 rgba(2,6,23,.04);
-      transition: border-color .14s var(--e), box-shadow .14s var(--e);
-    }
-    textarea{ min-height:128px; resize:vertical }
-    input:focus, textarea:focus{
-      outline:none;
-      border-color: rgba(79,70,229,.35);
-      box-shadow: 0 0 0 5px rgba(79,70,229,.10);
-    }
-    .grid2{
+    /* Create form */
+    .grid{
       display:grid; gap:12px;
       grid-template-columns: 1fr 1fr;
     }
-    @media (max-width: 680px){ .grid2{ grid-template-columns:1fr } }
+    @media (max-width: 640px){ .grid{ grid-template-columns:1fr } }
+
+    label{ font-weight:950; font-size:.92rem; color:#111827 }
+    .hint{ font-size:.88rem; color:var(--muted); margin-top:5px }
+    input, textarea{
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px 12px;
+      font:inherit;
+      background:#fbfcff;
+      box-shadow: inset 0 1px 0 rgba(11,19,32,.03);
+    }
+    textarea{ min-height:120px; resize:vertical }
 
     .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center }
-    .status{
+
+    .out{
       margin-top:12px;
-      font-weight:950;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:#fbfcff;
+      padding:12px;
+      color:#111827;
+    }
+    .kv{
+      display:grid; gap:6px;
+      font-size:.92rem;
+    }
+    .kv div{
+      display:flex; gap:10px; align-items:flex-start; justify-content:space-between;
+      border-bottom:1px dashed rgba(230,233,240,.95);
+      padding-bottom:6px;
+    }
+    .kv div:last-child{ border-bottom:none; padding-bottom:0 }
+    .k{ color:var(--muted); font-weight:950; min-width:128px }
+    .v{ text-align:right; word-break:break-word; overflow-wrap:anywhere; max-width: calc(100% - 140px) }
+
+    .status{
+      margin-top:10px;
+      font-weight:1000;
       font-size:.95rem;
-      display:none;
     }
     .status.ok{ color:var(--ok) }
     .status.err{ color:var(--err) }
     .status.warn{ color:var(--warn) }
 
-    .out{
-      margin-top:12px;
-      border-radius:16px;
-      border:1px solid rgba(15,23,42,.12);
-      background: rgba(255,255,255,.92);
-      padding:14px;
-      box-shadow: var(--shadow3);
-      display:none;
+    /* How / Pricing / FAQ */
+    .two{
+      display:grid; gap:14px;
+      grid-template-columns: 1fr 1fr;
     }
-    .kv{
-      display:grid; gap:8px;
-      font-size:.92rem;
-    }
-    .kv .line{
-      display:flex; gap:12px; align-items:flex-start; justify-content:space-between;
-      border-bottom:1px dashed rgba(15,23,42,.12);
-      padding-bottom:8px;
-    }
-    .kv .line:last-child{ border-bottom:none; padding-bottom:0 }
-    .k{ color:rgba(15,23,42,.62); font-weight:950; min-width:120px }
-    .v{ text-align:right; word-break:break-word; overflow-wrap:anywhere; max-width: calc(100% - 130px) }
-    .v a{ font-weight:900 }
+    @media (max-width: 980px){ .two{ grid-template-columns:1fr } }
 
-    details{
-      margin-top:12px;
-      border-top:1px solid rgba(15,23,42,.10);
-      padding-top:12px;
-    }
-    summary{ cursor:pointer; font-weight:950 }
-    details pre{
-      margin-top:10px;
-      padding:12px;
-      border-radius:16px;
-      background: rgba(15,23,42,.03);
-      border:1px solid rgba(15,23,42,.08);
-      color: rgba(15,23,42,.82);
-      font-size:.92rem;
-    }
+    .ul{ margin:0; padding-left:18px; color:var(--muted) }
+    .ul li{ margin:7px 0 }
 
-    /* Pricing */
     .pricing{
-      display:grid; gap:12px;
+      display:grid; gap:14px;
       grid-template-columns: repeat(3, 1fr);
       align-items:stretch;
     }
     @media (max-width: 980px){ .pricing{ grid-template-columns:1fr } }
+
     .price{
       padding:16px;
       display:flex; flex-direction:column; gap:10px;
-      border-radius: var(--r);
-      border:1px solid rgba(15,23,42,.10);
-      background: rgba(255,255,255,.88);
-      box-shadow: var(--shadow3);
-    }
-    .price.featured{
-      border-color: rgba(79,70,229,.22);
-      box-shadow: 0 20px 60px rgba(79,70,229,.12);
+      border-radius:var(--r);
+      border:1px solid var(--line);
+      background:#fff;
+      box-shadow:var(--shadow2);
       position:relative;
       overflow:hidden;
     }
-    .price.featured::before{
-      content:"";
-      position:absolute; inset:-2px -2px auto -2px; height:110px;
-      background: radial-gradient(280px 120px at 20% 30%, rgba(79,70,229,.22), transparent 60%),
-                  radial-gradient(280px 120px at 70% 10%, rgba(14,165,233,.16), transparent 60%);
-      pointer-events:none;
+    .price.featured{
+      border-color: rgba(29,78,216,.25);
+      box-shadow:0 18px 46px rgba(29,78,216,.12);
     }
     .tag{
       display:inline-flex; align-items:center; gap:8px;
-      padding:7px 10px;
-      border-radius:999px;
-      border:1px solid rgba(15,23,42,.12);
-      background: rgba(255,255,255,.82);
+      padding:7px 11px; border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
       width:fit-content;
-      font-weight:950;
-      color:rgba(15,23,42,.90);
+      font-weight:1000;
+      color:#111827;
       font-size:.88rem;
-      position:relative;
-      z-index:1;
     }
     .amount{
-      font-size:2.05rem;
-      font-weight:1000;
-      letter-spacing:-.03em;
-      position:relative;
-      z-index:1;
+      font-size:2.1rem; font-weight:1100; letter-spacing:-.03em;
     }
-    .ul{ margin:0; padding-left:18px; color:var(--muted) }
-    .ul li{ margin:7px 0 }
-    .fine{
-      color:var(--muted2);
-      font-weight:750;
-      font-size:.90rem;
-      position:relative;
-      z-index:1;
-    }
+    .muted{ color:var(--muted) }
 
-    /* FAQ */
-    .faq details{
-      border-top:1px solid rgba(15,23,42,.10);
+    details{
+      border-top:1px solid var(--line);
       padding:12px 0;
-      margin:0;
     }
-    .faq details:first-child{ border-top:none; padding-top:0 }
-    .faq details p{ margin:10px 0 0; color:var(--muted) }
+    summary{ cursor:pointer; font-weight:1000 }
+    details p{ margin:10px 0 0; color:var(--muted) }
 
     /* Footer */
     footer{
-      border-top:1px solid rgba(15,23,42,.10);
-      padding:20px 0 30px;
+      border-top:1px solid var(--line);
+      padding:18px 0 28px;
       color:var(--muted);
+      margin-top:10px;
     }
     .foot{
-      display:flex; gap:12px; flex-wrap:wrap;
-      align-items:center; justify-content:space-between;
+      display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:space-between;
     }
-    .foot a{ color:rgba(15,23,42,.62); font-weight:900; text-decoration:none }
-    .foot a:hover{ color:rgba(15,23,42,.90) }
-    .legal{
-      display:flex; flex-wrap:wrap; gap:10px;
-      align-items:center;
-    }
-
-    /* Toast */
-    .toast{
-      position:fixed; right:14px; bottom:14px;
-      background: rgba(255,255,255,.92);
-      border:1px solid rgba(15,23,42,.12);
-      border-radius:16px;
-      padding:10px 12px;
-      box-shadow: var(--shadow2);
-      color:rgba(15,23,42,.88);
-      font-weight:950;
-      opacity:0; transform: translateY(8px);
-      transition: opacity .18s var(--e), transform .18s var(--e);
-      z-index:2000;
-      pointer-events:none;
-    }
-    .toast.show{ opacity:1; transform:none }
-
-    /* Reveal */
-    .reveal{ opacity:0; transform: translateY(14px); transition: opacity .55s ease, transform .55s ease }
-    .reveal.in{ opacity:1; transform:none }
-    @media (prefers-reduced-motion: reduce){
-      .reveal{ opacity:1 !important; transform:none !important; transition:none !important }
-      html{ scroll-behavior:auto }
-    }
+    .foot a{ color:var(--muted); font-weight:950; padding:6px 8px; border-radius:12px }
+    .foot a:hover{ color:var(--text); text-decoration:none; background:rgba(11,19,32,.03) }
 
     /* Focus */
     a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
-      outline: 3px solid rgba(79,70,229,.22);
-      outline-offset: 2px;
-      border-radius: 14px;
+      outline:3px solid rgba(29,78,216,.22);
+      outline-offset:2px;
+      border-radius:12px;
+    }
+
+    /* Subtle entrance animation (safe) */
+    @media (prefers-reduced-motion: no-preference){
+      .lift{ opacity:0; transform:translateY(10px); animation:lift .55s var(--e) forwards }
+      .lift.d2{ animation-delay:.06s }
+      .lift.d3{ animation-delay:.12s }
+      .lift.d4{ animation-delay:.18s }
+      @keyframes lift{ to{ opacity:1; transform:none } }
+      .btn, .cta{ will-change:transform }
     }
   </style>
 </head>
@@ -590,97 +455,88 @@
 <body>
   <a class="skip" href="#main">Skip to main content</a>
 
-  <header id="hdr" role="banner">
+  <header role="banner" aria-label="Site header">
     <div class="wrap hdr">
       <a class="brand" href="/" aria-label="ACKZERO Home">
-        <span class="mark" aria-hidden="true">
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <path fill="currentColor" d="M12 2a7 7 0 0 0-7 7v3.2c0 2.2 1 4.2 2.6 5.5l1.1.9V22h6.6v-3.4l1.1-.9A7 7 0 0 0 19 12.2V9a7 7 0 0 0-7-7Zm3 10.3a4.2 4.2 0 0 1-1.6 3.3l-1.1.9c-.2.2-.3.4-.3.7V20h-2v-2.8c0-.3-.1-.5-.3-.7l-1.1-.9A4.2 4.2 0 0 1 7 12.3V9a5 5 0 0 1 10 0v3.3Z"/>
-          </svg>
-        </span>
-        <span class="t">
-          <span>ACKZERO</span>
-          <small>Independent message receipts</small>
-        </span>
+        <span class="logo" aria-hidden="true">A</span>
+        <span>ACKZERO</span>
       </a>
 
-      <nav aria-label="Primary">
-        <a href="#create">Create</a>
+      <nav class="nav" aria-label="Primary navigation">
         <a href="#how">How it works</a>
         <a href="#pricing">Pricing</a>
         <a href="#faq">FAQ</a>
-        <a class="cta" href="#create">Create a receipt</a>
+        <a href="#legal">Legal</a>
+        <a class="cta" href="#create" aria-label="Create a receipt">Create a receipt</a>
       </nav>
 
-      <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mnav">
-        <span aria-hidden="true">☰</span>
-      </button>
+      <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile">☰</button>
+    </div>
+
+    <div class="wrap mobile" id="mobile" data-open="false" aria-label="Mobile menu">
+      <a href="#create">Create</a>
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="#legal">Legal</a>
+      <a class="cta" href="#create" aria-label="Create a receipt (mobile)">Create a receipt</a>
     </div>
   </header>
 
-  <div class="mnav" id="mnav" data-open="false" role="navigation" aria-label="Mobile Navigation">
-    <a href="#create">Create <span aria-hidden="true">→</span></a>
-    <a href="#how">How it works <span aria-hidden="true">→</span></a>
-    <a href="#pricing">Pricing <span aria-hidden="true">→</span></a>
-    <a href="#faq">FAQ <span aria-hidden="true">→</span></a>
-    <a class="mcta" href="#create">Create a receipt</a>
-  </div>
-
   <main id="main" class="wrap" role="main">
     <!-- HERO -->
-    <section class="hero reveal" aria-labelledby="title">
-      <div>
+    <section class="hero" aria-labelledby="title">
+      <div class="lift">
         <div class="kicker" aria-label="Key claims">
           <span class="pill">🌍 <b>Europe + UK</b></span>
           <span class="pill">🔒 <b>No message storage</b></span>
           <span class="pill">🧾 <b>Verifiable receipt</b></span>
-          <span class="pill">👤 <b>No recipient signup</b></span>
+          <span class="pill">🙅 <b>No recipient signup</b></span>
         </div>
 
-        <h1 id="title">
-          Prove you sent it. <span class="h1grad">Independently.</span>
-        </h1>
+        <h1 id="title">Prove you sent it. Independently.</h1>
 
         <p class="lead">
-          ACKZERO generates a neutral, verifiable receipt that a specific message was issued and made available at a precise time —
-          <strong>without storing the message</strong>. Only hashes, timestamps and proof events are recorded.
+          Generate a neutral receipt that a specific message was <strong>issued</strong> and made available at a precise time.
+          ACKZERO stores <strong>hashes + timestamps + proof events</strong> only — never your message.
         </p>
 
-        <div class="actions" role="group" aria-label="Primary actions">
+        <div class="hero-actions" role="group" aria-label="Primary actions">
           <a class="btn primary" href="#create">Create a receipt</a>
           <a class="btn" href="#how">Understand the proof</a>
-          <a class="ghostlink" id="healthLink" href="#" target="_blank" rel="noopener">API health</a>
+          <a class="btn ghost" id="healthLink" href="#" target="_blank" rel="noopener">API health</a>
         </div>
 
-        <div class="note" style="margin-top:14px">
-          <b>What it proves (v0.1)</b>: issuance of a verifiable receipt + optional availability/open events via claim link/pixel.
-          <span class="sub"><b>What it does not prove</b>: legal identity, guaranteed delivery, or that the recipient read the full message.</span>
-        </div>
+        <p class="hero-note">
+          What it proves: <strong>issuance of a verifiable receipt</strong> + optional availability/open events (claim link / pixel).<br/>
+          What it does not prove: <strong>legal identity</strong>, <strong>guaranteed delivery</strong>, or that the recipient read the full message.
+        </p>
 
-        <div class="cards" style="margin-top:14px" aria-label="Guarantees">
-          <div class="card">
+        <div class="trust" aria-label="Proof components">
+          <div class="card lift d2">
             <h3>Timestamp (UTC)</h3>
-            <p>When the receipt was created — in a consistent, auditable format.</p>
+            <p>When the receipt was created — consistent, auditable, exportable.</p>
           </div>
-          <div class="card">
+          <div class="card lift d3">
             <h3>Integrity (hash-only)</h3>
-            <p>Recipient / subject / body are hashed locally. Raw content is never stored by ACKZERO.</p>
+            <p><code>to</code>, optional <code>subject</code>, <code>body</code> are hashed locally (SHA-256). No raw content stored.</p>
           </div>
-          <div class="card">
+          <div class="card lift d4">
             <h3>Independent verification</h3>
-            <p>Public receipt JSON can be checked later, and evidence can be shared in disputes.</p>
+            <p>A public receipt JSON can be checked later and shared in disputes.</p>
           </div>
         </div>
       </div>
 
-      <!-- CREATE PANEL -->
-      <div class="panel reveal" id="create" aria-labelledby="create-title">
+      <!-- Create -->
+      <div class="panel lift d2" id="create" aria-labelledby="create-title">
         <div class="panel-hd">
           <strong id="create-title">Create a receipt</strong>
-          <span class="pill" aria-label="Version">v0.1</span>
+          <span class="pill">v0.1</span>
         </div>
+
         <div class="panel-bd">
-          <div class="grid2">
+          <div class="grid">
             <div>
               <label for="to">Recipient (email)</label>
               <input id="to" type="email" inputmode="email" autocomplete="email" placeholder="recipient@example.com"/>
@@ -705,9 +561,9 @@
             <button class="btn ghost" id="btnClear" type="button">Clear</button>
           </div>
 
-          <div id="status" class="status" role="status" aria-live="polite"></div>
+          <div id="status" class="status" role="status" aria-live="polite" style="display:none"></div>
 
-          <div id="result" class="out" aria-label="Result">
+          <div id="result" class="out" style="display:none" aria-label="Result">
             <div class="kv" id="kv"></div>
 
             <div class="row" style="margin-top:12px">
@@ -716,67 +572,56 @@
               <a class="btn" id="openReceipt" href="#" target="_blank" rel="noopener">Open receipt</a>
             </div>
 
-            <details>
+            <details style="margin-top:12px">
               <summary>Show raw JSON</summary>
-              <pre id="raw"></pre>
+              <pre id="raw" style="margin:10px 0 0"></pre>
             </details>
-
-            <div class="note" style="margin-top:12px">
-              <b>Next step</b>: include the <b>claim link</b> inside your message, then send it with your usual email client.
-              <span class="sub">Opening the claim link records a “made available” event.</span>
-            </div>
           </div>
 
           <div class="hint" style="margin-top:12px">
-            Tip: for high-stakes notices, keep a screenshot/PDF of the sent email + attach this receipt JSON in your evidence folder.
+            Next step: include the <strong>claim link</strong> in your message, then send it with your usual email client.
+            Opening the claim link records a “made available” event.
           </div>
         </div>
       </div>
     </section>
 
     <!-- HOW -->
-    <section id="how" class="reveal" aria-labelledby="how-title">
-      <h2 class="sec-title" id="how-title">How it works</h2>
-      <p class="sec-lead">A simple, repeatable workflow designed for disputes, audits, and good-faith communication — without requiring the recipient to do anything.</p>
-
-      <div class="split">
-        <div class="panel">
-          <div class="panel-hd">
-            <strong>Workflow (5 steps)</strong>
-            <span class="pill">One-link model</span>
-          </div>
-          <div class="panel-bd">
-            <ol class="ul" style="margin:0">
-              <li><strong>You write your message</strong> (email / notice) normally.</li>
-              <li><strong>This page hashes</strong> recipient + subject + body locally (SHA-256).</li>
-              <li><strong>ACKZERO returns</strong> a proof id + claim link + receipt JSON link.</li>
-              <li><strong>You include the claim link</strong> in the message and send it.</li>
-              <li><strong>Anyone can verify</strong> later via the signed receipt (and events).</li>
-            </ol>
-            <div class="note" style="margin-top:12px">
-              <b>Positioning</b>: ACKZERO is a technical receipt. It strengthens evidence but does not replace regulated e-delivery services.
-            </div>
-          </div>
+    <section id="how" aria-labelledby="how-title">
+      <div class="panel">
+        <div class="panel-hd">
+          <strong id="how-title">How it works</strong>
+          <span class="pill">One-link model</span>
         </div>
-
-        <div class="panel">
-          <div class="panel-hd">
-            <strong>What’s inside the receipt</strong>
-            <span class="pill">Hash-only</span>
-          </div>
-          <div class="panel-bd">
-            <div class="cards" style="grid-template-columns:1fr; margin:0">
-              <div class="card">
-                <h3>Hashes</h3>
-                <p>SHA-256 for <code>to</code>, optional <code>subject</code>, and <code>body</code>. No raw message stored.</p>
+        <div class="panel-bd">
+          <div class="two">
+            <div>
+              <ol class="ul" style="margin:0">
+                <li><strong>You write your message</strong> (email / notice) normally.</li>
+                <li><strong>This page hashes</strong> recipient + subject + body locally (SHA-256).</li>
+                <li><strong>ACKZERO returns</strong> a proof id + claim link + receipt JSON link.</li>
+                <li><strong>You include the claim link</strong> in the message and send it.</li>
+                <li><strong>Anyone can verify</strong> later via the signed receipt (and events).</li>
+              </ol>
+              <div class="hint" style="margin-top:10px">
+                Positioning: ACKZERO is a <strong>technical receipt</strong>. It strengthens evidence but does not replace regulated e-delivery services.
               </div>
-              <div class="card">
-                <h3>Timestamps</h3>
-                <p>Creation time (UTC), and event timestamps if the claim link or pixel is opened.</p>
-              </div>
-              <div class="card">
-                <h3>Verification</h3>
-                <p>Public receipt JSON endpoint for later checks and evidence sharing.</p>
+            </div>
+            <div class="panel" style="box-shadow:var(--shadow2)">
+              <div class="panel-bd">
+                <div style="font-weight:1100; letter-spacing:-.01em">What’s inside the receipt</div>
+                <div class="hint" style="margin-top:6px">
+                  Minimal, hash-only, verification-first fields designed for disputes and audits.
+                </div>
+                <ul class="ul" style="margin-top:10px">
+                  <li><strong>hashes</strong>: SHA-256 of <code>to</code>, optional <code>subject</code>, <code>body</code></li>
+                  <li><strong>timestamps</strong>: createdAt (UTC) + event times (claim/pixel)</li>
+                  <li><strong>urls</strong>: claim / receipt / pixel endpoints</li>
+                  <li><strong>signature</strong>: HMAC-SHA256 (server-side) for integrity</li>
+                </ul>
+                <div class="hint" style="margin-top:10px">
+                  Tip: for high-stakes notices, keep a screenshot/PDF of the sent message and attach the receipt JSON in your evidence folder.
+                </div>
               </div>
             </div>
           </div>
@@ -785,89 +630,94 @@
     </section>
 
     <!-- PRICING -->
-    <section id="pricing" class="reveal" aria-labelledby="pricing-title">
-      <h2 class="sec-title" id="pricing-title">Pricing</h2>
-      <p class="sec-lead">Simple v0.1 pricing. Accounts/billing can be added later without breaking existing receipts.</p>
-
-      <div class="pricing" role="list" aria-label="Plans">
-        <div class="price" role="listitem">
-          <span class="tag">Free</span>
-          <div class="amount">€0</div>
-          <div class="fine">For individuals testing the workflow.</div>
-          <ul class="ul">
-            <li>Create receipts</li>
-            <li>Public receipt links</li>
-            <li>Basic proof fields</li>
-          </ul>
+    <section id="pricing" aria-labelledby="pricing-title">
+      <div class="panel">
+        <div class="panel-hd">
+          <strong id="pricing-title">Pricing</strong>
+          <span class="pill">EUR · Europe/UK</span>
         </div>
+        <div class="panel-bd">
+          <div class="pricing" aria-label="Pricing plans">
+            <div class="price">
+              <span class="tag">Free</span>
+              <div class="amount">€0</div>
+              <div class="muted">For individuals testing the workflow.</div>
+              <ul class="ul">
+                <li>Create receipts</li>
+                <li>Public receipt links</li>
+                <li>Basic proof fields</li>
+              </ul>
+            </div>
 
-        <div class="price featured" role="listitem">
-          <span class="tag">Pro</span>
-          <div class="amount">€9<span style="font-size:.95rem; font-weight:900; color:rgba(15,23,42,.58)">/mo</span></div>
-          <div class="fine">Early pricing for frequent use.</div>
-          <ul class="ul">
-            <li>Higher limits</li>
-            <li>Export / audit-friendly receipts</li>
-            <li>Priority reliability</li>
-          </ul>
-          <div class="fine"><strong>Activation:</strong> manual for now (no accounts yet).</div>
+            <div class="price featured" aria-label="Pro plan">
+              <span class="tag">Pro</span>
+              <div class="amount">€9<span style="font-size:1rem; font-weight:900">/mo</span></div>
+              <div class="muted">Early pricing for frequent use.</div>
+              <ul class="ul">
+                <li>Higher limits</li>
+                <li>Export / audit-friendly receipts</li>
+                <li>Priority reliability</li>
+              </ul>
+              <div class="hint"><strong>Activation:</strong> manual for now (no accounts yet).</div>
+            </div>
+
+            <div class="price">
+              <span class="tag">Business</span>
+              <div class="amount">€49<span style="font-size:1rem; font-weight:900">/mo</span></div>
+              <div class="muted">Small teams handling formal notices.</div>
+              <ul class="ul">
+                <li>Team usage</li>
+                <li>Higher limits</li>
+                <li>Support</li>
+              </ul>
+              <div class="hint"><strong>Activation:</strong> manual for now.</div>
+            </div>
+          </div>
+
+          <div class="hint" style="margin-top:12px">
+            v0.1: pricing is operational for launch. Accounts/billing can be added later without breaking existing receipts.
+          </div>
         </div>
-
-        <div class="price" role="listitem">
-          <span class="tag">Business</span>
-          <div class="amount">€49<span style="font-size:.95rem; font-weight:900; color:rgba(15,23,42,.58)">/mo</span></div>
-          <div class="fine">Small teams handling formal notices.</div>
-          <ul class="ul">
-            <li>Team usage</li>
-            <li>Higher limits</li>
-            <li>Support</li>
-          </ul>
-          <div class="fine"><strong>Activation:</strong> manual for now.</div>
-        </div>
-      </div>
-
-      <div class="note" style="margin-top:14px">
-        <b>Important</b>: pricing is operational for v0.1. You can launch now, then refine limits and add billing later.
       </div>
     </section>
 
     <!-- FAQ -->
-    <section id="faq" class="reveal" aria-labelledby="faq-title">
-      <h2 class="sec-title" id="faq-title">FAQ</h2>
-      <p class="sec-lead">Clear limits = fewer disputes. This is what ACKZERO does — and what it does not.</p>
-
-      <div class="panel faq">
+    <section id="faq" aria-labelledby="faq-title">
+      <div class="panel">
+        <div class="panel-hd">
+          <strong id="faq-title">FAQ</strong>
+          <span class="pill">Clear limits</span>
+        </div>
         <div class="panel-bd">
           <details open>
             <summary>Does ACKZERO store my message?</summary>
             <p>No. This page hashes locally. ACKZERO stores hashes + timestamps + proof events only.</p>
           </details>
-
           <details>
             <summary>Does this prove the recipient read the message?</summary>
             <p>No. It proves a receipt was created and can record that the claim link (or pixel) was opened. Reading the full content is not guaranteed.</p>
           </details>
-
           <details>
             <summary>Is this equivalent to registered electronic delivery?</summary>
             <p>No. ACKZERO is a technical receipt. Legal equivalence depends on jurisdiction and regulated providers.</p>
           </details>
-
           <details>
             <summary>What should I include in my email?</summary>
             <p>Include the claim link. Optionally include the receipt link for transparency and faster verification.</p>
           </details>
-
           <details>
             <summary>What if I need stronger evidence?</summary>
             <p>Use ACKZERO + keep a copy of the sent message (PDF/screenshot) + include the receipt JSON in your evidence file. For regulated equivalence, use a qualified e-delivery provider in your jurisdiction.</p>
           </details>
         </div>
       </div>
+    </section>
 
-      <div class="panel" style="margin-top:14px">
+    <!-- LEGAL -->
+    <section id="legal" aria-labelledby="legal-title">
+      <div class="panel">
         <div class="panel-hd">
-          <strong>Legal positioning (v0.1)</strong>
+          <strong id="legal-title">Legal positioning (v0.1)</strong>
           <span class="pill">Europe/UK</span>
         </div>
         <div class="panel-bd">
@@ -876,7 +726,7 @@
             It is designed to strengthen disputes and document good-faith communication.
             It does not certify legal identity or guarantee delivery, and it is not a regulated e-delivery service.
           </p>
-          <p style="margin:10px 0 0; color:var(--muted2); font-weight:750">
+          <p style="margin:10px 0 0; color:var(--muted)">
             Links below are placeholders: add <code>/terms.html</code>, <code>/privacy.html</code>, <code>/legal.html</code> before public launch.
           </p>
         </div>
@@ -884,93 +734,46 @@
     </section>
   </main>
 
-  <footer role="contentinfo">
+  <footer role="contentinfo" aria-label="Site footer">
     <div class="wrap foot">
-      <div>
-        © <span id="y"></span> ACKZERO — Independent receipts for message issuance.
-      </div>
-
-      <div class="legal">
+      <div>© <span id="y"></span> ACKZERO — Independent receipts for message issuance.</div>
+      <div class="row" aria-label="Footer links">
         <a href="#create">Create</a>
-        <a href="#how">How</a>
         <a href="#pricing">Pricing</a>
         <a href="#faq">FAQ</a>
-        <a href="/terms.html">Terms</a>
-        <a href="/privacy.html">Privacy</a>
-        <a href="/legal.html">Legal</a>
+        <a href="#legal">Legal</a>
+        <a id="termsLink" href="/terms.html">Terms</a>
+        <a id="privacyLink" href="/privacy.html">Privacy</a>
+        <a id="legalLink" href="/legal.html">Legal</a>
         <a id="apiLink" href="#" target="_blank" rel="noopener">API</a>
       </div>
     </div>
   </footer>
 
-  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
-
   <script>
   (function(){
-    // IMPORTANT: keep this aligned with your worker deploy
-    const WORKER_BASE = "https://ackzero.jeason-bacoul.workers.dev"; // later: https://api.ackzero.io
+    // Worker base URL (v0.1). Change later to https://api.ackzero.io
+    const WORKER_BASE = "https://ackzero.jeason-bacoul.workers.dev";
+
     const $ = (id) => document.getElementById(id);
 
     $("y").textContent = String(new Date().getFullYear());
-    $("apiLink").href = WORKER_BASE + "/health";
     $("healthLink").href = WORKER_BASE + "/health";
-
-    // Header shadow on scroll
-    const hdr = $("hdr");
-    function onScroll(){
-      if (window.scrollY > 8) hdr.classList.add("scrolled");
-      else hdr.classList.remove("scrolled");
-    }
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive:true });
+    $("apiLink").href = WORKER_BASE + "/health";
 
     // Mobile menu
     const burger = $("burger");
-    const mnav = $("mnav");
-    function closeMenu(){
-      mnav.dataset.open = "false";
-      burger.setAttribute("aria-expanded", "false");
+    const mobile = $("mobile");
+    function setMenu(open){
+      mobile.setAttribute("data-open", open ? "true" : "false");
+      burger.setAttribute("aria-expanded", open ? "true" : "false");
     }
-    function toggleMenu(){
-      const open = mnav.dataset.open === "true";
-      mnav.dataset.open = open ? "false" : "true";
-      burger.setAttribute("aria-expanded", open ? "false" : "true");
-    }
-    burger.addEventListener("click", toggleMenu);
-    document.addEventListener("click", (e)=>{
-      if (mnav.dataset.open !== "true") return;
-      if (e.target.closest("#mnav") || e.target.closest("#burger")) return;
-      closeMenu();
+    burger.addEventListener("click", () => {
+      const open = mobile.getAttribute("data-open") === "true";
+      setMenu(!open);
     });
-    document.addEventListener("keydown", (e)=>{
-      if (e.key === "Escape" && mnav.dataset.open === "true") closeMenu();
-    });
-    mnav.querySelectorAll("a").forEach(a => a.addEventListener("click", closeMenu));
-
-    // Reveal on view
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!prefersReduced){
-      const io = new IntersectionObserver((entries)=>{
-        entries.forEach(entry=>{
-          if(entry.isIntersecting){
-            entry.target.classList.add("in");
-            io.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.10, rootMargin: "-10% 0px -10% 0px" });
-
-      document.querySelectorAll(".reveal").forEach(el => io.observe(el));
-    } else {
-      document.querySelectorAll(".reveal").forEach(el => el.classList.add("in"));
-    }
-
-    // UI helpers
-    function toast(msg){
-      const t = $("toast");
-      t.textContent = msg;
-      t.classList.add("show");
-      setTimeout(()=>t.classList.remove("show"), 1400);
-    }
+    mobile.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setMenu(false)));
+    document.addEventListener("keydown", (e)=>{ if(e.key==="Escape") setMenu(false); });
 
     function showStatus(kind, msg){
       const el = $("status");
@@ -998,6 +801,7 @@
     }
 
     async function computeHashes(to, subject, body){
+      // Contract (v0.1): hashes: { to, subject?, body, meta? } values are SHA-256 hex (64)
       const hTo = await sha256Hex(normalizeText(to).toLowerCase());
       const hSubject = subject ? await sha256Hex(normalizeText(subject)) : "";
       const hBody = await sha256Hex(normalizeText(body));
@@ -1007,12 +811,12 @@
     async function createProof(payload){
       const r = await fetch(WORKER_BASE + "/v1/proofs", {
         method: "POST",
-        headers: { "content-type": "application/json" },
+        headers: { "content-type": "application/json", "accept":"application/json" },
         body: JSON.stringify(payload),
         mode: "cors",
         credentials: "omit",
         cache: "no-store",
-        referrerPolicy: "no-referrer",
+        referrerPolicy: "no-referrer"
       });
 
       const j = await r.json().catch(()=>null);
@@ -1029,37 +833,20 @@
       const kv = $("kv");
       kv.innerHTML = "";
 
-      const add = (k,v,isLink) => {
+      const add = (k,v) => {
         const row = document.createElement("div");
-        row.className = "line";
-        const kk = document.createElement("span");
-        kk.className = "k";
-        kk.textContent = k;
-
-        const vv = document.createElement("span");
-        vv.className = "v";
-
-        if(isLink && v && v !== "—"){
-          const a = document.createElement("a");
-          a.href = v;
-          a.target = "_blank";
-          a.rel = "noopener";
-          a.textContent = v;
-          vv.appendChild(a);
-        } else {
-          vv.textContent = v;
-        }
-
-        row.appendChild(kk);
-        row.appendChild(vv);
+        row.innerHTML = '<span class="k"></span><span class="v"></span>';
+        row.querySelector(".k").textContent = k;
+        row.querySelector(".v").textContent = v;
         kv.appendChild(row);
       };
 
-      add("Proof ID", j.id || "—");
-      add("Created", j.createdAt || "—");
-      add("Claim link", j?.urls?.claim || "—", true);
-      add("Receipt link", j?.urls?.receipt || "—", true);
-      add("Pixel (optional)", j?.urls?.pixel || "—", true);
+      add("Proof ID", j?.id || "—");
+      add("Token", j?.token || "—");
+      add("Created", j?.createdAt || "—");
+      add("Claim link", j?.urls?.claim || "—");
+      add("Receipt link", j?.urls?.receipt || "—");
+      add("Pixel", j?.urls?.pixel || "—");
 
       $("openClaim").href = j?.urls?.claim || "#";
       $("openReceipt").href = j?.urls?.receipt || "#";
@@ -1069,15 +856,15 @@
       $("copyAll").onclick = async () => {
         const txt = [
           "ACKZERO receipt",
-          "Proof ID: " + (j.id || ""),
+          "Proof ID: " + (j?.id || ""),
           "Claim: " + (j?.urls?.claim || ""),
           "Receipt: " + (j?.urls?.receipt || ""),
           "Pixel: " + (j?.urls?.pixel || "")
         ].join("\n");
-
         try{
           await navigator.clipboard.writeText(txt);
-          toast("Copied.");
+          showStatus("ok", "Copied.");
+          setTimeout(hideStatus, 1100);
         }catch{
           showStatus("warn", "Copy failed. Select and copy manually from the links above.");
         }
@@ -1127,7 +914,6 @@
         const j = await createProof({ hashes });
         showStatus("ok", "Receipt generated.");
         setResult(j);
-        toast("Receipt ready.");
       }catch(e){
         showStatus("err", String(e?.message || e));
       }finally{
