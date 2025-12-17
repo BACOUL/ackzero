@@ -3,42 +3,44 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-  <meta name="color-scheme" content="dark light"/>
-  <title>ACKZERO — Prove you sent it. Independently.</title>
+  <meta name="color-scheme" content="light"/>
+  <title>ACKZERO — Independent, verifiable message receipts</title>
 
   <meta name="application-name" content="ACKZERO"/>
   <meta name="description" content="Create a neutral, verifiable receipt that a specific message was issued and made available at a precise time — without storing the message and without requiring the recipient to sign up."/>
-  <meta name="keywords" content="proof of sending,receipt,proof of issuance,email notice,cancellation,dispute,verifiable receipt,hash,sha-256,europe,uk"/>
   <meta name="robots" content="index,follow"/>
-  <meta name="theme-color" content="#0b1020"/>
+  <meta name="theme-color" content="#fbfcff"/>
   <meta name="referrer" content="strict-origin-when-cross-origin"/>
-
   <link rel="canonical" href="/"/>
+
   <link rel="alternate" hreflang="en" href="/"/>
   <link rel="alternate" hreflang="x-default" href="/"/>
 
+  <!-- Icons / Manifest (safe even if missing during dev) -->
   <link rel="icon" href="/favicon.ico" sizes="any"/>
   <link rel="icon" href="/logo.svg" type="image/svg+xml"/>
   <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
   <link rel="manifest" href="/site.webmanifest"/>
 
+  <!-- Social -->
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="ACKZERO"/>
-  <meta property="og:title" content="ACKZERO — Prove you sent it. Independently."/>
-  <meta property="og:description" content="Neutral, verifiable receipt that a specific message was issued and made available at a precise time — without storing the message and without requiring the recipient to sign up."/>
+  <meta property="og:title" content="ACKZERO — Independent, verifiable message receipts"/>
+  <meta property="og:description" content="Proof of issuance + availability without storing message content. Hashes + timestamps only. Europe + UK."/>
   <meta property="og:url" content="/"/>
   <meta property="og:image" content="/og.png"/>
-  <meta property="og:image:alt" content="ACKZERO — Neutral proof of message issuance"/>
+  <meta property="og:image:alt" content="ACKZERO — Independent receipts for message issuance"/>
   <meta property="og:locale" content="en_GB"/>
   <meta property="og:locale:alternate" content="fr_FR"/>
 
   <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="ACKZERO — Prove you sent it. Independently."/>
-  <meta name="twitter:description" content="Neutral, verifiable receipt for message issuance — no recipient signup, no message storage."/>
+  <meta name="twitter:title" content="ACKZERO — Independent, verifiable message receipts"/>
+  <meta name="twitter:description" content="Proof of issuance + availability without storing message content. Hashes + timestamps only. No recipient signup."/>
   <meta name="twitter:image" content="/og.png"/>
 
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()"/>
 
+  <!-- JSON-LD -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -66,457 +68,519 @@
 
   <style>
     :root{
-      --bg0:#070a12;
-      --bg1:#0b1020;
-      --panel: rgba(255,255,255,.06);
-      --panel2: rgba(255,255,255,.08);
-      --line: rgba(255,255,255,.10);
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.70);
-      --faint: rgba(255,255,255,.55);
-      --accent:#7c3aed;
-      --accent2:#06b6d4;
-      --ok:#22c55e;
-      --warn:#f59e0b;
-      --err:#ef4444;
+      --paper:#fbfcff;
+      --paper2:#f4f7ff;
+      --panel:#ffffff;
+      --line:rgba(15,23,42,.12);
+      --text:#0b1220;
+      --muted:rgba(15,23,42,.68);
+      --muted2:rgba(15,23,42,.52);
 
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
-      --shadow2: 0 1px 0 rgba(255,255,255,.06);
-      --r: 18px;
-      --r2: 14px;
-      --e: cubic-bezier(.22,.61,.36,1);
+      --accent:#4f46e5;   /* indigo */
+      --accent2:#0ea5e9;  /* sky */
+      --ok:#16a34a;
+      --warn:#f59e0b;
+      --err:#dc2626;
+
+      --r:18px;
+      --r2:14px;
+      --e:cubic-bezier(.22,.61,.36,1);
+      --shadow: 0 20px 60px rgba(2,6,23,.10);
+      --shadow2: 0 10px 30px rgba(2,6,23,.08);
+      --shadow3: 0 1px 0 rgba(2,6,23,.06);
 
       --max: 1120px;
-      --pad: 18px;
-      --headerH: 66px;
-    }
-
-    @media (prefers-color-scheme: light){
-      :root{
-        --bg0:#f7f8fb;
-        --bg1:#eef2ff;
-        --panel: rgba(255,255,255,.78);
-        --panel2: rgba(255,255,255,.92);
-        --line: rgba(15,23,42,.10);
-        --text: rgba(2,6,23,.92);
-        --muted: rgba(2,6,23,.68);
-        --faint: rgba(2,6,23,.55);
-        --shadow: 0 18px 60px rgba(2,6,23,.14);
-        --shadow2: 0 1px 0 rgba(2,6,23,.06);
-      }
     }
 
     *{ box-sizing:border-box }
-    html{ scroll-behavior:smooth; scroll-padding-top: calc(var(--headerH) + 16px); background: var(--bg0); }
+    html{ background:var(--paper); scroll-behavior:smooth; scroll-padding-top:92px }
     body{
       margin:0;
+      font:16px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
       color:var(--text);
-      font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       background:
-        radial-gradient(1100px 650px at 10% -10%, rgba(124,58,237,.35), transparent 60%),
-        radial-gradient(900px 550px at 90% 0%, rgba(6,182,212,.28), transparent 58%),
-        radial-gradient(900px 520px at 50% 120%, rgba(124,58,237,.18), transparent 55%),
-        linear-gradient(180deg, var(--bg1), var(--bg0));
-      min-height: 100vh;
+        radial-gradient(1100px 520px at 85% -12%, rgba(79,70,229,.14), transparent 58%),
+        radial-gradient(900px 420px at 12% 0%, rgba(14,165,233,.12), transparent 60%),
+        linear-gradient(180deg, var(--paper), var(--paper2) 60%, var(--paper));
     }
 
-    a{ color: inherit; text-decoration:none }
-    a:hover{ text-decoration:none }
-    code, pre{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-    pre{ white-space:pre-wrap; word-break:break-word; overflow-wrap:anywhere }
+    a{ color:var(--accent); text-decoration:none }
+    a:hover{ text-decoration:underline }
 
-    .wrap{ max-width: var(--max); margin:0 auto; padding: 0 var(--pad); }
+    code, pre{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace }
+    pre{ white-space:pre-wrap; word-break:break-word; overflow-wrap:anywhere; margin:0 }
+
+    .wrap{ max-width:var(--max); margin:0 auto; padding:0 18px }
+
     .skip{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden }
     .skip:focus{
-      position:fixed; left:12px; top:12px; width:auto; height:auto;
-      padding:10px 12px; border-radius: 12px;
-      background: var(--panel2);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      z-index: 9999;
+      position:fixed; left:14px; top:14px; width:auto; height:auto;
+      padding:10px 12px; border-radius:12px;
+      background:#fff; border:1px solid var(--line);
+      box-shadow:var(--shadow2);
+      z-index:9999;
     }
 
     /* Header */
     header{
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      height: var(--headerH);
-      display:flex;
-      align-items:center;
-      background: color-mix(in oklab, var(--bg0) 70%, transparent);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--line);
+      position:sticky; top:0; z-index:1000;
+      background:rgba(251,252,255,.72);
+      backdrop-filter: blur(12px);
+      border-bottom:1px solid rgba(15,23,42,.10);
+      transition: box-shadow .2s var(--e), background .2s var(--e);
+    }
+    header.scrolled{
+      background:rgba(251,252,255,.86);
+      box-shadow: 0 12px 30px rgba(2,6,23,.08);
     }
     .hdr{
-      height: var(--headerH);
+      height:64px;
       display:flex;
       align-items:center;
-      gap: 14px;
+      gap:14px;
     }
+
     .brand{
-      display:flex;
-      align-items:center;
-      gap: 10px;
+      display:flex; align-items:center; gap:10px;
+      font-weight:950;
+      letter-spacing:.2px;
+      color:var(--text);
       margin-right:auto;
-      font-weight: 950;
-      letter-spacing: .2px;
     }
     .mark{
-      width: 40px; height: 40px;
-      border-radius: 14px;
-      display:grid; place-items:center;
+      width:40px; height:40px; border-radius:14px;
       background:
-        radial-gradient(16px 16px at 30% 30%, rgba(255,255,255,.18), transparent 65%),
-        linear-gradient(135deg, rgba(124,58,237,.88), rgba(6,182,212,.78));
-      box-shadow: var(--shadow2);
-      border: 1px solid color-mix(in oklab, var(--line) 70%, transparent);
-      position: relative;
-      overflow: hidden;
+        radial-gradient(12px 12px at 30% 25%, rgba(255,255,255,.85), transparent 55%),
+        linear-gradient(135deg, rgba(79,70,229,.95), rgba(14,165,233,.90));
+      box-shadow: 0 16px 34px rgba(79,70,229,.18), var(--shadow3);
+      display:flex; align-items:center; justify-content:center;
+      border:1px solid rgba(255,255,255,.55);
     }
-    .mark::after{
-      content:"";
-      position:absolute; inset:-40%;
-      background: radial-gradient(circle at 20% 20%, rgba(255,255,255,.24), transparent 55%);
-      transform: rotate(18deg);
+    .mark svg{ width:22px; height:22px; color:#fff; opacity:.95 }
+    .brand small{
+      display:block;
+      font-weight:800;
+      color:var(--muted2);
+      letter-spacing:0;
+      margin-top:-2px;
+      font-size:.82rem;
+    }
+    .brand .t{
+      display:flex; flex-direction:column; line-height:1.05;
     }
 
-    nav{ display:flex; align-items:center; gap: 14px; }
+    nav{ display:flex; align-items:center; gap:18px }
     nav a{
-      color: var(--muted);
-      font-weight: 850;
-      padding: 9px 10px;
-      border-radius: 12px;
-      transition: background .15s var(--e), color .15s var(--e);
+      color:rgba(15,23,42,.72);
+      font-weight:800;
+      text-decoration:none;
     }
-    nav a:hover{
-      color: var(--text);
-      background: color-mix(in oklab, var(--panel2) 70%, transparent);
-    }
+    nav a:hover{ color:rgba(15,23,42,.92) }
 
     .cta{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      height: 40px;
-      padding: 0 14px;
-      border-radius: 14px;
-      font-weight: 950;
-      color: white;
+      display:inline-flex; align-items:center; justify-content:center;
+      height:42px; padding:0 14px;
+      border-radius:14px;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 16px 40px rgba(124,58,237,.22);
+      color:#fff;
+      font-weight:950;
+      border:1px solid rgba(79,70,229,.18);
+      box-shadow: 0 14px 34px rgba(79,70,229,.18);
+      text-decoration:none;
+      white-space:nowrap;
     }
-    .cta:hover{ filter: brightness(1.05); }
+    .cta:hover{ text-decoration:none; filter:brightness(1.02) }
 
+    .ghostlink{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(15,23,42,.12);
+      background: rgba(255,255,255,.55);
+      color: rgba(15,23,42,.75);
+      font-weight:900;
+      text-decoration:none;
+      white-space:nowrap;
+    }
+    .ghostlink:hover{ text-decoration:none; background:#fff; color:rgba(15,23,42,.92) }
+
+    /* Burger (mobile) */
     .burger{
       display:none;
-      width: 46px; height: 46px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: color-mix(in oklab, var(--panel2) 70%, transparent);
-      color: var(--text);
-      font-weight: 1000;
+      width:46px; height:46px;
+      border-radius:14px;
+      border:1px solid rgba(15,23,42,.12);
+      background:rgba(255,255,255,.65);
+      box-shadow: var(--shadow3);
       cursor:pointer;
-      box-shadow: var(--shadow2);
     }
-
+    .burger span{ font-size:20px; line-height:1 }
+    @media (max-width: 920px){
+      nav{ display:none }
+      .burger{ display:inline-flex; align-items:center; justify-content:center }
+      .hdr{ gap:10px }
+    }
     .mnav{
       display:none;
-      position: fixed;
-      inset: calc(var(--headerH) + 10px) var(--pad) auto var(--pad);
-      max-width: var(--max);
-      margin: 0 auto;
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: color-mix(in oklab, var(--panel2) 86%, transparent);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(16px);
-      padding: 10px;
+      position:fixed; left:12px; right:12px; top:72px;
+      background:rgba(255,255,255,.92);
+      backdrop-filter: blur(12px);
+      border:1px solid rgba(15,23,42,.12);
+      border-radius:18px;
+      box-shadow: var(--shadow2);
+      padding:12px;
+      z-index:1100;
     }
-    .mnav[data-state="open"]{ display:block; }
-    .mnav .grid{
-      display:grid;
-      gap: 10px;
-      grid-template-columns: 1fr;
-    }
+    .mnav[data-open="true"]{ display:block }
     .mnav a{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: color-mix(in oklab, var(--panel) 85%, transparent);
-      color: var(--text);
-      font-weight: 950;
+      display:flex; justify-content:space-between; align-items:center;
+      padding:12px 12px;
+      border-radius:14px;
+      font-weight:950;
+      color:rgba(15,23,42,.82);
+      text-decoration:none;
     }
-    .mnav a.primary{
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      border-color: rgba(255,255,255,.12);
-      color: white;
+    .mnav a:hover{ background:rgba(15,23,42,.04) }
+    .mnav .mcta{ background: linear-gradient(135deg, var(--accent), var(--accent2)); color:#fff; }
+    .mnav .mcta:hover{ background: linear-gradient(135deg, var(--accent), var(--accent2)); filter:brightness(1.02) }
+
+    /* Sections */
+    main{ padding:34px 0 24px }
+    section{ padding:26px 0 }
+    .sec-title{
+      font-size: clamp(1.35rem, 2.4vw, 1.6rem);
+      letter-spacing:-.01em;
+      margin:0 0 12px;
+    }
+    .sec-lead{
+      margin:0 0 16px;
+      color:var(--muted);
+      max-width:78ch;
     }
 
-    @media (max-width: 900px){
-      nav{ display:none; }
-      .burger{ display:inline-flex; align-items:center; justify-content:center; }
-    }
-
-    /* Layout */
-    main{ padding: 28px 0 34px; }
+    /* Hero */
     .hero{
+      padding-top:12px;
       display:grid;
-      grid-template-columns: 1.02fr .98fr;
-      gap: 18px;
+      gap:16px;
+      grid-template-columns: 1.08fr .92fr;
       align-items:start;
-      padding-top: 10px;
     }
     @media (max-width: 980px){
-      .hero{ grid-template-columns: 1fr; }
+      .hero{ grid-template-columns:1fr; }
     }
 
     .kicker{
-      display:flex;
-      flex-wrap:wrap;
-      gap: 10px;
+      display:flex; flex-wrap:wrap; gap:10px;
       align-items:center;
-      color: var(--muted);
-      font-weight: 850;
+      color:var(--muted);
+      font-weight:850;
     }
     .pill{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: color-mix(in oklab, var(--panel2) 70%, transparent);
-      box-shadow: var(--shadow2);
-      font-size: .88rem;
+      display:inline-flex; align-items:center; gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(15,23,42,.12);
+      background:rgba(255,255,255,.70);
+      box-shadow: var(--shadow3);
+      font-size:.88rem;
+      white-space:nowrap;
     }
+    .pill b{ color:rgba(15,23,42,.86) }
     h1{
-      margin: 12px 0 0;
-      font-size: clamp(2.15rem, 4.7vw, 3.35rem);
-      line-height: 1.05;
-      letter-spacing: -.02em;
+      margin:10px 0 0;
+      font-size: clamp(2.15rem, 4.8vw, 3.3rem);
+      line-height:1.05;
+      letter-spacing:-.035em;
+    }
+    .h1grad{
+      background: linear-gradient(90deg, rgba(15,23,42,1), rgba(79,70,229,.96) 45%, rgba(14,165,233,.92));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
     }
     .lead{
-      margin: 12px 0 0;
-      color: var(--muted);
-      font-size: 1.06rem;
-      max-width: 70ch;
+      margin:12px 0 0;
+      color:var(--muted);
+      font-size:1.06rem;
+      max-width:70ch;
     }
 
+    .actions{
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin-top:16px;
+      align-items:center;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      height:46px; padding:0 16px;
+      border-radius:16px;
+      border:1px solid rgba(15,23,42,.12);
+      background:rgba(255,255,255,.75);
+      color:rgba(15,23,42,.88);
+      font-weight:950;
+      cursor:pointer;
+      box-shadow: var(--shadow3);
+      text-decoration:none;
+      transition: transform .14s var(--e), box-shadow .14s var(--e), background .14s var(--e);
+      white-space:nowrap;
+    }
+    .btn:hover{ transform: translateY(-1px); background:#fff; box-shadow: var(--shadow2) }
+    .btn.primary{
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color:#fff;
+      border-color: rgba(79,70,229,.18);
+      box-shadow: 0 18px 42px rgba(79,70,229,.18);
+    }
+    .btn.primary:hover{ filter:brightness(1.02) }
+    .btn.ghost{ background:transparent }
+    .btn:disabled{ opacity:.6; cursor:not-allowed; transform:none; box-shadow: var(--shadow3) }
+
+    /* Panels / cards */
     .panel{
+      background:rgba(255,255,255,.85);
+      border:1px solid rgba(15,23,42,.12);
       border-radius: var(--r);
-      border: 1px solid var(--line);
-      background: color-mix(in oklab, var(--panel) 90%, transparent);
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow2);
       overflow:hidden;
     }
     .panel-hd{
-      padding: 16px 16px 12px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
-      border-bottom: 1px solid var(--line);
-      background: color-mix(in oklab, var(--panel2) 55%, transparent);
+      padding:16px 16px 12px;
+      border-bottom:1px solid rgba(15,23,42,.08);
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
     }
-    .panel-hd strong{ font-size: 1rem; font-weight: 1000; }
-    .panel-bd{ padding: 16px; }
+    .panel-hd strong{ font-size:1rem; font-weight:950; letter-spacing:-.01em }
+    .panel-bd{ padding:16px }
 
-    .row{ display:flex; flex-wrap:wrap; align-items:center; gap: 10px; }
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      height: 44px;
-      padding: 0 14px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: color-mix(in oklab, var(--panel2) 70%, transparent);
-      color: var(--text);
-      font-weight: 950;
-      cursor:pointer;
-      box-shadow: var(--shadow2);
-      transition: transform .12s var(--e), filter .12s var(--e);
+    .note{
+      margin-top:12px;
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid rgba(15,23,42,.10);
+      background: rgba(15,23,42,.03);
+      color:rgba(15,23,42,.78);
+      font-weight:800;
     }
-    .btn:hover{ transform: translateY(-1px); filter: brightness(1.04); }
-    .btn:disabled{ opacity:.55; cursor:not-allowed; transform:none; }
-    .btn.primary{
-      border-color: rgba(255,255,255,.12);
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: white;
-      box-shadow: 0 18px 44px rgba(124,58,237,.22);
-    }
-    .btn.ghost{
-      background: transparent;
-      border-color: color-mix(in oklab, var(--line) 70%, transparent);
-    }
+    .note b{ color:rgba(15,23,42,.92) }
+    .note .sub{ display:block; margin-top:4px; font-weight:750; color:rgba(15,23,42,.62) }
 
     .cards{
-      display:grid;
+      display:grid; gap:12px;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 12px;
     }
-    @media (max-width: 980px){ .cards{ grid-template-columns: 1fr; } }
+    @media (max-width: 980px){ .cards{ grid-template-columns:1fr } }
+
     .card{
-      border-radius: var(--r2);
-      border: 1px solid var(--line);
-      background: color-mix(in oklab, var(--panel2) 70%, transparent);
-      padding: 14px;
-      box-shadow: var(--shadow2);
+      padding:16px;
+      border-radius: var(--r);
+      border:1px solid rgba(15,23,42,.10);
+      background: rgba(255,255,255,.85);
+      box-shadow: var(--shadow3);
+      transition: transform .16s var(--e), box-shadow .16s var(--e);
     }
-    .card h3{ margin:0 0 6px; font-size: 1.05rem; font-weight:1000; }
-    .card p{ margin:0; color: var(--muted); }
+    .card:hover{ transform: translateY(-2px); box-shadow: var(--shadow2) }
+    .card h3{
+      margin:0 0 6px;
+      font-size:1.04rem;
+      letter-spacing:-.01em;
+    }
+    .card p{ margin:0; color:var(--muted) }
 
-    .grid2{
-      display:grid;
+    .split{
+      display:grid; gap:14px;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      align-items:start;
     }
-    @media (max-width: 640px){ .grid2{ grid-template-columns: 1fr; } }
+    @media (max-width: 980px){ .split{ grid-template-columns:1fr } }
 
-    label{ font-weight: 1000; font-size: .92rem; color: var(--text); }
-    .hint{ color: var(--faint); font-size: .88rem; margin-top: 5px; }
+    /* Form */
+    label{ font-weight:950; font-size:.92rem; color:rgba(15,23,42,.92) }
+    .hint{ font-size:.88rem; color:var(--muted2); margin-top:4px; font-weight:750 }
 
     input, textarea{
       width:100%;
-      margin-top: 6px;
-      border-radius: 14px;
-      padding: 12px 12px;
-      border: 1px solid var(--line);
-      background: color-mix(in oklab, var(--panel2) 78%, transparent);
-      color: var(--text);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
-      font: inherit;
+      border:1px solid rgba(15,23,42,.12);
+      border-radius:16px;
+      padding:12px 12px;
+      font:inherit;
+      background: rgba(255,255,255,.92);
+      box-shadow: inset 0 1px 0 rgba(2,6,23,.04);
+      transition: border-color .14s var(--e), box-shadow .14s var(--e);
     }
-    textarea{ min-height: 120px; resize: vertical; }
+    textarea{ min-height:128px; resize:vertical }
+    input:focus, textarea:focus{
+      outline:none;
+      border-color: rgba(79,70,229,.35);
+      box-shadow: 0 0 0 5px rgba(79,70,229,.10);
+    }
+    .grid2{
+      display:grid; gap:12px;
+      grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 680px){ .grid2{ grid-template-columns:1fr } }
 
+    .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center }
     .status{
-      margin-top: 12px;
-      font-weight: 950;
-      font-size: .95rem;
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: color-mix(in oklab, var(--panel2) 60%, transparent);
+      margin-top:12px;
+      font-weight:950;
+      font-size:.95rem;
       display:none;
     }
-    .status.ok{ border-color: rgba(34,197,94,.35); }
-    .status.warn{ border-color: rgba(245,158,11,.35); }
-    .status.err{ border-color: rgba(239,68,68,.35); }
+    .status.ok{ color:var(--ok) }
+    .status.err{ color:var(--err) }
+    .status.warn{ color:var(--warn) }
 
     .out{
-      margin-top: 12px;
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      background: color-mix(in oklab, var(--panel2) 76%, transparent);
-      padding: 12px;
+      margin-top:12px;
+      border-radius:16px;
+      border:1px solid rgba(15,23,42,.12);
+      background: rgba(255,255,255,.92);
+      padding:14px;
+      box-shadow: var(--shadow3);
       display:none;
     }
-
     .kv{
-      display:grid;
-      gap: 8px;
-      font-size: .92rem;
+      display:grid; gap:8px;
+      font-size:.92rem;
     }
-    .kv .item{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap: 12px;
-      padding-bottom: 8px;
-      border-bottom: 1px dashed color-mix(in oklab, var(--line) 65%, transparent);
+    .kv .line{
+      display:flex; gap:12px; align-items:flex-start; justify-content:space-between;
+      border-bottom:1px dashed rgba(15,23,42,.12);
+      padding-bottom:8px;
     }
-    .kv .item:last-child{ border-bottom:none; padding-bottom: 0; }
-    .k{ color: var(--muted); font-weight: 950; min-width: 110px; }
-    .v{ color: var(--text); text-align:right; word-break:break-word; overflow-wrap:anywhere; max-width: calc(100% - 120px); }
-
-    .note{
-      margin-top: 12px;
-      border-radius: 16px;
-      border: 1px solid rgba(124,58,237,.22);
-      background: linear-gradient(135deg,
-        color-mix(in oklab, rgba(124,58,237,.18) 70%, transparent),
-        color-mix(in oklab, rgba(6,182,212,.14) 60%, transparent));
-      padding: 12px 14px;
-      color: var(--text);
-    }
-    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-
-    .pricing{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-    @media (max-width: 980px){ .pricing{ grid-template-columns: 1fr; } }
-    .price{
-      border-radius: var(--r);
-      border: 1px solid var(--line);
-      background: color-mix(in oklab, var(--panel2) 70%, transparent);
-      padding: 16px;
-      box-shadow: var(--shadow2);
-      display:flex;
-      flex-direction:column;
-      gap: 10px;
-    }
-    .tag{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: color-mix(in oklab, var(--panel2) 70%, transparent);
-      width: fit-content;
-      font-weight: 1000;
-      font-size: .88rem;
-    }
-    .amount{
-      font-size: 2.05rem;
-      font-weight: 1100;
-      letter-spacing: -.02em;
-      line-height: 1.05;
-    }
-    .ul{ margin: 0; padding-left: 18px; color: var(--muted); }
-    .ul li{ margin: 6px 0; }
+    .kv .line:last-child{ border-bottom:none; padding-bottom:0 }
+    .k{ color:rgba(15,23,42,.62); font-weight:950; min-width:120px }
+    .v{ text-align:right; word-break:break-word; overflow-wrap:anywhere; max-width: calc(100% - 130px) }
+    .v a{ font-weight:900 }
 
     details{
-      margin-top: 10px;
-      border-top: 1px solid var(--line);
-      padding-top: 12px;
+      margin-top:12px;
+      border-top:1px solid rgba(15,23,42,.10);
+      padding-top:12px;
     }
-    summary{ cursor:pointer; font-weight: 1000; color: var(--text); }
-    details p{ margin: 10px 0 0; color: var(--muted); }
+    summary{ cursor:pointer; font-weight:950 }
+    details pre{
+      margin-top:10px;
+      padding:12px;
+      border-radius:16px;
+      background: rgba(15,23,42,.03);
+      border:1px solid rgba(15,23,42,.08);
+      color: rgba(15,23,42,.82);
+      font-size:.92rem;
+    }
 
+    /* Pricing */
+    .pricing{
+      display:grid; gap:12px;
+      grid-template-columns: repeat(3, 1fr);
+      align-items:stretch;
+    }
+    @media (max-width: 980px){ .pricing{ grid-template-columns:1fr } }
+    .price{
+      padding:16px;
+      display:flex; flex-direction:column; gap:10px;
+      border-radius: var(--r);
+      border:1px solid rgba(15,23,42,.10);
+      background: rgba(255,255,255,.88);
+      box-shadow: var(--shadow3);
+    }
+    .price.featured{
+      border-color: rgba(79,70,229,.22);
+      box-shadow: 0 20px 60px rgba(79,70,229,.12);
+      position:relative;
+      overflow:hidden;
+    }
+    .price.featured::before{
+      content:"";
+      position:absolute; inset:-2px -2px auto -2px; height:110px;
+      background: radial-gradient(280px 120px at 20% 30%, rgba(79,70,229,.22), transparent 60%),
+                  radial-gradient(280px 120px at 70% 10%, rgba(14,165,233,.16), transparent 60%);
+      pointer-events:none;
+    }
+    .tag{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(15,23,42,.12);
+      background: rgba(255,255,255,.82);
+      width:fit-content;
+      font-weight:950;
+      color:rgba(15,23,42,.90);
+      font-size:.88rem;
+      position:relative;
+      z-index:1;
+    }
+    .amount{
+      font-size:2.05rem;
+      font-weight:1000;
+      letter-spacing:-.03em;
+      position:relative;
+      z-index:1;
+    }
+    .ul{ margin:0; padding-left:18px; color:var(--muted) }
+    .ul li{ margin:7px 0 }
+    .fine{
+      color:var(--muted2);
+      font-weight:750;
+      font-size:.90rem;
+      position:relative;
+      z-index:1;
+    }
+
+    /* FAQ */
+    .faq details{
+      border-top:1px solid rgba(15,23,42,.10);
+      padding:12px 0;
+      margin:0;
+    }
+    .faq details:first-child{ border-top:none; padding-top:0 }
+    .faq details p{ margin:10px 0 0; color:var(--muted) }
+
+    /* Footer */
     footer{
-      border-top: 1px solid var(--line);
-      padding: 18px 0 28px;
-      color: var(--muted);
+      border-top:1px solid rgba(15,23,42,.10);
+      padding:20px 0 30px;
+      color:var(--muted);
     }
     .foot{
-      display:flex;
-      flex-wrap:wrap;
-      gap: 12px;
+      display:flex; gap:12px; flex-wrap:wrap;
+      align-items:center; justify-content:space-between;
+    }
+    .foot a{ color:rgba(15,23,42,.62); font-weight:900; text-decoration:none }
+    .foot a:hover{ color:rgba(15,23,42,.90) }
+    .legal{
+      display:flex; flex-wrap:wrap; gap:10px;
       align-items:center;
-      justify-content:space-between;
-    }
-    .foot a{
-      color: var(--muted);
-      font-weight: 950;
-      padding: 8px 10px;
-      border-radius: 12px;
-    }
-    .foot a:hover{
-      color: var(--text);
-      background: color-mix(in oklab, var(--panel2) 60%, transparent);
     }
 
+    /* Toast */
+    .toast{
+      position:fixed; right:14px; bottom:14px;
+      background: rgba(255,255,255,.92);
+      border:1px solid rgba(15,23,42,.12);
+      border-radius:16px;
+      padding:10px 12px;
+      box-shadow: var(--shadow2);
+      color:rgba(15,23,42,.88);
+      font-weight:950;
+      opacity:0; transform: translateY(8px);
+      transition: opacity .18s var(--e), transform .18s var(--e);
+      z-index:2000;
+      pointer-events:none;
+    }
+    .toast.show{ opacity:1; transform:none }
+
+    /* Reveal */
+    .reveal{ opacity:0; transform: translateY(14px); transition: opacity .55s ease, transform .55s ease }
+    .reveal.in{ opacity:1; transform:none }
+    @media (prefers-reduced-motion: reduce){
+      .reveal{ opacity:1 !important; transform:none !important; transition:none !important }
+      html{ scroll-behavior:auto }
+    }
+
+    /* Focus */
     a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
-      outline: 3px solid color-mix(in oklab, var(--accent) 45%, transparent);
+      outline: 3px solid rgba(79,70,229,.22);
       outline-offset: 2px;
       border-radius: 14px;
     }
@@ -526,14 +590,21 @@
 <body>
   <a class="skip" href="#main">Skip to main content</a>
 
-  <header role="banner" aria-label="Site header">
+  <header id="hdr" role="banner">
     <div class="wrap hdr">
       <a class="brand" href="/" aria-label="ACKZERO Home">
-        <span class="mark" aria-hidden="true">A</span>
-        <span>ACKZERO</span>
+        <span class="mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M12 2a7 7 0 0 0-7 7v3.2c0 2.2 1 4.2 2.6 5.5l1.1.9V22h6.6v-3.4l1.1-.9A7 7 0 0 0 19 12.2V9a7 7 0 0 0-7-7Zm3 10.3a4.2 4.2 0 0 1-1.6 3.3l-1.1.9c-.2.2-.3.4-.3.7V20h-2v-2.8c0-.3-.1-.5-.3-.7l-1.1-.9A4.2 4.2 0 0 1 7 12.3V9a5 5 0 0 1 10 0v3.3Z"/>
+          </svg>
+        </span>
+        <span class="t">
+          <span>ACKZERO</span>
+          <small>Independent message receipts</small>
+        </span>
       </a>
 
-      <nav aria-label="Primary navigation">
+      <nav aria-label="Primary">
         <a href="#create">Create</a>
         <a href="#how">How it works</a>
         <a href="#pricing">Pricing</a>
@@ -541,78 +612,73 @@
         <a class="cta" href="#create">Create a receipt</a>
       </nav>
 
-      <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mnav">☰</button>
-    </div>
-
-    <div class="mnav" id="mnav" data-state="closed" role="navigation" aria-label="Mobile navigation">
-      <div class="grid wrap" style="padding:0">
-        <a href="#create">Create <span aria-hidden="true">→</span></a>
-        <a href="#how">How it works <span aria-hidden="true">→</span></a>
-        <a href="#pricing">Pricing <span aria-hidden="true">→</span></a>
-        <a href="#faq">FAQ <span aria-hidden="true">→</span></a>
-        <a class="primary" href="#create">Create a receipt <span aria-hidden="true">→</span></a>
-      </div>
+      <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mnav">
+        <span aria-hidden="true">☰</span>
+      </button>
     </div>
   </header>
 
+  <div class="mnav" id="mnav" data-open="false" role="navigation" aria-label="Mobile Navigation">
+    <a href="#create">Create <span aria-hidden="true">→</span></a>
+    <a href="#how">How it works <span aria-hidden="true">→</span></a>
+    <a href="#pricing">Pricing <span aria-hidden="true">→</span></a>
+    <a href="#faq">FAQ <span aria-hidden="true">→</span></a>
+    <a class="mcta" href="#create">Create a receipt</a>
+  </div>
+
   <main id="main" class="wrap" role="main">
-    <section class="hero" aria-labelledby="title">
+    <!-- HERO -->
+    <section class="hero reveal" aria-labelledby="title">
       <div>
-        <div class="kicker">
-          <span class="pill">Europe + UK</span>
-          <span class="pill">No recipient signup</span>
-          <span class="pill">No message storage</span>
-          <span class="pill"><span class="mono">SHA-256</span> + <span class="mono">HMAC</span></span>
+        <div class="kicker" aria-label="Key claims">
+          <span class="pill">🌍 <b>Europe + UK</b></span>
+          <span class="pill">🔒 <b>No message storage</b></span>
+          <span class="pill">🧾 <b>Verifiable receipt</b></span>
+          <span class="pill">👤 <b>No recipient signup</b></span>
         </div>
 
-        <h1 id="title">Prove you sent it. Independently.</h1>
+        <h1 id="title">
+          Prove you sent it. <span class="h1grad">Independently.</span>
+        </h1>
 
         <p class="lead">
-          Create a <strong>neutral, verifiable receipt</strong> that a specific message was issued and made available at a precise time.
-          Your message stays on your device — only hashes and timestamps are stored.
+          ACKZERO generates a neutral, verifiable receipt that a specific message was issued and made available at a precise time —
+          <strong>without storing the message</strong>. Only hashes, timestamps and proof events are recorded.
         </p>
 
-        <div class="row" style="margin-top:14px">
+        <div class="actions" role="group" aria-label="Primary actions">
           <a class="btn primary" href="#create">Create a receipt</a>
           <a class="btn" href="#how">Understand the proof</a>
-          <a class="btn ghost" id="healthLink" href="https://ackzero.jeason-bacoul.workers.dev/health" target="_blank" rel="noopener">API health</a>
+          <a class="ghostlink" id="healthLink" href="#" target="_blank" rel="noopener">API health</a>
         </div>
 
-        <div class="panel" style="margin-top:16px">
-          <div class="panel-hd">
-            <strong>What ACKZERO guarantees</strong>
-            <span class="pill">Neutral receipt</span>
-          </div>
-          <div class="panel-bd">
-            <div class="cards">
-              <div class="card">
-                <h3>Timestamp</h3>
-                <p>When the receipt was created (UTC), signed by the service.</p>
-              </div>
-              <div class="card">
-                <h3>Integrity</h3>
-                <p>Hashes of recipient/subject/body — never the message content.</p>
-              </div>
-              <div class="card">
-                <h3>Public verification</h3>
-                <p>Anyone can verify later via the public signed receipt JSON.</p>
-              </div>
-            </div>
+        <div class="note" style="margin-top:14px">
+          <b>What it proves (v0.1)</b>: issuance of a verifiable receipt + optional availability/open events via claim link/pixel.
+          <span class="sub"><b>What it does not prove</b>: legal identity, guaranteed delivery, or that the recipient read the full message.</span>
+        </div>
 
-            <div class="note">
-              Primary use cases: cancellation, disputes, HR, freelancing, insurance, B2B notices.
-              Not a regulated e-delivery certification.
-            </div>
+        <div class="cards" style="margin-top:14px" aria-label="Guarantees">
+          <div class="card">
+            <h3>Timestamp (UTC)</h3>
+            <p>When the receipt was created — in a consistent, auditable format.</p>
+          </div>
+          <div class="card">
+            <h3>Integrity (hash-only)</h3>
+            <p>Recipient / subject / body are hashed locally. Raw content is never stored by ACKZERO.</p>
+          </div>
+          <div class="card">
+            <h3>Independent verification</h3>
+            <p>Public receipt JSON can be checked later, and evidence can be shared in disputes.</p>
           </div>
         </div>
       </div>
 
-      <div class="panel" id="create" aria-labelledby="create-title">
+      <!-- CREATE PANEL -->
+      <div class="panel reveal" id="create" aria-labelledby="create-title">
         <div class="panel-hd">
           <strong id="create-title">Create a receipt</strong>
-          <span class="pill">v0.1</span>
+          <span class="pill" aria-label="Version">v0.1</span>
         </div>
-
         <div class="panel-bd">
           <div class="grid2">
             <div>
@@ -643,199 +709,268 @@
 
           <div id="result" class="out" aria-label="Result">
             <div class="kv" id="kv"></div>
+
             <div class="row" style="margin-top:12px">
               <button class="btn" id="copyAll" type="button">Copy links</button>
               <a class="btn" id="openClaim" href="#" target="_blank" rel="noopener">Open claim</a>
               <a class="btn" id="openReceipt" href="#" target="_blank" rel="noopener">Open receipt</a>
             </div>
+
             <details>
               <summary>Show raw JSON</summary>
-              <pre id="raw" style="margin:10px 0 0"></pre>
+              <pre id="raw"></pre>
             </details>
-          </div>
 
-          <div class="hint" style="margin-top:12px">
-            Next step: include the <strong>claim link</strong> inside your message, then send it with your usual email client.
-            Opening the claim link records a “made available” event.
-          </div>
-
-          <div class="hint" style="margin-top:10px">
-            <span class="mono">Worker:</span> <span id="apiBase" class="mono">…</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="how" aria-labelledby="how-title" style="padding-top:18px">
-      <div class="panel">
-        <div class="panel-hd">
-          <strong id="how-title">How it works</strong>
-          <span class="pill">Link + tracking model</span>
-        </div>
-        <div class="panel-bd">
-          <ol class="ul" style="margin:0">
-            <li><strong>You write your message</strong> (email/notice) normally.</li>
-            <li><strong>This page hashes</strong> recipient + subject + body locally (<span class="mono">SHA-256</span>).</li>
-            <li><strong>ACKZERO returns</strong> an <span class="mono">id</span>, a claim link, and a signed receipt link.</li>
-            <li><strong>You include the claim link</strong> inside your message and send it using your usual client.</li>
-            <li><strong>Opening the claim link</strong> logs an availability/open event.</li>
-            <li><strong>Later, anyone can verify</strong> via the public receipt JSON (<span class="mono">/v/:id</span>).</li>
-          </ol>
-
-          <div class="note">
-            ACKZERO strengthens disputes and documents good-faith communication.
-            It does <strong>not</strong> certify legal identity and does <strong>not</strong> guarantee delivery.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="pricing" aria-labelledby="pricing-title">
-      <div class="panel">
-        <div class="panel-hd">
-          <strong id="pricing-title">Pricing</strong>
-          <span class="pill">EUR · Europe/UK</span>
-        </div>
-        <div class="panel-bd">
-          <div class="pricing">
-            <div class="price">
-              <span class="tag">Free</span>
-              <div class="amount">€0</div>
-              <div class="hint">For individuals testing the workflow.</div>
-              <ul class="ul">
-                <li>Create receipts</li>
-                <li>Claim + receipt links</li>
-                <li>Signed JSON receipt</li>
-              </ul>
-            </div>
-
-            <div class="price" style="border-color: rgba(124,58,237,.35)">
-              <span class="tag">Pro</span>
-              <div class="amount">€9</div>
-              <div class="hint">Per month (early pricing).</div>
-              <ul class="ul">
-                <li>Higher limits</li>
-                <li>Export / audit-friendly usage</li>
-                <li>Priority reliability</li>
-              </ul>
-              <div class="hint"><strong>Activation:</strong> manual for now (no accounts yet).</div>
-            </div>
-
-            <div class="price">
-              <span class="tag">Business</span>
-              <div class="amount">€49</div>
-              <div class="hint">Per month (small teams).</div>
-              <ul class="ul">
-                <li>Team usage</li>
-                <li>Higher limits</li>
-                <li>Support</li>
-              </ul>
-              <div class="hint"><strong>Activation:</strong> manual for now.</div>
+            <div class="note" style="margin-top:12px">
+              <b>Next step</b>: include the <b>claim link</b> inside your message, then send it with your usual email client.
+              <span class="sub">Opening the claim link records a “made available” event.</span>
             </div>
           </div>
 
           <div class="hint" style="margin-top:12px">
-            v0.1 pricing is operational. Billing/accounts can be added later without breaking existing receipts.
+            Tip: for high-stakes notices, keep a screenshot/PDF of the sent email + attach this receipt JSON in your evidence folder.
           </div>
         </div>
       </div>
     </section>
 
-    <section id="faq" aria-labelledby="faq-title">
-      <div class="panel">
-        <div class="panel-hd">
-          <strong id="faq-title">FAQ</strong>
-          <span class="pill">Clear limits</span>
+    <!-- HOW -->
+    <section id="how" class="reveal" aria-labelledby="how-title">
+      <h2 class="sec-title" id="how-title">How it works</h2>
+      <p class="sec-lead">A simple, repeatable workflow designed for disputes, audits, and good-faith communication — without requiring the recipient to do anything.</p>
+
+      <div class="split">
+        <div class="panel">
+          <div class="panel-hd">
+            <strong>Workflow (5 steps)</strong>
+            <span class="pill">One-link model</span>
+          </div>
+          <div class="panel-bd">
+            <ol class="ul" style="margin:0">
+              <li><strong>You write your message</strong> (email / notice) normally.</li>
+              <li><strong>This page hashes</strong> recipient + subject + body locally (SHA-256).</li>
+              <li><strong>ACKZERO returns</strong> a proof id + claim link + receipt JSON link.</li>
+              <li><strong>You include the claim link</strong> in the message and send it.</li>
+              <li><strong>Anyone can verify</strong> later via the signed receipt (and events).</li>
+            </ol>
+            <div class="note" style="margin-top:12px">
+              <b>Positioning</b>: ACKZERO is a technical receipt. It strengthens evidence but does not replace regulated e-delivery services.
+            </div>
+          </div>
         </div>
+
+        <div class="panel">
+          <div class="panel-hd">
+            <strong>What’s inside the receipt</strong>
+            <span class="pill">Hash-only</span>
+          </div>
+          <div class="panel-bd">
+            <div class="cards" style="grid-template-columns:1fr; margin:0">
+              <div class="card">
+                <h3>Hashes</h3>
+                <p>SHA-256 for <code>to</code>, optional <code>subject</code>, and <code>body</code>. No raw message stored.</p>
+              </div>
+              <div class="card">
+                <h3>Timestamps</h3>
+                <p>Creation time (UTC), and event timestamps if the claim link or pixel is opened.</p>
+              </div>
+              <div class="card">
+                <h3>Verification</h3>
+                <p>Public receipt JSON endpoint for later checks and evidence sharing.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" class="reveal" aria-labelledby="pricing-title">
+      <h2 class="sec-title" id="pricing-title">Pricing</h2>
+      <p class="sec-lead">Simple v0.1 pricing. Accounts/billing can be added later without breaking existing receipts.</p>
+
+      <div class="pricing" role="list" aria-label="Plans">
+        <div class="price" role="listitem">
+          <span class="tag">Free</span>
+          <div class="amount">€0</div>
+          <div class="fine">For individuals testing the workflow.</div>
+          <ul class="ul">
+            <li>Create receipts</li>
+            <li>Public receipt links</li>
+            <li>Basic proof fields</li>
+          </ul>
+        </div>
+
+        <div class="price featured" role="listitem">
+          <span class="tag">Pro</span>
+          <div class="amount">€9<span style="font-size:.95rem; font-weight:900; color:rgba(15,23,42,.58)">/mo</span></div>
+          <div class="fine">Early pricing for frequent use.</div>
+          <ul class="ul">
+            <li>Higher limits</li>
+            <li>Export / audit-friendly receipts</li>
+            <li>Priority reliability</li>
+          </ul>
+          <div class="fine"><strong>Activation:</strong> manual for now (no accounts yet).</div>
+        </div>
+
+        <div class="price" role="listitem">
+          <span class="tag">Business</span>
+          <div class="amount">€49<span style="font-size:.95rem; font-weight:900; color:rgba(15,23,42,.58)">/mo</span></div>
+          <div class="fine">Small teams handling formal notices.</div>
+          <ul class="ul">
+            <li>Team usage</li>
+            <li>Higher limits</li>
+            <li>Support</li>
+          </ul>
+          <div class="fine"><strong>Activation:</strong> manual for now.</div>
+        </div>
+      </div>
+
+      <div class="note" style="margin-top:14px">
+        <b>Important</b>: pricing is operational for v0.1. You can launch now, then refine limits and add billing later.
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="reveal" aria-labelledby="faq-title">
+      <h2 class="sec-title" id="faq-title">FAQ</h2>
+      <p class="sec-lead">Clear limits = fewer disputes. This is what ACKZERO does — and what it does not.</p>
+
+      <div class="panel faq">
         <div class="panel-bd">
           <details open>
             <summary>Does ACKZERO store my message?</summary>
-            <p>No. This page hashes locally. ACKZERO stores hashes and timestamps only.</p>
+            <p>No. This page hashes locally. ACKZERO stores hashes + timestamps + proof events only.</p>
           </details>
+
           <details>
             <summary>Does this prove the recipient read the message?</summary>
-            <p>No. It proves a receipt was created and can record that the claim link was opened (availability). Reading is not guaranteed.</p>
+            <p>No. It proves a receipt was created and can record that the claim link (or pixel) was opened. Reading the full content is not guaranteed.</p>
           </details>
+
           <details>
             <summary>Is this equivalent to registered electronic delivery?</summary>
             <p>No. ACKZERO is a technical receipt. Legal equivalence depends on jurisdiction and regulated providers.</p>
           </details>
+
           <details>
             <summary>What should I include in my email?</summary>
-            <p>Include the claim link. Optionally include the receipt link for transparency.</p>
+            <p>Include the claim link. Optionally include the receipt link for transparency and faster verification.</p>
           </details>
+
           <details>
-            <summary>What exactly is signed?</summary>
-            <p>The receipt JSON is signed using <span class="mono">HMAC-SHA256</span> so it can be checked for tampering against the service’s verification rules.</p>
+            <summary>What if I need stronger evidence?</summary>
+            <p>Use ACKZERO + keep a copy of the sent message (PDF/screenshot) + include the receipt JSON in your evidence file. For regulated equivalence, use a qualified e-delivery provider in your jurisdiction.</p>
           </details>
         </div>
       </div>
-    </section>
 
-    <section aria-label="Legal positioning">
-      <div class="panel">
+      <div class="panel" style="margin-top:14px">
         <div class="panel-hd">
           <strong>Legal positioning (v0.1)</strong>
           <span class="pill">Europe/UK</span>
         </div>
         <div class="panel-bd">
-          <p style="margin:0; color: var(--muted)">
+          <p style="margin:0; color:var(--muted)">
             ACKZERO provides a <strong>technical proof of issuance</strong> and a <strong>verifiable receipt</strong>.
             It is designed to strengthen disputes and document good-faith communication.
             It does not certify legal identity or guarantee delivery, and it is not a regulated e-delivery service.
+          </p>
+          <p style="margin:10px 0 0; color:var(--muted2); font-weight:750">
+            Links below are placeholders: add <code>/terms.html</code>, <code>/privacy.html</code>, <code>/legal.html</code> before public launch.
           </p>
         </div>
       </div>
     </section>
   </main>
 
-  <footer role="contentinfo" aria-label="Site footer">
+  <footer role="contentinfo">
     <div class="wrap foot">
-      <div>© <span id="y"></span> ACKZERO — Independent receipts for message issuance.</div>
-      <div class="row">
+      <div>
+        © <span id="y"></span> ACKZERO — Independent receipts for message issuance.
+      </div>
+
+      <div class="legal">
         <a href="#create">Create</a>
         <a href="#how">How</a>
         <a href="#pricing">Pricing</a>
         <a href="#faq">FAQ</a>
-        <a id="apiLink" href="https://ackzero.jeason-bacoul.workers.dev/health" target="_blank" rel="noopener">API</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/legal.html">Legal</a>
+        <a id="apiLink" href="#" target="_blank" rel="noopener">API</a>
       </div>
     </div>
   </footer>
 
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
   <script>
   (function(){
-    // Force Worker base (prevents Vercel 404 on /v1/proofs)
+    // IMPORTANT: keep this aligned with your worker deploy
     const WORKER_BASE = "https://ackzero.jeason-bacoul.workers.dev"; // later: https://api.ackzero.io
-
     const $ = (id) => document.getElementById(id);
 
     $("y").textContent = String(new Date().getFullYear());
-    $("apiBase").textContent = WORKER_BASE;
+    $("apiLink").href = WORKER_BASE + "/health";
+    $("healthLink").href = WORKER_BASE + "/health";
+
+    // Header shadow on scroll
+    const hdr = $("hdr");
+    function onScroll(){
+      if (window.scrollY > 8) hdr.classList.add("scrolled");
+      else hdr.classList.remove("scrolled");
+    }
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive:true });
 
     // Mobile menu
-    (function(){
-      const burger = $("burger");
-      const mnav = $("mnav");
-      function open(){ mnav.setAttribute("data-state","open"); burger.setAttribute("aria-expanded","true"); }
-      function close(){ mnav.setAttribute("data-state","closed"); burger.setAttribute("aria-expanded","false"); }
-      function toggle(){ (mnav.getAttribute("data-state")==="open") ? close() : open(); }
+    const burger = $("burger");
+    const mnav = $("mnav");
+    function closeMenu(){
+      mnav.dataset.open = "false";
+      burger.setAttribute("aria-expanded", "false");
+    }
+    function toggleMenu(){
+      const open = mnav.dataset.open === "true";
+      mnav.dataset.open = open ? "false" : "true";
+      burger.setAttribute("aria-expanded", open ? "false" : "true");
+    }
+    burger.addEventListener("click", toggleMenu);
+    document.addEventListener("click", (e)=>{
+      if (mnav.dataset.open !== "true") return;
+      if (e.target.closest("#mnav") || e.target.closest("#burger")) return;
+      closeMenu();
+    });
+    document.addEventListener("keydown", (e)=>{
+      if (e.key === "Escape" && mnav.dataset.open === "true") closeMenu();
+    });
+    mnav.querySelectorAll("a").forEach(a => a.addEventListener("click", closeMenu));
 
-      burger.addEventListener("click", toggle);
-      document.addEventListener("click", (e)=>{
-        if (window.matchMedia("(min-width: 901px)").matches) return;
-        if (!e.target.closest("header") && mnav.getAttribute("data-state")==="open") close();
-      }, { passive:true });
-      document.addEventListener("keydown", (e)=>{
-        if (e.key === "Escape" && mnav.getAttribute("data-state")==="open") close();
-      });
-      window.addEventListener("resize", ()=>{
-        if (window.matchMedia("(min-width: 901px)").matches) close();
-      }, { passive:true });
+    // Reveal on view
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!prefersReduced){
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            entry.target.classList.add("in");
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.10, rootMargin: "-10% 0px -10% 0px" });
 
-      mnav.querySelectorAll("a").forEach(a=>{
-        a.addEventListener("click", ()=> close(), { passive:true });
-      });
-    })();
+      document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+    } else {
+      document.querySelectorAll(".reveal").forEach(el => el.classList.add("in"));
+    }
+
+    // UI helpers
+    function toast(msg){
+      const t = $("toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      setTimeout(()=>t.classList.remove("show"), 1400);
+    }
 
     function showStatus(kind, msg){
       const el = $("status");
@@ -847,7 +982,6 @@
       const el = $("status");
       el.style.display = "none";
       el.textContent = "";
-      el.className = "status";
     }
 
     function normalizeText(s){
@@ -873,7 +1007,7 @@
     async function createProof(payload){
       const r = await fetch(WORKER_BASE + "/v1/proofs", {
         method: "POST",
-        headers: { "content-type": "application/json", "accept":"application/json" },
+        headers: { "content-type": "application/json" },
         body: JSON.stringify(payload),
         mode: "cors",
         credentials: "omit",
@@ -881,38 +1015,51 @@
         referrerPolicy: "no-referrer",
       });
 
-      const ct = (r.headers.get("content-type") || "");
-      let j = null;
-      if (ct.includes("application/json")) j = await r.json().catch(()=>null);
-
+      const j = await r.json().catch(()=>null);
       if(!r.ok){
-        const fallback = await r.text().catch(()=> "");
-        const msg = j?.error?.message || fallback || ("Request failed (" + r.status + ")");
+        const msg = j?.error?.message || ("Request failed (" + r.status + ")");
         throw new Error(msg);
       }
-      if(!j) throw new Error("Worker returned non-JSON response.");
       return j;
     }
 
     function setResult(j){
       $("result").style.display = "block";
+
       const kv = $("kv");
       kv.innerHTML = "";
 
-      const add = (k,v) => {
+      const add = (k,v,isLink) => {
         const row = document.createElement("div");
-        row.className = "item";
-        row.innerHTML = '<span class="k"></span><span class="v"></span>';
-        row.querySelector(".k").textContent = k;
-        row.querySelector(".v").textContent = v;
+        row.className = "line";
+        const kk = document.createElement("span");
+        kk.className = "k";
+        kk.textContent = k;
+
+        const vv = document.createElement("span");
+        vv.className = "v";
+
+        if(isLink && v && v !== "—"){
+          const a = document.createElement("a");
+          a.href = v;
+          a.target = "_blank";
+          a.rel = "noopener";
+          a.textContent = v;
+          vv.appendChild(a);
+        } else {
+          vv.textContent = v;
+        }
+
+        row.appendChild(kk);
+        row.appendChild(vv);
         kv.appendChild(row);
       };
 
       add("Proof ID", j.id || "—");
       add("Created", j.createdAt || "—");
-      add("Claim link", j?.urls?.claim || "—");
-      add("Receipt link", j?.urls?.receipt || "—");
-      add("Pixel", j?.urls?.pixel || "—");
+      add("Claim link", j?.urls?.claim || "—", true);
+      add("Receipt link", j?.urls?.receipt || "—", true);
+      add("Pixel (optional)", j?.urls?.pixel || "—", true);
 
       $("openClaim").href = j?.urls?.claim || "#";
       $("openReceipt").href = j?.urls?.receipt || "#";
@@ -927,10 +1074,10 @@
           "Receipt: " + (j?.urls?.receipt || ""),
           "Pixel: " + (j?.urls?.pixel || "")
         ].join("\n");
+
         try{
           await navigator.clipboard.writeText(txt);
-          showStatus("ok", "Copied.");
-          setTimeout(hideStatus, 1100);
+          toast("Copied.");
         }catch{
           showStatus("warn", "Copy failed. Select and copy manually from the links above.");
         }
@@ -941,12 +1088,7 @@
       $("to").value = "recipient@example.com";
       $("subject").value = "Cancellation notice";
       $("body").value =
-`Hello,
-
-I hereby cancel my subscription effective immediately.
-Please confirm in writing.
-
-Regards,`;
+        "Hello,\n\nI hereby cancel my subscription effective immediately.\nPlease confirm in writing.\n\nRegards,";
       $("to").focus();
     });
 
@@ -985,6 +1127,7 @@ Regards,`;
         const j = await createProof({ hashes });
         showStatus("ok", "Receipt generated.");
         setResult(j);
+        toast("Receipt ready.");
       }catch(e){
         showStatus("err", String(e?.message || e));
       }finally{
@@ -995,4 +1138,4 @@ Regards,`;
   })();
   </script>
 </body>
-                                           </html>
+</html>
